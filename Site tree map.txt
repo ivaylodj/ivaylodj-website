@@ -1,0 +1,27 @@
+Albums
+- Greece
+- Morocco
+- Myanmar
+- Vietnam
+- Thailand
+- Namibia
+- Italy
+- UK
+- France
+- Bulgaria
+- Nature
+- Wildlife
+- Astroscapes
+- City scapes
+- Sunsets
+- Sunrises
+
+Portfolio --> Gallery
+tags:
+all
+landscape
+historical cities and landmarks
+cityscape
+
+Gallery (==Albums) --> Collection
+Landscape and travel photography. Come in and celebrate the most spectacular landscapes of the world
