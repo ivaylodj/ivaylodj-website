@@ -54,8 +54,10 @@ $cherga_packery_wrapper.each(function() {
 			$this_dom = this.obj;
 		if ($this_dom.find('.load_anim:first').length > 0) {
 			(function (img, src) {
-				img.src = src;
-				img.onload = function () {
+				var loaded = false;
+				var proceed = function() {
+					if (loaded) return;
+					loaded = true;
 					$this_dom.find('.load_anim:first').removeClass('load_anim').removeClass('anim_el').animate({
 						'z-index': '15'
 					}, 200, function() {
@@ -64,6 +66,10 @@ $cherga_packery_wrapper.each(function() {
 						this_obj.preloader.call(this_obj);
 					});
 				};
+				img.onload = proceed;
+				img.onerror = proceed;
+				setTimeout(proceed, 3000);
+				img.src = src;
 			}(new Image(), $this_dom.find('.load_anim:first').find('.packery-item-inner').attr('data-src')));
 		} else {
 			this_obj.setup.call(this_obj);
