@@ -94,14 +94,19 @@ if (jQuery('.cherga_photoswipe_wrapper').length > 0) {
 				}
 				$pswp_gallery_array['cherga_gallery_' + this_id].slides.push(this_item);
 			} else {
-				var item_size = jQuery(this).data('size').split('x'),
-					item_width = item_size[0],
-					item_height = item_size[1],
-					this_item = {
-						src : jQuery(this).attr('href'),
-						w : item_width,
-						h : item_height
-					};
+				var size_attr = jQuery(this).data('size'),
+					item_width = 1600,
+					item_height = 1200;
+				if (size_attr) {
+					var item_size = size_attr.split('x');
+					item_width = item_size[0] || 1600;
+					item_height = item_size[1] || 1200;
+				}
+				var this_item = {
+					src : jQuery(this).attr('href'),
+					w : item_width,
+					h : item_height
+				};
 				$pswp_gallery_array['cherga_gallery_' + this_id].slides.push(this_item);
 			}
 		});
