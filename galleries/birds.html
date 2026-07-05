@@ -413,5 +413,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	<script src="../js/theme.js"></script>
 <script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var pswpLinks = document.querySelectorAll('.cherga_pswp_slide');
+    pswpLinks.forEach(function(link) {
+        var img = new Image();
+        img.onload = function() {
+            link.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+        };
+        img.src = link.getAttribute('href');
+    });
+});
+</script>
 </body>
 </html>
