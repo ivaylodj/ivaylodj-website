@@ -65,13 +65,14 @@
 </style>
 <style>
 .cherga_albums_categories {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+    display: block;
     margin-bottom: 4px;
 }
 .cherga_albums_category {
-    display: inline-block;
+    display: inline;
+}
+.cherga_albums_category:not(:last-child)::after {
+    content: ", ";
 }
 </style>
 </head>
