@@ -1,0 +1,30 @@
+backend:
+  name: github
+  repo: ivaylodj/ivaylodj-website
+  branch: main
+  base_url: https://ivaylodj-website.pages.dev
+
+media_folder: "img/uploads"
+public_folder: "/img/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Cover Image", name: "cover_image", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "galleries"
+    label: "Gallery Pages"
+    folder: "_galleries"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Genre", name: "genre", widget: "string"}
+      - {label: "Cover Image", name: "cover_image", widget: "image"}
+      - {label: "Description", name: "description", widget: "text"}
