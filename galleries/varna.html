@@ -290,5 +290,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	<script src="../js/theme.js"></script>
 <script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var slides = document.querySelectorAll('.cherga_ribbon_slide');
+    slides.forEach(function(slide) {
+        var img = slide.querySelector('img');
+        if (img) {
+            var update = function() {
+                if (img.naturalWidth) {
+                    slide.setAttribute('data-img-width', img.naturalWidth);
+                    slide.setAttribute('data-img-height', img.naturalHeight);
+                }
+            };
+            if (img.complete) {
+                update();
+            } else {
+                img.addEventListener('load', update);
+            }
+        }
+    });
+});
+</script>
 </body>
 </html>
