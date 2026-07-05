@@ -379,7 +379,7 @@
 					<a href="../index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
 				</div>
 
-				<div class="cherga_copyright">© 2022 <span class="cherga_color">Ivaylo Djounov</span> Photography. All Rights Reserved.</div>
+				<div class="cherga_copyright"><span id="copyright-year"></span></div>
 			</div>
 		</footer>
 
@@ -407,5 +407,6 @@
 	<script src="../js/pm_gallery_packery.js"></script>
 	<script src="../js/photoswipe.min.js"></script>
 	<script src="../js/photoswipe-ui-default.min.js"></script>
+<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 </body>
 </html>

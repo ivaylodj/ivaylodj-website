@@ -802,7 +802,7 @@
 					<a href="index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
 				</div>
 
-				<div class="cherga_copyright">© 2022 Ivaylo Djounov Photography. All Rights Reserved.</div>
+				<div class="cherga_copyright"><span id="copyright-year"></span></div>
 			</div>
 		</footer>
 
@@ -826,5 +826,6 @@
 	<script src="js/pm_testimonials.js"></script>
 
 	<script src="js/theme.js"></script>
+<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 </body>
 </html>
