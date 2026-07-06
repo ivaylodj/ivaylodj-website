@@ -33,6 +33,13 @@
 	<link rel="stylesheet" href="../../css/font-awesome.min.css">
 	<link rel="stylesheet" href="../../css/theme.css">
 
+	<!-- Album grid styling -->
+	<style>
+	.cherga_albums_grid_page .cherga_albums_grid_item .cherga_inner_cont { height: 300px !important; }
+	.cherga_albums_grid_page .cherga_albums_grid_item .cherga_dp { display: block; height: 100%; position: relative; overflow: hidden; }
+	.cherga_albums_grid_page .cherga_albums_grid_item .cherga_dp img { width: 100%; height: 100%; object-fit: cover; }
+	</style>
+
 	<!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -59,7 +66,7 @@
 <!-- End Cloudflare Web Analytics -->
 </head>
 
-<body class="cherga_drag_protection">
+<body class="cherga_drag_protection cherga_albums_grid_page">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR3X354K"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -204,27 +211,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 							</div>
 
 							<div class="row cherga_pf_fullwidth">
-								<div class="col col-12">
-									<div class="cherga_container cherga_mb_60">
-										<div class="row">
-											<div class="col col-6">
-												<a href="rome.html" class="cherga_gallery_card">
-													<div class="cherga_gallery_card_image" data-src="../../img/clipart/facebook/Rome/img-1.jpg"></div>
-													<div class="cherga_gallery_card_content">
-														<h3>Rome</h3>
-														<p class="cherga_gallery_card_meta">travel, italy, architecture</p>
-													</div>
-												</a>
-											</div>
+								<div class="col col-12 cherga_pl_30 cherga_pr_30">
+									<div class="cherga_widget_pm_albums_grid">
+										<div class="cherga_widget_container">
+											<div class="cherga_front_end_display">
+												<div class="cherga_albums_listing_cont cherga_albums_grid cherga_albums_grid4 view_type_grid albums_titles_show">
+													<!-- Rome -->
+													<div class="cherga_albums_grid_item columns_4">
+														<div class="cherga_inner_cont">
+															<a href="rome.html" class="cherga_dp cherga_no_select">
+																<img src="../../img/clipart/facebook/Rome/img-1.jpg" alt="Rome"/>
 
-											<div class="col col-6">
-												<a href="la-ciotat.html" class="cherga_gallery_card">
-													<div class="cherga_gallery_card_image" data-src="../../img/clipart/facebook/La%20Ciotat/img-1.jpg"></div>
-													<div class="cherga_gallery_card_content">
-														<h3>La Ciotat</h3>
-														<p class="cherga_gallery_card_meta">travel, france, coast</p>
+																<span class="cherga_albums_grid_content">
+																	<span class="cherga_albums_category">travel, italy, architecture</span>
+																	<span class="cherga_albums_title">Rome</span>
+																</span>
+															</a>
+														</div>
 													</div>
-												</a>
+
+													<!-- La Ciotat -->
+													<div class="cherga_albums_grid_item columns_4">
+														<div class="cherga_inner_cont">
+															<a href="la-ciotat.html" class="cherga_dp cherga_no_select">
+																<img src="../../img/clipart/facebook/La%20Ciotat/img-1.jpg" alt="La Ciotat"/>
+
+																<span class="cherga_albums_grid_content">
+																	<span class="cherga_albums_category">travel, france, coast</span>
+																	<span class="cherga_albums_title">La Ciotat</span>
+																</span>
+															</a>
+														</div>
+													</div>
+												</div>
+
+												<div class="clear"></div>
 											</div>
 										</div>
 									</div>
