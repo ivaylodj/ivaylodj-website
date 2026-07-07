@@ -1,0 +1,20 @@
+[
+  {
+    "filename": "2022-01-22-first-post.md",
+    "title": "First Post",
+    "date": "2022-01-22",
+    "cover_image": "",
+    "categories": [],
+    "tags": [],
+    "excerpt": ""
+  },
+  {
+    "filename": "2022-01-22-welcome-post.md",
+    "title": "Welcome Message",
+    "date": "2022-01-22",
+    "cover_image": "img/clipart/facebook/Welcome-Post/img-7.jpg",
+    "categories": ["General"],
+    "tags": ["General", "Photography"],
+    "excerpt": "Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new humble amateur photographer website."
+  }
+]

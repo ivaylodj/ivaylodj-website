@@ -2,10 +2,20 @@ backend:
   name: github
   repo: ivaylodj/ivaylodj-website
   branch: main
-  base_url: https://ivaylodj-website.pages.dev
+  open_repo_check: public
 
-media_folder: "img/uploads"
-public_folder: "/img/uploads"
+auth_scope: open_repo
+# For private repos, remove auth_scope above and add the two lines below:
+# auth_scope: repo
+# site_domain: cms.ivaylodj.com
+
+# Email login (Decap generates a static file for verification)
+provider: email
+
+media_folder: "img/clipart/facebook"
+public_folder: "/img/clipart/facebook"
+
+editor_formats: [default]
 
 collections:
   - name: "blog"
@@ -13,18 +23,49 @@ collections:
     folder: "_posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "Cover Image", name: "cover_image", widget: "image", required: false}
+      - {label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false}
+      - { 
+          label: "Cover Image path (relative to img/clipart/facebook)", 
+          name: "cover_image", 
+          widget: "image", 
+          required: false,
+          media_folder: "img/clipart/facebook",
+          public_folder: "/img/clipart/facebook"
+        }
+      - {
+          label: "Categories", 
+          name: "categories", 
+          widget: "list", 
+          allow_add: true, 
+          allow_delete: true, 
+          clear_all: false, 
+          min: 1,
+          default: ["General"],
+          summary: "{{value}}",
+          field: {label: "Category", name: "category", widget: "string"}
+        }
+      - {
+          label: "Tags", 
+          name: "tags", 
+          widget: "list", 
+          allow_add: true, 
+          allow_delete: true, 
+          clear_all: false, 
+          summary: "{{value}}",
+          field: {label: "Tag", name: "tag", widget: "string"}
+        }
+      - {label: "Excerpt (short summary for blog listing)", name: "excerpt", widget: "text", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "galleries"
     label: "Gallery Pages"
-    folder: "_galleries"
-    create: true
+    folder: "galleries"
+    create: false
+    identifier_fields: filename
     fields:
+      - {label: "Filename", name: "filename", widget: "string"}
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Genre", name: "genre", widget: "string"}
-      - {label: "Cover Image", name: "cover_image", widget: "image"}
-      - {label: "Description", name: "description", widget: "text"}
