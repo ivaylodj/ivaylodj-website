@@ -5,14 +5,14 @@
     "date": "2022-01-22",
     "cover_image": "",
     "categories": [],
-    "tags": [],
-    "excerpt": ""
+    "tags": ["General"],
+    "excerpt": "Welcome to my photography blog. More posts coming soon."
   },
   {
     "filename": "2022-01-22-welcome-post.md",
     "title": "Welcome Message",
     "date": "2022-01-22",
-    "cover_image": "img/clipart/facebook/Welcome-Post/img-7.jpg",
+    "cover_image": "",
     "categories": ["General"],
     "tags": ["General", "Photography"],
     "excerpt": "Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new humble amateur photographer website."

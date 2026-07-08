@@ -62,28 +62,30 @@
       }
     }
 
-    // Render tag cloud
+    // Render tag cloud - use same widget_tag_cloud .tagcloud style as sidebar
     var container = document.getElementById('blog-tag-cloud');
     if (!container) return;
 
-    // All tags button
-    var allBtn = document.createElement('span');
-    allBtn.className = 'cherga_blog_tag_filter active';
-    allBtn.textContent = 'All (' + posts.length + ')';
-    allBtn.setAttribute('data-tag', '');
-    allBtn.onclick = function() { setActiveTag(null); };
-    container.appendChild(allBtn);
+    container.className = 'tagcloud';
+
+    // All tags link
+    var allLink = document.createElement('a');
+    allLink.setAttribute('href', 'javascript:void(0)');
+    allLink.setAttribute('data-tag', '');
+    allLink.textContent = 'All (' + posts.length + ')';
+    allLink.onclick = function() { setActiveTag(null); };
+    container.appendChild(allLink);
 
     var sortedTags = Object.keys(tagCounts).sort(function(a, b) { return tagCounts[b] - tagCounts[a]; });
     for (var t = 0; t < sortedTags.length; t++) {
-      var btn = document.createElement('span');
-      btn.className = 'cherga_blog_tag_filter';
-      btn.textContent = sortedTags[t] + ' (' + tagCounts[sortedTags[t]] + ')';
-      btn.setAttribute('data-tag', sortedTags[t]);
-      btn.onclick = (function(tag) {
+      var link = document.createElement('a');
+      link.setAttribute('href', 'javascript:void(0)');
+      link.setAttribute('data-tag', sortedTags[t]);
+      link.textContent = sortedTags[t] + ' (' + tagCounts[sortedTags[t]] + ')';
+      link.onclick = (function(tag) {
         return function() { setActiveTag(tag); };
       })(sortedTags[t]);
-      container.appendChild(btn);
+      container.appendChild(link);
     }
 
     // Render sidebar categories list
