@@ -91,40 +91,34 @@
   }
 
   function formatInline(text) {
-    // Bold: **text** only (avoid __ to prevent destroying inline HTML class names with underscores)
-    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    
-    // Italic: *text* only (preserving _ characters to protect inline HTML like cherga_highlighter_dark)
-    text = text.replace(/(?<![^<])\*(?![\s<])(.+?)(?<![\s>])\*(?![^>])/g, '<em>$1</em>');
-
-    // Links: [text](url)
-    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
-      if (linkText.indexOf('http') === 0) return match; // Already a full URL, no need to modify
-      // Convert relative links if needed, but mostly keep as-is since the site uses full URLs
-      return '<a href="' + url + '">' + linkText + '</a>';
-    });
-
-    // Images: ![alt](url)
-  function formatInline(text) {
-    // Preserve HTML tags - don't process inside <...> blocks
+    // Split text by HTML tags to preserve them exactly as-is
     var parts = text.split(/(<[^>]+>)/g);
     
     for (var i = 0; i < parts.length; i++) {
-      if (parts[i].indexOf('<') === 0) continue; // Skip HTML tags, process only plain text
+      if (parts[i].indexOf('<') === 0 || parts[i] === '') continue; // Keep HTML tags, process plain text
       
       var segment = parts[i];
       
-      // Bold: **text** 
+      // Bold: **text**
       segment = segment.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       
-      // Italic: *text* (use * not _ to avoid mangling HTML class names)
+      // Italic: *text* (avoid underscores to protect class names like cherga_highlighter_dark)
       segment = segment.replace(/(?<![^<])\*(?![\s<])(.+?)(?<![\s>])\*(?![^>])/g, '<em>$1</em>');
       
       // Links: [text](url)
-      segment = segment.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match
+      segment = segment.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
+        if (linkText.indexOf('http') === 0) return match;
+        return '<a href="' + url + '">' + linkText + '</a>';
+      });
 
-... [truncated]
-
+      // Images: ![alt](url)
+      segment = segment.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+      
+      parts[i] = segment; // Replace plain text with processed version
+    }
+    
+    return parts.join('');
+  }
   function loadPost() {
     // Get post filename from URL query param
     var params = new URLSearchParams(window.location.search);
