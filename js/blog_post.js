@@ -91,13 +91,11 @@
   }
 
   function formatInline(text) {
-    // Bold: **text** or __text__
+    // Bold: **text** only (remove __ to avoid mangling HTML class names like cherga_highlighter_dark)
     text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
     
-    // Italic: *text* or _text_ (but not inside HTML tags)
+    // Italic: *text* only (removing _ support to avoid mangling HTML class names with underscores)
     text = text.replace(/(?<![^<])\*(?![\s<])(.+?)(?<![\s>])\*(?![^>])/g, '<em>$1</em>');
-    text = text.replace(/(?<![^<])_(?![\s<])(.+?)(?<![\s>])_(?![^>])/g, '<em>$1</em>');
 
     // Links: [text](url)
     text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
