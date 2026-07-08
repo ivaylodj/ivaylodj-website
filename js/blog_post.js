@@ -84,17 +84,17 @@
       result.push('<p>' + formatInline(line) + '</p>');
     }
 
-    // Close any remaining list or quote blocks
-    if (inList) { result.push('</' + listTag + '>'); }
-    
+    // Close any remaining blocks (properly close blockquotes, not as </bq>)
+    if (listTag === 'bq') { result.push('</blockquote>'); }
+    else if (inList) { result.push('</' + listTag + '>'); }    
     return result.join('\n');
   }
 
   function formatInline(text) {
-    // Bold: **text** only (remove __ to avoid mangling HTML class names like cherga_highlighter_dark)
+    // Bold: **text** only (avoid __ to prevent destroying inline HTML class names with underscores)
     text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     
-    // Italic: *text* only (removing _ support to avoid mangling HTML class names with underscores)
+    // Italic: *text* only (preserving _ characters to protect inline HTML like cherga_highlighter_dark)
     text = text.replace(/(?<![^<])\*(?![\s<])(.+?)(?<![\s>])\*(?![^>])/g, '<em>$1</em>');
 
     // Links: [text](url)
