@@ -39,7 +39,7 @@
       // Blockquote: > text or >> nested
       var bqMatch = line.match(/^\s*>\s?(.+)$/);
       if (bqMatch) {
-        if (!inList) { result.push('<blockquote><p>' + formatInline(bqMatch[1]); inList = true; listTag = 'bq'; continue; }
+        if (!inList) { result.push('<blockquote><p>' + formatInline(bqMatch[1]) + '</p></blockquote>'); inList = true; listTag = 'bq'; continue; }
         result.push(formatInline(bqMatch[1])); // just add the text inside <p> of blockquote
         continue;
       }
