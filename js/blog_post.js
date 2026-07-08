@@ -105,10 +105,25 @@
     });
 
     // Images: ![alt](url)
-    text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+  function formatInline(text) {
+    // Preserve HTML tags - don't process inside <...> blocks
+    var parts = text.split(/(<[^>]+>)/g);
+    
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].indexOf('<') === 0) continue; // Skip HTML tags, process only plain text
+      
+      var segment = parts[i];
+      
+      // Bold: **text** 
+      segment = segment.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      
+      // Italic: *text* (use * not _ to avoid mangling HTML class names)
+      segment = segment.replace(/(?<![^<])\*(?![\s<])(.+?)(?<![\s>])\*(?![^>])/g, '<em>$1</em>');
+      
+      // Links: [text](url)
+      segment = segment.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match
 
-    return text;
-  }
+... [truncated]
 
   function loadPost() {
     // Get post filename from URL query param
