@@ -1,210 +1,227 @@
 (function() {
-  // Minimal markdown parser - handles what this blog uses:
-  // headers (h2-h4), bold, italic, blockquotes, lists, links, images, paragraphs
-  
+
+  // ---------------------------------------------------------------
+  // Markdown parser that preserves inline HTML tags (e.g.
+  // <span class="cherga_drop_cap">, <span class="cherga_color">
+  // <span class="cherga_highlighter_dark">) exactly as-is so the
+  // theme.css custom classes render correctly against Decap CMS
+  // markdown content. Supports: headers (h2-h4), bold, italic,
+  // blockquotes, lists (<ul>/<ol>), inline links/images, <u>,
+  // and regular paragraphs.
+  // ---------------------------------------------------------------
+
   function parseMd(md) {
     var lines = md.split('\n');
     var result = [];
     var inList = false;
     var listTag = 'ul';
-    var headingLevel = 0;
 
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i];
 
-      // Empty line closes list, adds paragraph break
+      // Blank line: close any open list and continue
       if (line.trim() === '') {
         if (inList) { result.push('</' + listTag + '>'); inList = false; }
         continue;
       }
 
-      // Code blocks - skip for now
-      if (line.indexOf('```') === 0) continue;
-
-      // Headers: ##, ###, ####
-      var m = line.match(/^(#{1,3})\s+(.+)$/);
-      if (m) {
-        level = m[1].length + 1; // convert to h{2,4}
-        content = formatInline(m[2]);
-        result.push('<h' + level + '>' + content + '</h' + level + '>');
+      // HTML tags (self-closing or wrapping) -- pass through verbatim so
+      // the parser does not destroy .cherga_*, .drop_cap, etc.
+      if (/^\s*<[^>]+>\s*$/.test(line)) {
+        result.push(line);
         continue;
       }
 
-      // Horizontal rule
-      if (line.match(/^---+$/)) {
+      // Code blocks -- skip for now
+      if (line.indexOf('\u0060\u0060\u0060') === 0) continue;
+
+      // --- Headings: ## to ####  -----------------------------------
+      var mH = line.match(/^(#{2,4})\s+(.+)$/);
+      if (mH) {
+        var lvl = Math.min(mH[1].length + 1, 4);
+        result.push('<h' + lvl + '>' + formatInline(mH[2]) + '</h' + lvl + '>');
+        continue;
+      }
+
+      // --- Horizontal rule ------------------------------------------
+      if (/^---+$/.test(line.trim())) {
         result.push('<hr>');
         continue;
       }
 
-      // Blockquote: > text or >> nested
-      var bqMatch = line.match(/^\s*>\s?(.+)$/);
-      if (bqMatch) {
-        if (!inList) { result.push('<blockquote><p>' + formatInline(bqMatch[1]) + '</p></blockquote>'); inList = true; listTag = 'bq'; continue; }
-        result.push(formatInline(bqMatch[1])); // just add the text inside <p> of blockquote
-        continue;
-      }
-
-      // Unordered list: - or * item
-      var ulMatch = line.match(/^\s*[-*]\s+(.+)$/);
-      if (ulMatch) {
-        if (!inList || listTag !== 'ul') { 
-          result.push('<ul>'); 
-          inList = true; 
-          listTag = 'ul'; 
+      // --- Blockquotes: > text or >> deeper -------------------------
+      var mBq = line.match(/^\s*> ?(.+)$/);
+      if (mBq) {
+        if (!inList || listTag !== 'bq') {
+          result.push('<blockquote><p>' + formatInline(mBq[1]) + '</p>');
+          inList = true;
+          listTag = 'bq';
+        } else {
+          // Append inside the same <blockquote>
+          result.push(formatInline(mBq[1]));
         }
-        result.push('<li>' + formatInline(ulMatch[1]) + '</li>');
         continue;
       }
 
-      // Ordered list: 1. item
-      var olMatch = line.match(/^\s*\d+\.\s+(.+)$/);
-      if (olMatch) {
-        if (!inList || listTag !== 'ol') { 
-          result.push('<ol>'); 
-          inList = true; 
-          listTag = 'ol'; 
+      // Close blockquote tag if we are no longer in it
+      if (listTag === 'bq') {
+        result.push('</blockquote>');
+        listTag = 'ul';   // reset, will reopen as <ul>/<ol> if needed
+      }
+
+      // --- Unordered list items: - or * ----------------------------
+      var mU = line.match(/^\s*[-*]\s+(.+)$/);
+      if (mU) {
+        if (!inList || listTag !== 'ul') {
+          result.push('<ul>');
+          inList = true;
+          listTag = 'ul';
         }
-        result.push('<li>' + formatInline(olMatch[1]) + '</li>');
+        result.push('<li>' + formatInline(mU[1]) + '</li>');
         continue;
       }
 
-      // Close list if we were in one
-      if (inList) { result.push('</' + listTag + '>'); inList = false; }
-
-      // Closing blockquote if it was open
-      if (listTag === 'bq') { 
-        // Don't close bq immediately, let next line decide
+      // --- Ordered list items: 1. ----------------------------------
+      var mO = line.match(/^\s*\d+\.\s+(.+)$/);
+      if (mO) {
+        if (!inList || listTag !== 'ol') {
+          result.push('<ol>');
+          inList = true;
+          listTag = 'ol';
+        }
+        result.push('<li>' + formatInline(mO[1]) + '</li>');
+        continue;
       }
 
-      // Paragraph - detect closing of nested blockquotes or other special structures
-      var pMatch = line.match(/^>\s?/);  // still inside a quoted section
-      // Skip these lines since they're handled in the blockquote logic above
-      
-      // Regular paragraph text
+      // Close ol/ul when we hit non-list content
+      if (inList && listTag !== 'bq') {
+        result.push('</' + listTag + '>');
+        inList = false;
+        listTag = 'ul';
+      }
+
+      // --- Regular paragraph text -----------------------------------
       result.push('<p>' + formatInline(line) + '</p>');
     }
 
-    // Close any remaining blocks (properly close blockquotes, not as </bq>)
+    // Close any remaining blocks at EOF
     if (listTag === 'bq') { result.push('</blockquote>'); }
-    else if (inList) { result.push('</' + listTag + '>'); }    
+    else if (inList && listTag !== 'bq') { result.push('</' + listTag + '>'); }   
+
     return result.join('\n');
   }
 
+  // Apply markdown inline syntax while preserving embedded HTML tags.
+  // E.g. **bold**, *italic*, [link](url), ![img](src)
   function formatInline(text) {
-    // Split text by HTML tags to preserve them exactly as-is
     var parts = text.split(/(<[^>]+>)/g);
-    
+
     for (var i = 0; i < parts.length; i++) {
-      if (parts[i].indexOf('<') === 0 || parts[i] === '') continue; // Keep HTML tags, process plain text
-      
-      var segment = parts[i];
-      
+      if (!parts[i] || parts[i].charAt(0) === '<') continue;
+
+      var seg = parts[i];
+
       // Bold: **text**
-      segment = segment.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-      
-      // Italic: *text* (avoid underscores to protect class names like cherga_highlighter_dark)
-      segment = segment.replace(/(?<![^<])\*(?![\s<])(.+?)(?<![\s>])\*(?![^>])/g, '<em>$1</em>');
-      
-      // Links: [text](url)
-      segment = segment.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
-        if (linkText.indexOf('http') === 0) return match;
-        return '<a href="' + url + '">' + linkText + '</a>';
-      });
+      seg = seg.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+      // Italic: *text*
+      seg = seg.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
       // Images: ![alt](url)
-      segment = segment.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
-      
-      parts[i] = segment; // Replace plain text with processed version
+      seg = seg.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,
+        '<img src="$2" alt="$1">');
+
+      // Inline links: [text](url)
+      seg = seg.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(m, lt, u) {
+        return (lt.indexOf('http') === 0 || lt.indexOf('/') === 0) ? m :
+               '<a href="' + u + '">' + lt + '</a>';
+      });
+
+      parts[i] = seg;
     }
-    
+
     return parts.join('');
   }
+
+  // ---------------------------------------------------------------
+  // Load and render the single blog post
+  // ---------------------------------------------------------------
   function loadPost() {
-    // Get post filename from URL query param
     var params = new URLSearchParams(window.location.search);
     var postFile = params.get('post');
-    
+
     if (!postFile) {
       document.getElementById('blog-post-content').innerHTML = 
         'No post specified. <a href="blog.html">&larr; Back to Blog</a>';
       return;
     }
 
-    // Load both the post data and content
     var postIdx = new XMLHttpRequest();
     postIdx.open('GET', '_posts/index.json', true);
     postIdx.onload = function() {
       if (postIdx.status !== 200) return;
-      
+
       var allPosts = JSON.parse(postIdx.responseText);
       var post = null;
       for (var i = 0; i < allPosts.length; i++) {
-        if (allPosts[i].filename === postFile) {
-          post = allPosts[i];
-          break;
-        }
+        if (allPosts[i].filename === postFile) { post = allPosts[i]; break; }
       }
 
       if (!post) {
-        document.getElementById('blog-post-content').innerHTML = 'Post not found. <a href="blog.html">&larr; Back to Blog</a>';
+        document.getElementById('blog-post-content').innerHTML = 
+          'Post not found. <a href="blog.html">&larr; Back to Blog</a>';
         return;
       }
 
-      // Load post markdown content from _posts/ dir
       var contentXhr = new XMLHttpRequest();
       contentXhr.open('GET', '_posts/' + postFile, true);
       contentXhr.onload = function() {
         if (contentXhr.status !== 200) {
-          document.getElementById('blog-post-content').innerHTML = 'Failed to load post. <a href="blog.html">&larr; Back to Blog</a>';
+          document.getElementById('blog-post-content').innerHTML = 
+            'Failed to load post. <a href="blog.html">&larr; Back to Blog</a>';
           return;
         }
 
         var mdContent = contentXhr.responseText;
 
-        // Extract frontmatter if present
-        var frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/m;
-        var fmMatch = mdContent.match(frontmatterRegex);
-        
-        var title = post.title || '';
+        // Extract frontmatter (YAML between --- markers)
+        var fmRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/m;
+        var fmMatch = mdContent.match(fmRegex);
+
+        var title   = post.title || '';
         var dateStr = new Date(post.date).toLocaleDateString('en-GB', {
           year: 'numeric', month: 'long', day: 'numeric'
         });
 
-        // Build the post
+        // ---- Build the full HTML output (matching old blog_standard.html) ----
         var html = '';
-        
-        // Cover image or placeholder
+
+        // Cover image (post-format block with .cherga_pf_boxed)
         if (post.cover_image) {
           html += '<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">';
-          html += '<div class="cherga_pf_standard_cont cherga_dp cherga_no_select"><img src="' + post.cover_image + '" alt=""></div>';
+          html +=   '<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">';
+          html +=     '<img src="' + post.cover_image + '" alt="" />';
+          html +=   '</div>';
           html += '</div>';
         }
 
-        // Meta
+        // Post meta (date + categories)
         html += '<div class="cherga_post_meta">';
-        html += '<div class="cherga_post_meta_item">' + dateStr + '</div>';
+        html +=   '<div class="cherga_post_meta_item">' + dateStr + '</div>';
         if (post.categories && post.categories.length) {
-          html += '<div class="cherga_post_meta_item">in ';
           var cats = [];
-          for (c in post.categories) {
+          for (var c = 0; c < post.categories.length; c++) {
             cats.push('<a rel="category tag" href="javascript:void(0)">' + post.categories[c] + '</a>');
           }
-          html += cats.join(', ');
-          html += '</div>';
+          html += '<div class="cherga_post_meta_item">in ' + cats.join(', ') + '</div>';
         }
         html += '</div>';
 
-        // Title
+        // Post title
         html += '<h1 class="cherga_post_title">' + title + '</h1>';
 
-        // Content (body with <span> class support for drop cap etc.)
-        var bodyMd = '';
-        if (fmMatch) {
-          bodyMd = fmMatch[2];
-        } else {
-          bodyMd = mdContent;
-        }
-        
+        // Body content (preserves inline HTML from markdown)
+        var bodyMd = fmMatch ? fmMatch[2] : mdContent;
         html += '<div class="cherga_tiny cherga_blog_post_content">';
         html += parseMd(bodyMd);
         html += '</div>';
@@ -220,40 +237,72 @@
         }
 
         // Share buttons
-        var encodedUrl = encodeURIComponent(window.location.href);
-        var encodedTitle = encodeURIComponent(title);
+        var encUrl  = encodeURIComponent(window.location.href);
+        var encTitle = encodeURIComponent(title);
         html += '<div class="cherga_sharing">';
-        html += '<span class="cherga_sharing_label">Share This Post</span> ';
-        html += '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl + '&t=' + encodedTitle + '" target="_blank" title="Share on Facebook" class="cherga_share_facebook">Facebook</a> ';
-        html += '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '&text=' + encodedTitle + '" target="_blank" title="Share on Twitter/X" class="cherga_share_twitter">Twitter/X</a>';
+        html +=   '<span class="cherga_sharing_label">Share This Post</span> ';
+        html +=   '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encUrl + '&t=' + encTitle + '" target="_blank" title="Share on Facebook" class="cherga_share_facebook">Facebook</a>';
+        html +=   ' <a href="https://twitter.com/intent/tweet?url=' + encUrl + '&text=' + encTitle + '" target="_blank" title="Share on Twitter/X" class="cherga_share_twitter">Twitter/X</a>';
         html += '</div>';
         html += '<div class="clear"></div>';
 
+        // Single divider (matches old template)
+        html += '<div class="cherga_single_divider"></div>';
+
+        // Post tags + sharing rendered again in comments container area
+        // Posts navigation
+        html += '<div class="cherga_posts_navigation row">';
+        html +=   '<div class="cherga_next_post_wrapper col push-right">';
+        html +=     '<span class="cherga_next_post_button cherga_post_nav_button">Next Post</span>';
+        html +=     '<a class="cherga_next_post_title" href="javascript:void(0)">' + title + '</a>';
+        html +=   '</div>';
+        html +=   '<div class="cherga_prev_post_wrapper col pull-left">';
+        html +=     '<span class="cherga_prev_post_button cherga_post_nav_button"><i class="fa fa-arrow-left"></i> Previous Post</span>';
+        html +=     '<a class="cherga_prev_post_title" href="javascript:void(0)">' + title + '</a>';
+        html +=   '</div>';
+        html += '</div>';
+
+        // Comments section (matches old template exactly)
+        html += '<div class="cherga_comments_cont">';
+        html +=   '<div class="cherga_comments_wrapper">';
+        html +=     '<h4 class="cherga_comments_title">Comments on This Post</h4>';
+        html +=     '<div class="comment-respond" id="respond">';
+        html +=       '<h5 class="cherga_reply_comment_title">Let us know your thoughts about this topic</h5>';
+        html +=       '<form class="comment-form" id="commentform" method="post">';
+        html +=         '<div class="row"><div class="comment-form-comment col col-12">';
+        html +=           '<textarea name="comment" cols="45" rows="5" placeholder="Your comments goes here." class="form-field" form="commentform"></textarea>';
+        html +=         '</div></div>';
+        html +=         '<p class="form-submit"><input name="submit" type="submit" class="submit" value="Send Comment" form="commentform"></p>';
+        html +=       '</form>';
+        html +=     '</div>';
+        html +=   '</div>';
+        html += '</div>';
+
         document.getElementById('blog-post-content').innerHTML = html;
 
-        // Update page metadata with post-specific info
+        // ---- Update page metadata dynamically ----
         document.title = title + ' | Ivaylo Djounov Photography Blog';
-        var canonicalMeta = document.querySelector("link[rel='canonical']");
+
+        var canonicalMeta  = document.querySelector("link[rel='canonical']");
         if (canonicalMeta) canonicalMeta.href = 'https://ivaylodj.com/blog_post.html?post=' + postFile;
-        
-        var descMeta = document.querySelector('meta[name="description"]');
-        if (descMeta) descMeta.content = post.excerpt || '';
-        
-        var ogTitleMeta = document.querySelector('meta[property="og:title"]');
-        if (ogTitleMeta) ogTitleMeta.content = title;
-        var ogDescMeta = document.querySelector('meta[property="og:description"]');
-        if (ogDescMeta) ogDescMeta.content = post.excerpt || '';
-        
-        // Update URL without reload
+
+        var descMeta       = document.querySelector('meta[name="description"]');
+        if (descMeta)      descMeta.content = post.excerpt || '';
+
+        var ogTitleMeta    = document.querySelector('meta[property="og:title"]');
+        if (ogTitleMeta)   ogTitleMeta.content = title;
+        var ogDescMeta     = document.querySelector('meta[property="og:description"]');
+        if (ogDescMeta)    ogDescMeta.content = post.excerpt || '';
+
         window.history.replaceState({}, '', 'blog_post.html?post=' + postFile);
 
-        // Update sidebar categories
-        var catList = document.getElementById('post-category-list');
-        if (catList && post.categories) {
+        // Sidebar: populate category list
+        var catListEl = document.getElementById('post-category-list');
+        if (catListEl && post.categories) {
           for (var ci = 0; ci < post.categories.length; ci++) {
             var li = document.createElement('li');
             li.innerHTML = '<a href="javascript:void(0)" data-cat="' + post.categories[ci] + '">' + post.categories[ci] + '</a>';
-            catList.appendChild(li);
+            catListEl.appendChild(li);
           }
         }
       };
