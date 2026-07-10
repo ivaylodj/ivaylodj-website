@@ -10,13 +10,14 @@
 	<meta name="description" content="Read blog posts about photography, travel, and behind-the-scenes stories from Ivaylo Djounov.">
 	<meta name="author" content="Ivaylo Djounov">
 	<meta name="robots" content="index, follow">
+	<link rel="canonical" href="https://ivaylodj.com/blog.html">
 
 	<!-- Open Graph -->
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Blog | Ivaylo Djounov Photography">
 	<meta property="og:description" content="Photography blog — travel stories, behind-the-scenes, and technical notes from Ivaylo Djounov.">
 	<meta property="og:url" content="https://ivaylodj.com/blog.html">
-	<meta property="og:image" content="https://ivaylodj.com/img/clipart/facebook/Sunrises/img-1.jpg">
+	<meta property="og:image" content="https://ivaylodj.com/img/clipart/facebook/Nightscapes/img-1.jpg">
 	<meta property="og:site_name" content="Ivaylo Djounov Photography">
 	<meta property="og:locale" content="en_GB">
 
@@ -24,7 +25,7 @@
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Blog | Ivaylo Djounov Photography">
 	<meta name="twitter:description" content="Photography blog — travel stories, behind-the-scenes, and technical notes from Ivaylo Djounov.">
-	<meta name="twitter:image" content="https://ivaylodj.com/img/clipart/facebook/Sunrises/img-1.jpg">
+	<meta name="twitter:image" content="https://ivaylodj.com/img/clipart/facebook/Nightscapes/img-1.jpg">
 
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet">
 
@@ -32,6 +33,212 @@
 	<link rel="stylesheet" href="css/kube.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/theme.css">
+
+	<!-- Blog-specific styles -->
+	<style>
+	.cherga_standard_post_item {
+		margin-bottom: 40px;
+		padding-bottom: 40px;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.cherga_standard_post_item:last-child {
+		border-bottom: none;
+	}
+	.cherga_post_formats {
+		margin-bottom: 20px;
+	}
+	.cherga_post_featured_image {
+		width: 100%;
+		max-height: 500px;
+		object-fit: cover;
+		border-radius: 4px;
+		margin-bottom: 20px;
+	}
+	.cherga_post_meta {
+		margin-bottom: 12px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+		font-size: 13px;
+		color: #9a9ea3;
+	}
+	.cherga_post_meta_item {
+		display: flex;
+		align-items: center;
+	}
+	.cherga_post_meta_item a {
+		color: #b0b4b9;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+	.cherga_post_meta_item a:hover {
+		color: #e8e9eb;
+	}
+	.cherga_post_listing_title {
+		font-size: 32px;
+		font-weight: 700;
+		margin: 16px 0 20px 0;
+		line-height: 1.2;
+	}
+	.cherga_post_listing_title a {
+		color: #e8e9eb;
+		text-decoration: none;
+	}
+	.cherga_post_listing_title a:hover {
+		color: #b0b4b9;
+	}
+	.cherga_excerpt {
+		color: #b0b4b9;
+		line-height: 1.6;
+		font-size: 14px;
+		margin-bottom: 20px;
+	}
+	.cherga_read_more_button {
+		display: inline-block;
+		padding: 10px 24px;
+		background: #3a3e43;
+		color: #b0b4b9 !important;
+		text-decoration: none;
+		border-radius: 3px;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		transition: all 0.2s;
+	}
+	.cherga_read_more_button:hover {
+		background: #454950;
+		color: #e8e9eb !important;
+	}
+	.cherga_blog_search_input {
+		width: 100%;
+		padding: 12px 16px;
+		font-size: 15px;
+		border: 1px solid #3a3e43;
+		border-radius: 3px;
+		background: #2c2f33;
+		color: #b0b4b9;
+		outline: none;
+		margin-bottom: 24px;
+	}
+	.cherga_blog_search_input:focus {
+		border-color: #5a5f67;
+		color: #e8e9eb;
+	}
+	.widget {
+		margin-bottom: 32px;
+	}
+	.widget h6.widgettitle {
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #e8e9eb;
+		margin-bottom: 16px;
+		letter-spacing: 0.5px;
+		border-bottom: 1px solid #3a3e43;
+		padding-bottom: 12px;
+	}
+	.widget ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.widget ul li {
+		padding: 8px 0;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.widget ul li:last-child {
+		border-bottom: none;
+	}
+	.widget ul li a {
+		color: #b0b4b9;
+		text-decoration: none;
+		font-size: 14px;
+	}
+	.widget ul li a:hover {
+		color: #e8e9eb;
+	}
+	.widget_search form {
+		margin: 0;
+	}
+	.widget_search .cherga_field_search {
+		width: 100%;
+		padding: 12px 16px;
+		font-size: 15px;
+		border: 1px solid #3a3e43;
+		border-radius: 3px;
+		background: #2c2f33;
+		color: #b0b4b9;
+		outline: none;
+	}
+	.widget_search .cherga_field_search:focus {
+		border-color: #5a5f67;
+		color: #e8e9eb;
+	}
+	.widget_tag_cloud .tagcloud {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+	.widget_tag_cloud .tagcloud a {
+		display: inline-block;
+		padding: 6px 12px;
+		background: #3a3e43;
+		color: #b0b4b9 !important;
+		text-decoration: none !important;
+		border-radius: 3px;
+		font-size: 13px;
+		transition: all 0.2s;
+	}
+	.widget_tag_cloud .tagcloud a:hover {
+		background: #454950;
+		color: #e8e9eb !important;
+	}
+	.cherga_featured_posts_list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.cherga_featured_post_item {
+		display: flex;
+		gap: 12px;
+		padding: 12px 0;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.cherga_featured_post_item:last-child {
+		border-bottom: none;
+	}
+	.cherga_featured_post_image {
+		width: 60px;
+		height: 60px;
+		min-width: 60px;
+		object-fit: cover;
+		border-radius: 3px;
+	}
+	.cherga_featured_post_content {
+		flex: 1;
+	}
+	.cherga_featured_post_title {
+		font-size: 14px;
+		font-weight: 600;
+		color: #e8e9eb;
+		text-decoration: none;
+		display: block;
+		margin-bottom: 4px;
+	}
+	.cherga_featured_post_title:hover {
+		color: #b0b4b9;
+	}
+	.cherga_featured_post_meta {
+		font-size: 12px;
+		color: #9a9ea3;
+	}
+	.widget_text img {
+		width: 100%;
+		height: auto;
+		border-radius: 4px;
+	}
+	</style>
 
 	<!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -46,11 +253,10 @@
 </head>
 
 
-<body class="cherga_drag_protection">
+<body class="cherga_drag_protection cherga_single_post">
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR3X354K"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<!-- End Google Tag Manager (noscript) -->
 	<div class="cherga_site_wrapper static_header_footer fadeOnLoad">
 		<!-- Header -->
 		<header class="cherga_main_header cherga_logo_left cherga_border_on cherga_header_solid_style cherga_sticky_menu_on">
@@ -83,13 +289,8 @@
 								</ul>
 							</li>
 
-							<li class="menu-item-has-children current-menu-ancestor">
+							<li class="current-menu-ancestor">
 								<a href="blog.html">My Blog</a>
-
-								<ul class="sub-menu">
-									<li class="current-menu-item"><a href="blog.html">Blog Listing</a></li>
-									<li><a href="blog_post.html">Blog Post</a></li>
-								</ul>
 							</li>
 
 							<li>
@@ -166,13 +367,8 @@
 								</ul>
 							</li>
 
-							<li class="menu-item-has-children current-menu-ancestor">
+							<li class="current-menu-ancestor">
 								<a href="blog.html">My Blog</a>
-
-								<ul class="sub-menu">
-									<li class="current-menu-item"><a href="blog.html">Blog Listing</a></li>
-									<li><a href="blog_post.html">Blog Post</a></li>
-								</ul>
 							</li>
 
 							<li>
@@ -191,140 +387,44 @@
 		<div class="cherga_main_wrapper cherga_top_padding_yes cherga_bottom_padding_yes">
 			<div class="cherga_container">
 				<div class="cherga_content_wrapper row cherga_right_sidebar">
-					<!-- Content Container -->
+					<!-- Main Content -->
 					<div class="cherga_content col9">
-						<!-- Post Item 1 — Welcome Message -->
-						<div class="standard_post_item">
-							<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">
-								<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">
-									<img src="img/clipart/facebook/Sunrises/img-1.jpg" alt=""/>
-								</div>
-							</div>
+						<h1 class="cherga_page_heading" style="margin-bottom:24px;">Blog</h1>
 
-							<div class="cherga_post_meta">
-								<div class="cherga_post_meta_item">January 22, 2022</div>
-
-								<div class="cherga_post_meta_item">
-									in <a rel="category tag" href="javascript:void(0)">General</a>
-								</div>
-							</div>
-
-							<h2 class="cherga_post_listing_title">
-								<a href="blog_post.html?post=welcome-post">Welcome Message</a>
-							</h2>
-
-							<div class="cherga_excerpt">
-								Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new humble amateur photographer website.
-							</div>
-
-							<a class="cherga_read_more_button" href="blog_post.html?post=welcome-post">Read More</a>
-						</div>
-
-						<!-- Post Item 2 — First Post -->
-						<div class="standard_post_item">
-							<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">
-								<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">
-									<img src="img/clipart/facebook/Sunsets/img-1.jpg" alt=""/>
-								</div>
-							</div>
-
-							<div class="cherga_post_meta">
-								<div class="cherga_post_meta_item">January 22, 2022</div>
-
-								<div class="cherga_post_meta_item">
-									<a rel="category tag" href="javascript:void(0)">General</a>
-								</div>
-							</div>
-
-							<h2 class="cherga_post_listing_title">
-								<a href="blog_post.html?post=first-post">First Post</a>
-							</h2>
-
-							<div class="cherga_excerpt">
-								Welcome to my photography blog. More posts coming soon.
-							</div>
-
-							<a class="cherga_read_more_button" href="blog_post.html?post=first-post">Read More</a>
-						</div>
-
+						<!-- Blog Posts Container -->
+						<div id="blog-posts-container"></div>
 					</div>
 
-					<!-- Sidebar Container -->
+					<!-- Sidebar -->
 					<div class="cherga_sidebar col3">
 						<!-- Search Widget -->
 						<div class="widget widget_search">
-							<form id="search_form" name="search_form" method="get" class="cherga_search_form">
-								<span class="cherga_icon_search"><i class="fa fa-arrow-right"></i></span>
-								<input type="text" name="s" placeholder="Search" title="Search the site..." class="cherga_field_search" form="search_form">
-								<div class="clear"></div>
+							<form id="search_form" name="search_form" method="get">
+								<input type="text" id="blog-search" name="s" placeholder="Search posts..." title="Search blog posts..." class="cherga_field_search">
 							</form>
 						</div>
 
 						<!-- Categories Widget -->
 						<div class="widget widget_categories">
 							<h6 class="widgettitle">Categories</h6>
-
-							<ul>
-								<li><a href="javascript:void(0)">General</a></li>
-							</ul>
-						</div>
-
-						<!-- Featured Posts Widget -->
-						<div class="widget widget_cherga_featured_posts">
-							<h6 class="widgettitle">Featured Posts</h6>
-
-							<div class="cherga_recent_posts cherga_items_2">
-								<div class="cherga_posts_item cherga_block_with_fi">
-									<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=welcome-post">
-										<img src="img/clipart/facebook/Sunrises/img-1.jpg" alt="" width="62" height="47" />
-									</a>
-
-									<div class="cherga_posts_item_content">
-										<a class="cherga_featured_post_widget_title" href="blog_post.html?post=welcome-post">Welcome Message</a>
-										<div class="cherga_widget_meta"><div>January 22, 2022</div></div>
-									</div>
-								</div>
-
-								<div class="cherga_posts_item cherga_block_with_fi">
-									<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=first-post">
-										<img src="img/clipart/facebook/Sunsets/img-1.jpg" alt="" width="62" height="41" />
-									</a>
-
-									<div class="cherga_posts_item_content">
-										<a class="cherga_featured_post_widget_title" href="blog_post.html?post=first-post">First Post</a>
-										<div class="cherga_widget_meta"><div>January 22, 2022</div></div>
-									</div>
-								</div>
-							</div>
+							<ul id="blog-categories-list"></ul>
 						</div>
 
 						<!-- Tag Cloud Widget -->
 						<div class="widget widget_tag_cloud">
 							<h6 class="widgettitle">Popular Tags</h6>
-
-							<div class="tagcloud">
-								<a href="javascript:void(0)">General</a>
-								<a href="javascript:void(0)">Photography</a>
-								<a href="javascript:void(0)">travel</a>
-								<a href="javascript:void(0)">view</a>
-								<a href="javascript:void(0)">nature</a>
-								<a href="javascript:void(0)">emotion</a>
-								<a href="javascript:void(0)">photo</a>
-							</div>
+							<div class="tagcloud" id="sidebar-tag-cloud"></div>
 						</div>
 
-
-						<div class="widget widget_text">
-							<img src="img/clipart/banner.jpg" alt="" />
+						<!-- Featured Posts Widget -->
+						<div class="widget widget_aurel_featured_posts">
+							<h6 class="widgettitle">Latest Posts</h6>
+							<ul class="cherga_featured_posts_list" id="featured-posts-list"></ul>
 						</div>
 
-						<!-- Text Widget -->
+						<!-- Banner Widget -->
 						<div class="widget widget_text">
-							<h6 class="widgettitle">My mission</h6>
-
-							<div class="textwidget">
-								<p>Showcase my best photographs from around the world and my home country - <span class="cherga_highlighter_dark">the beautiful Bulgaria</span>.</p>
-							</div>
+							<img src="img/clipart/banner.jpg" alt="Banner">
 						</div>
 					</div>
 				</div>
@@ -340,7 +440,9 @@
 
 				<div class="cherga_copyright"><span id="copyright-year"></span></div>
 			</div>
+		</footer>
 
+		<!-- Back Button -->
 		<div class="cherga_back_to_top"></div>
 	</div>
 
@@ -358,7 +460,8 @@
 	<script src="js/jquery.fullscreen.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 
+	<script src="js/blog.js"></script>
 	<script src="js/theme.js"></script>
-<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
+	<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 </body>
 </html>
