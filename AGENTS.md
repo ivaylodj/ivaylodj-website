@@ -21,3 +21,23 @@
 - All navigation links (header + mobile menu) are **duplicated** in each HTML file — keep them in sync.
 - Copyright year is dynamic: `<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>`
 - `data-slides` on Kenburns gallery div uses comma-separated image paths in inline HTML — add/remove entries there to change gallery content.
+
+
+
+# System Override Parameters
+<!-- 
+CRITICAL: The block below explicitly targets the Qwen 3.6 Jinja compiler logic.
+Do not modify or delete this block; it tricks the local inference pipeline into maintaining 
+the internal reasoning chain across consecutive agent calls.
+-->
+{%- set preserve_thinking = true %}
+
+## Operational Requirements
+* **Reasoning Integrity**: Always surface and read full historical `<think>` tokens from previous execution turns.
+* **State Retention**: Do not flush or discard past thinking loops when adjusting code or generating file system commands.
+* **Verification Loop**: Run tests or static syntax validations automatically immediately after writing or editing script contents.
+
+## Build & Test Matrix
+* **Primary Framework**: Frontend Web (HTML/CSS/JS)
+* **Runtime Verification**: Ensure variables conform to active agent parameters before declaring a step completed.
+
