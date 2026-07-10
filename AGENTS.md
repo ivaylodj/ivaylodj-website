@@ -2,7 +2,7 @@
 
 ## Structure
 - **Pure static HTML/CSS/JS.** No build tool, no package.json, no framework.
-- Root pages: `index.html`, `about.html`, `contacts.html`, `blog_standard.html`
+- Root pages: `index.html`, `about.html`, `contacts.html`, `blog.html` (listing), `blog_post.html` (single post)
 - Galleries live in `galleries/` with nested subfolders (`world-travels/`, `europe-travel/`, `seasons/`, `varna/`)
 - Assets: `css/` (Kube framework + `theme.css`), `js/` (jQuery plugins), `img/clipart/`, `fonts/`
 
