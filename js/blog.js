@@ -16,28 +16,7 @@
     return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   }
 
-  // Load posts from index.json and render
-  function loadPosts() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'blog_post_template.html', true);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        window.blogPostTemplate = xhr.responseText;
-      }
-    };
-    xhr.send();
 
-    var postIdx = new XMLHttpRequest();
-    postIdx.open('GET', '_posts/index.json', true);
-    postIdx.onload = function() {
-      if (postIdx.status === 200) {
-        posts = JSON.parse(postIdx.responseText);
-        buildTagCloud();
-        renderPosts(posts);
-      }
-    };
-    postIdx.send();
-  }
 
   // Build tag cloud from all posts
   function buildTagCloud() {
@@ -70,6 +49,7 @@
 
     // All tags link
     var allLink = document.createElement('a');
+    allLink.className = 'cherga_blog_tag_filter';
     allLink.setAttribute('href', 'javascript:void(0)');
     allLink.setAttribute('data-tag', '');
     allLink.textContent = 'All (' + posts.length + ')';
@@ -79,6 +59,7 @@
     var sortedTags = Object.keys(tagCounts).sort(function(a, b) { return tagCounts[b] - tagCounts[a]; });
     for (var t = 0; t < sortedTags.length; t++) {
       var link = document.createElement('a');
+      link.className = 'cherga_blog_tag_filter';
       link.setAttribute('href', 'javascript:void(0)');
       link.setAttribute('data-tag', sortedTags[t]);
       link.textContent = sortedTags[t] + ' (' + tagCounts[sortedTags[t]] + ')';
@@ -226,6 +207,17 @@
     });
 
     renderPosts(filtered);
+  }
+
+  // Fetch and load posts from JSON index
+  function loadPosts() {
+    fetch('_posts/index.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        posts = data;
+        buildTagCloud();
+        filterPosts();
+      });
   }
 
   // Initialize
