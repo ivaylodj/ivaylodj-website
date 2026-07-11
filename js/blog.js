@@ -169,13 +169,27 @@
       var dateStr = formatDate(post.date);
 
       var item = document.createElement('div');
-      item.className = 'cherga_standard_post_item';
+      item.className = 'standard_post_item';
 
       var postImg = '';
-      if (post.cover_image) {
-        postImg = '<div class="cherga_post_formats">' +
-          '<img class="cherga_post_featured_image" src="' + post.cover_image + '" alt="">' +
-          '</div>';
+      var postHtml = '';
+
+      if (post.template === 'blog_image') {
+        // Carousel layout with Owl Carousel
+        postImg = '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">' +
+          '<div class="cherga_owlCarousel owl-carousel owl-theme owl-loaded owl-drag">' +
+            '<div class="item">' +
+              '<img src="' + (post.cover_image || 'img/clipart/banner.jpg') + '" alt="">' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      } else {
+        // Standard layout with single image
+        postImg = '<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">' +
+          '<div class="cherga_pf_standard_cont">' +
+            '<img src="' + (post.cover_image || 'img/clipart/banner.jpg') + '" alt="">' +
+          '</div>' +
+        '</div>';
       }
 
       var metaHtml = '<div class="cherga_post_meta">' +
