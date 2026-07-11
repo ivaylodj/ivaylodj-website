@@ -191,20 +191,33 @@
         var fmMatch = mdContent.match(fmRegex);
 
         var title   = post.title || '';
+        var template = post.template || 'blog_standard';
         var dateStr = new Date(post.date).toLocaleDateString('en-GB', {
           year: 'numeric', month: 'long', day: 'numeric'
         });
 
-        // ---- Build the full HTML output (matching old blog_standard.html) ----
+        // ---- Build the full HTML output (template-aware) ----
         var html = '';
 
-        // Cover image (post-format block with .cherga_pf_boxed)
+        // Cover image (post-format block - varies by template)
         if (post.cover_image) {
-          html += '<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">';
-          html +=   '<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">';
-          html +=     '<img src="' + post.cover_image + '" alt="" />';
-          html +=   '</div>';
-          html += '</div>';
+          if (template === 'blog_image') {
+            // blog_image template: owl carousel
+            html += '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">';
+            html +=   '<div class="cherga_owlCarousel owl-carousel owl-theme">';
+            html +=     '<div class="item">';
+            html +=       '<img src="' + post.cover_image + '" alt="" />';
+            html +=     '</div>';
+            html +=   '</div>';
+            html += '</div>';
+          } else {
+            // blog_standard template: simple boxed image (default)
+            html += '<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">';
+            html +=   '<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">';
+            html +=     '<img src="' + post.cover_image + '" alt="" />';
+            html +=   '</div>';
+            html += '</div>';
+          }
         }
 
         // Post meta (date + categories)

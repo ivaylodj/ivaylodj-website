@@ -1,6 +1,7 @@
 ---
 title: "Welcome Message"
 date: 2022-01-22
+template: "blog_standard"
 cover_image: "img/clipart/facebook/Sunrises/img-1.jpg"
 categories:
   - General
