@@ -793,8 +793,17 @@ input[type="submit"] {
 /* ---------- OWL Carousel ---------- */
 /* ---------------------------------- */
 .cherga_owlCarousel {
-	opacity: 0;
+	opacity: 1;
 	position: relative;
+}
+.cherga_owlCarousel .item {
+	display: block;
+	width: 100%;
+}
+.cherga_owlCarousel .item img {
+	display: block;
+	width: 100%;
+	height: auto;
 }
 
 .cherga_ribbon_slider_wrapper.owl-theme .owl-nav,
