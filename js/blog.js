@@ -206,7 +206,7 @@
         metaHtml += '<div class="cherga_post_meta_item">';
         for (var j = 0; j < post.categories.length; j++) {
           if (j > 0) metaHtml += ', ';
-          metaHtml += '<a href="javascript:void(0)" rel="category tag" onclick="filterByCategory(\'' + post.categories[j] + '\');">' + post.categories[j] + '</a>';
+          metaHtml += '<a href="javascript:void(0)" rel="category tag" onclick="filterByCategory(\'' + post.categories[j] + '\');">' + post.categories[j].toUpperCase() + '</a>';
         }
         metaHtml += '</div>';
       }
