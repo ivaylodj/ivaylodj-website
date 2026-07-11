@@ -355,5 +355,50 @@
     postIdx.send();
   }
 
-  document.addEventListener('DOMContentLoaded', loadPost);
+  document.addEventListener('DOMContentLoaded', function() {
+    loadPost();
+
+    // After post loads, adjust layout based on template
+    setTimeout(function() {
+      var params = new URLSearchParams(window.location.search);
+      var postFile = params.get('post');
+
+      if (postFile) {
+        var postIdx = new XMLHttpRequest();
+        postIdx.open('GET', '_posts/index.json', true);
+        postIdx.onload = function() {
+          if (postIdx.status !== 200) return;
+
+          var allPosts = JSON.parse(postIdx.responseText);
+          var postFilename = postFile.match(/\.md$/) ? postFile : postFile + '.md';
+          var post = null;
+
+          for (var i = 0; i < allPosts.length; i++) {
+            if (allPosts[i].filename === postFilename) { post = allPosts[i]; break; }
+          }
+
+          if (post && post.template === 'blog_image') {
+            // blog_image template: full-width, no sidebar
+            var wrapper = document.querySelector('.cherga_content_wrapper');
+            if (wrapper) {
+              wrapper.classList.remove('cherga_right_sidebar');
+              wrapper.classList.add('cherga_no_sidebar');
+            }
+
+            var content = document.querySelector('.cherga_content_wrapper .cherga_content');
+            if (content) {
+              content.classList.remove('col9');
+              content.classList.add('col', 'col-12');
+            }
+
+            var sidebar = document.querySelector('.cherga_content_wrapper .cherga_sidebar');
+            if (sidebar) {
+              sidebar.style.display = 'none';
+            }
+          }
+        };
+        postIdx.send();
+      }
+    }, 100);
+  });
 })();
