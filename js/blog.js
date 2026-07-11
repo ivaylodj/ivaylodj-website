@@ -59,7 +59,7 @@
       var li = document.createElement('li');
       var a = document.createElement('a');
       a.href = 'javascript:void(0)';
-      a.textContent = c + ' (' + catMap[c] + ')';
+      a.textContent = c;
       a.onclick = (function(cat) {
         return function() { filterByCategory(cat); };
       })(c);

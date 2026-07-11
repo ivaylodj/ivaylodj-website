@@ -449,7 +449,7 @@
         var li = document.createElement('li');
         var a = document.createElement('a');
         a.href = 'javascript:void(0)';
-        a.textContent = c + ' (' + catMap[c] + ')';
+        a.textContent = c;
         li.appendChild(a);
         catList.appendChild(li);
       }
