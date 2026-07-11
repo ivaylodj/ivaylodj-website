@@ -2559,6 +2559,10 @@ body .standard_post_item .cherga_post_formats {
 	letter-spacing: 1px;
 	font-weight: 400;
 	color: #ffffff;
+	max-width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .cherga_post_meta .cherga_post_meta_item {
 	margin-left: 15px;
