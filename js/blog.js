@@ -182,11 +182,12 @@
       var postImg = '';
 
       if (post.template === 'blog_image') {
-        // Carousel layout with Owl Carousel - TEST with hardcoded image
+        // Carousel layout with Owl Carousel
+        var imgSrc = '/' + post.cover_image;
         postImg = '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">' +
           '<div class="cherga_owlCarousel owl-carousel owl-theme">' +
             '<div class="item">' +
-              '<img src="/img/clipart/banner.jpg" alt="test" style="width:100%; height:auto; display:block;">' +
+              '<img src="' + imgSrc + '" alt="" style="width:100%; height:auto; display:block;">' +
             '</div>' +
           '</div>' +
         '</div>';
