@@ -4,3 +4,16 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+
+# Node/npm
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
