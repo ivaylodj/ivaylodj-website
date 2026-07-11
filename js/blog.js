@@ -183,18 +183,21 @@
 
       if (post.template === 'blog_image') {
         // Carousel layout with Owl Carousel
+        var imgSrc = post.cover_image.startsWith('/') ? post.cover_image : '/' + post.cover_image;
         postImg = '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">' +
           '<div class="cherga_owlCarousel owl-carousel owl-theme">' +
             '<div class="item">' +
-              '<img src="' + post.cover_image + '" alt="" style="width:100%; height:auto; display:block;">' +
+              '<img src="' + imgSrc + '" alt="" style="width:100%; height:auto; display:block;">' +
             '</div>' +
           '</div>' +
         '</div>';
       } else {
         // Standard layout with single image
+        var imgSrc2 = post.cover_image || '/img/clipart/banner.jpg';
+        imgSrc2 = imgSrc2.startsWith('/') ? imgSrc2 : '/' + imgSrc2;
         postImg = '<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">' +
           '<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">' +
-            '<img src="' + (post.cover_image || 'img/clipart/banner.jpg') + '" alt="">' +
+            '<img src="' + imgSrc2 + '" alt="">' +
           '</div>' +
         '</div>';
       }
