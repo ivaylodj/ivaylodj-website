@@ -16,6 +16,10 @@
 
 ---
 
+## Important Notes
+
+**Aurel = Cherga (rebranded):** The Aurel theme used in `/Users/ivaylodj/html-themes/other themes/html/aurel/` is the same as the Cherga theme in this project—Aurel is the old name. Both use identical CSS/JS structure, just different class prefixes (aurel_ vs cherga_) in the HTML. When copying Aurel templates, they work with this project's Cherga CSS and JS files.
+
 ## Current State (as of commit 2c25b91)
 
 ### ✅ Completed
