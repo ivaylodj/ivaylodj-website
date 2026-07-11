@@ -368,25 +368,6 @@
 
         document.getElementById('blog-post-content').innerHTML = html;
 
-        // Initialize owl carousel if present (for blog_image template)
-        if (jQuery && jQuery.fn.owlCarousel && jQuery('.cherga_owlCarousel').length > 0) {
-          jQuery('.cherga_owlCarousel').each(function() {
-            jQuery(this).owlCarousel({
-              loop: true,
-              margin: 0,
-              nav: false,
-              dots: true,
-              autoplay: false,
-              autoplayTimeout: 5000,
-              responsive: {
-                0: { items: 1 },
-                768: { items: 1 },
-                1024: { items: 1 }
-              }
-            });
-          });
-        }
-
         // ---- Update page metadata dynamically ----
         document.title = title + ' | Ivaylo Djounov Photography Blog';
 
