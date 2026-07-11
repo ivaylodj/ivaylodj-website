@@ -793,7 +793,7 @@ input[type="submit"] {
 /* ---------- OWL Carousel ---------- */
 /* ---------------------------------- */
 .cherga_owlCarousel {
-	opacity: 1;
+	opacity: 0;
 	position: relative;
 }
 .cherga_owlCarousel .item {
