@@ -227,28 +227,27 @@
 
     renderPagination(postList.length);
 
-    // Reinitialize carousels for dynamically loaded posts
-    if (jQuery('.cherga_owlCarousel').length > 0) {
-      jQuery('.cherga_owlCarousel').each(function() {
-        if (!jQuery(this).hasClass('owl-loaded')) {
-          jQuery(this).on('initialized.owl.carousel', function(e) {
-            jQuery(this).css('opacity', '1');
-          });
-          jQuery(this).owlCarousel({
-            items: 1,
-            lazyLoad: true,
-            loop: true,
-            dots: false,
-            nav: true,
-            navText: ['', ''],
-            autoplay: true,
-            autoplayTimeout: 5000,
-            autoplayHoverPause: true,
-            autoHeight: true
-          });
-        }
+    // Initialize carousels for blog_image posts
+    setTimeout(function() {
+      jQuery('.cherga_owlCarousel:not(.owl-loaded)').each(function() {
+        var $carousel = jQuery(this);
+        $carousel.on('initialized.owl.carousel', function(e) {
+          $carousel.css('opacity', '1');
+        });
+        $carousel.owlCarousel({
+          items: 1,
+          lazyLoad: true,
+          loop: true,
+          dots: false,
+          nav: true,
+          navText: ['', ''],
+          autoplay: true,
+          autoplayTimeout: 5000,
+          autoplayHoverPause: true,
+          autoHeight: true
+        });
       });
-    }
+    }, 100);
   }
 
   function renderPagination(postCount) {
