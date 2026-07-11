@@ -186,7 +186,7 @@
         postImg = '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">' +
           '<div class="cherga_owlCarousel owl-carousel owl-theme">' +
             '<div class="item">' +
-              '<img src="' + (post.cover_image || 'img/clipart/banner.jpg') + '" alt="">' +
+              '<img src="' + post.cover_image + '" alt="" style="width:100%; height:auto; display:block;">' +
             '</div>' +
           '</div>' +
         '</div>';
