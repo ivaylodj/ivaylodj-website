@@ -2073,6 +2073,8 @@ blockquote div {
 .widget_search .cherga_search_form input[type="text"] {
 	margin:0;
 	padding-right:45px;
+	width: 100%;
+	box-sizing: border-box;
 	font-size: 14px;
 	font-weight: 400;
 	color: #a0a7ae;
