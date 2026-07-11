@@ -34,9 +34,8 @@
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/theme.css">
 
-	<!-- Blog-specific styles - MINIMAL, theme.css handles most -->
+	<!-- Blog-specific styles - MINIMAL -->
 	<style>
-	/* Blog post listing items */
 	.cherga_standard_post_item { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #3a3e43; }
 	.cherga_standard_post_item:last-child { border-bottom: none; }
 	.cherga_post_featured_image { width: 100%; max-height: 500px; object-fit: cover; border-radius: 4px; margin-bottom: 20px; }
@@ -44,8 +43,42 @@
 	.cherga_post_listing_title a { color: #e8e9eb; text-decoration: none; }
 	.cherga_post_listing_title a:hover { color: #b0b4b9; }
 	.cherga_excerpt { color: #b0b4b9; line-height: 1.6; margin-bottom: 15px; }
-	.cherga_read_more_button { display: inline-block; padding: 10px 20px; background: #3a3e43; color: #b0b4b9 !important; text-decoration: none; border-radius: 3px; font-size: 12px; text-transform: uppercase; }
+	.cherga_read_more_button { display: inline-block; padding: 10px 20px; background: #3a3e43; color: #b0b4b9 !important; text-decoration: none; border-radius: 3px; font-size: 12px; }
 	.cherga_read_more_button:hover { background: #454950; color: #e8e9eb !important; }
+
+	/* Widget styles - MINIMAL */
+	.widget { margin-bottom: 30px; }
+	.widget h6.widgettitle { font-size: 13px; font-weight: 700; text-transform: uppercase; color: #e8e9eb; margin-bottom: 15px; border-bottom: 1px solid #3a3e43; padding-bottom: 10px; }
+	.widget ul { list-style: none; margin: 0; padding: 0; }
+	.widget ul li { padding: 8px 0; border-bottom: 1px solid #3a3e43; }
+	.widget ul li:last-child { border-bottom: none; }
+	.widget ul li a { color: #b0b4b9; text-decoration: none; font-size: 13px; }
+	.widget ul li a:hover { color: #e8e9eb; }
+
+	/* Categories */
+	#blog-categories-list { }
+
+	/* Featured Posts */
+	.cherga_featured_posts_list { margin: 0; padding: 0; list-style: none; }
+	.cherga_featured_post_item { display: flex; gap: 12px; padding: 10px 0; margin-bottom: 12px; border-bottom: 1px solid #3a3e43; }
+	.cherga_featured_post_item:last-child { border-bottom: none; }
+	.cherga_featured_post_image { width: 50px; height: 50px; min-width: 50px; object-fit: cover; border-radius: 2px; }
+	.cherga_featured_post_content { flex: 1; }
+	.cherga_featured_post_title { font-size: 12px; font-weight: 600; color: #e8e9eb; text-decoration: none; display: block; margin: 0 0 3px 0; }
+	.cherga_featured_post_title:hover { color: #b0b4b9; }
+	.cherga_featured_post_meta { font-size: 11px; color: #9a9ea3; margin: 0; }
+
+	/* Tags */
+	.tagcloud { display: flex; flex-wrap: wrap; gap: 6px; }
+	.tagcloud a { display: inline-block; padding: 5px 10px; background: #3a3e43; color: #b0b4b9 !important; text-decoration: none !important; border-radius: 3px; font-size: 12px; }
+	.tagcloud a:hover { background: #454950; color: #e8e9eb !important; }
+
+	/* Search */
+	.cherga_field_search { width: 100%; padding: 10px 12px; border: 1px solid #3a3e43; border-radius: 3px; background: #2c2f33; color: #b0b4b9; font-size: 13px; margin-bottom: 20px; }
+	.cherga_field_search:focus { border-color: #5a5f67; outline: none; }
+
+	/* Banner */
+	.widget img { width: 100%; height: auto; border-radius: 3px; }
 	</style>
 
 	<!-- Google Tag Manager -->
