@@ -182,13 +182,11 @@
       var postImg = '';
 
       if (post.template === 'blog_image') {
-        // Carousel layout with Owl Carousel
+        // Image layout - same as standard for now
         var imgSrc = '/' + post.cover_image;
         postImg = '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">' +
-          '<div class="cherga_owlCarousel owl-carousel owl-theme">' +
-            '<div class="item">' +
-              '<img src="' + imgSrc + '" alt="" style="width:100%; height:auto; display:block;">' +
-            '</div>' +
+          '<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">' +
+            '<img src="' + imgSrc + '" alt="" style="width:100%; height:auto; display:block;">' +
           '</div>' +
         '</div>';
       } else {
