@@ -137,6 +137,19 @@
 		letter-spacing: 0.5px;
 		border-bottom: 1px solid #3a3e43;
 		padding-bottom: 12px;
+		position: relative;
+		padding-left: 16px;
+	}
+	.widget h6.widgettitle:before {
+		content: '';
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		background: #f5a623;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 	.widget ul {
 		list-style: none;
@@ -144,24 +157,11 @@
 		padding: 0;
 	}
 	.widget ul li {
-		padding: 8px 0 8px 16px;
+		padding: 8px 0;
 		border-bottom: 1px solid #3a3e43;
-		position: relative;
 		display: flex;
 		align-items: center;
 		min-height: 20px;
-	}
-	.widget ul li:before {
-		content: '';
-		display: inline-block;
-		width: 8px;
-		height: 8px;
-		background: #f5a623;
-		margin-right: 10px;
-		position: absolute;
-		left: 0;
-		top: 50%;
-		transform: translateY(-50%);
 	}
 	.widget ul li:last-child {
 		border-bottom: none;
@@ -632,16 +632,16 @@
 							<ul id="blog-categories-list"></ul>
 						</div>
 
+						<!-- Featured Posts Widget -->
+						<div class="widget widget_aurel_featured_posts">
+							<h6 class="widgettitle">Featured Posts</h6>
+							<ul class="cherga_featured_posts_list" id="featured-posts-list"></ul>
+						</div>
+
 						<!-- Tag Cloud Widget -->
 						<div class="widget widget_tag_cloud">
 							<h6 class="widgettitle">Popular Tags</h6>
 							<div class="tagcloud" id="sidebar-tag-cloud"></div>
-						</div>
-
-						<!-- Featured Posts Widget -->
-						<div class="widget widget_aurel_featured_posts">
-							<h6 class="widgettitle">Latest Posts</h6>
-							<ul class="cherga_featured_posts_list" id="featured-posts-list"></ul>
 						</div>
 
 						<!-- Banner Widget -->
@@ -651,8 +651,8 @@
 
 						<!-- Text Widget -->
 						<div class="widget widget_text">
-							<h6 class="widgettitle">Did you like my blog?</h6>
-							<p>Leave a comment below or drop me a line. I'd love to hear your thoughts and feedback on my photography journey.</p>
+							<h6 class="widgettitle">Did you liked my blog?</h6>
+							<p>Leave a comment below or drop me a line.</p>
 						</div>
 
 						<!-- Flickr Follow Widget -->
