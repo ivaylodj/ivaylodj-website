@@ -251,17 +251,35 @@
         // Single divider (matches old template)
         html += '<div class="cherga_single_divider"></div>';
 
-        // Post tags + sharing rendered again in comments container area
-        // Posts navigation
+        // Post navigation - find current post index and build next/prev links
+        var currentPostIndex = -1;
+        for (var pi = 0; pi < allPosts.length; pi++) {
+          if (allPosts[pi].filename === postFilename) { currentPostIndex = pi; break; }
+        }
+
+        var prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
+        var nextPost = currentPostIndex < allPosts.length - 1 ? allPosts[currentPostIndex + 1] : null;
+
         html += '<div class="cherga_posts_navigation row">';
-        html +=   '<div class="cherga_next_post_wrapper col push-right">';
-        html +=     '<span class="cherga_next_post_button cherga_post_nav_button">Next Post</span>';
-        html +=     '<a class="cherga_next_post_title" href="javascript:void(0)">' + title + '</a>';
-        html +=   '</div>';
-        html +=   '<div class="cherga_prev_post_wrapper col pull-left">';
-        html +=     '<span class="cherga_prev_post_button cherga_post_nav_button"><i class="fa fa-arrow-left"></i> Previous Post</span>';
-        html +=     '<a class="cherga_prev_post_title" href="javascript:void(0)">' + title + '</a>';
-        html +=   '</div>';
+
+        // Next post (right side)
+        if (nextPost) {
+          var nextFilename = nextPost.filename.replace(/\.md$/, '');
+          html +=   '<div class="cherga_next_post_wrapper col push-right">';
+          html +=     '<span class="cherga_next_post_button cherga_post_nav_button">Next Post</span>';
+          html +=     '<a class="cherga_next_post_title" href="blog_post.html?post=' + nextFilename + '">' + nextPost.title + '</a>';
+          html +=   '</div>';
+        }
+
+        // Previous post (left side)
+        if (prevPost) {
+          var prevFilename = prevPost.filename.replace(/\.md$/, '');
+          html +=   '<div class="cherga_prev_post_wrapper col pull-left">';
+          html +=     '<span class="cherga_prev_post_button cherga_post_nav_button"><i class="fa fa-arrow-left"></i> Previous Post</span>';
+          html +=     '<a class="cherga_prev_post_title" href="blog_post.html?post=' + prevFilename + '">' + prevPost.title + '</a>';
+          html +=   '</div>';
+        }
+
         html += '</div>';
 
         // Comments section (matches old template exactly)
