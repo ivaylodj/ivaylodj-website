@@ -34,387 +34,6 @@
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/theme.css">
 
-	<!-- Blog-specific styles - Exact Aurel CSS -->
-	<style>
-	/* Blog Post Items */
-	.standard_post_item {
-		margin-bottom: 60px;
-		padding-bottom: 0;
-		border-bottom: none;
-	}
-	.standard_post_item:last-child {
-		border-bottom: none;
-	}
-	.cherga_post_formats {
-		margin-bottom: 24px;
-		text-align: center;
-	}
-	.cherga_post_featured_image {
-		width: 100%;
-		height: auto;
-		object-fit: cover;
-		border-radius: 0;
-		margin-bottom: 0;
-	}
-	.cherga_pf_standard_cont img {
-		display: block;
-		max-width: 100%;
-		height: auto;
-		margin: 0 auto;
-	}
-	.cherga_pf_image .owl-stage-outer {
-		position: relative;
-	}
-	.cherga_pf_image .owl-stage-outer:after,
-	.cherga_pf_image .owl-stage-outer:before {
-		content: '';
-		width: 100px;
-		height: 100%;
-		display: block;
-		position: absolute;
-		z-index: 10;
-	}
-	.cherga_pf_image .owl-stage-outer:before {
-		left: 0;
-		top: 0;
-	}
-	.cherga_pf_image .owl-stage-outer:after {
-		right: 0;
-		top: 0;
-	}
-	.cherga_owlCarousel {
-		opacity: 0;
-		position: relative;
-	}
-	.cherga_owlCarousel.owl-theme .owl-nav {
-		width: 100%;
-		height: 19px;
-		margin-top: 0;
-		position: absolute;
-		top: 50%;
-		z-index: 45;
-		-webkit-transform: translateY(-50%);
-		transform: translateY(-50%);
-	}
-	.cherga_owlCarousel.owl-theme .owl-nav [class*="owl-"] {
-		width: 20px;
-		height: 20px;
-		margin: 0;
-		padding: 0;
-		border-radius: 0;
-		background: transparent;
-		position: absolute;
-		-webkit-transition: all .3s;
-		transition: all .3s;
-		z-index: 17;
-	}
-	.cherga_owlCarousel.owl-theme .owl-nav [class*="owl-"]:hover {
-		background: none;
-	}
-	.cherga_owlCarousel.owl-theme .owl-nav [class*="owl-"]:before,
-	.cherga_owlCarousel.owl-theme .owl-nav [class*="owl-"]:after {
-		content: '';
-		position: absolute;
-		transition: background 400ms;
-		background: #ffffff;
-		box-shadow: 0 0 5px rgba(0,0,0,0.2);
-	}
-	.cherga_owlCarousel .owl-prev {
-		background-size: 20px 20px !important;
-		left: 45px;
-		transform: rotate(45deg) scale(1);
-		transition: transform 400ms;
-	}
-	.cherga_owlCarousel .owl-prev:hover {
-		transform: rotate(45deg) scale(1.5);
-	}
-	.cherga_owlCarousel .owl-prev:before {
-		left: 0;
-		top: 0;
-		width: 2px;
-		height: 20px;
-	}
-	.cherga_owlCarousel .owl-prev:after {
-		left: 0;
-		bottom: 0;
-		width: 20px;
-		height: 2px;
-	}
-	.cherga_owlCarousel .owl-next {
-		background-size: 20px 20px !important;
-		right: 45px;
-		transform: rotate(-45deg) scale(1);
-		transition: transform 400ms;
-	}
-	.cherga_owlCarousel .owl-next:hover {
-		transform: rotate(-45deg) scale(1.5);
-	}
-	.cherga_owlCarousel .owl-next:before {
-		right: 0;
-		top: 0;
-		width: 2px;
-		height: 20px;
-	}
-	.cherga_owlCarousel .owl-next:after {
-		right: 0;
-		bottom: 0;
-		width: 20px;
-		height: 2px;
-	}
-	.cherga_post_meta {
-		margin-bottom: 16px;
-		display: block;
-		font-size: 13px;
-		color: #a0a7ae;
-	}
-	.cherga_post_meta_item {
-		display: inline;
-		margin-right: 0;
-	}
-	.cherga_post_meta_item:before {
-		content: '·';
-		margin: 0 15px;
-		font-weight: bold;
-	}
-	.cherga_post_meta_item:first-child:before {
-		display: none;
-		margin: 0;
-	}
-	.cherga_post_meta_item a {
-		color: #a0a7ae;
-		text-decoration: none;
-		text-transform: none;
-		font-weight: 400;
-	}
-	.cherga_post_meta_item a:hover {
-		color: #e8e9eb;
-	}
-	.cherga_post_listing_title {
-		font-size: 28px;
-		font-weight: 700;
-		margin: 20px 0 20px 0;
-		line-height: 1.3;
-		color: #e8e9eb;
-	}
-	.cherga_post_listing_title a {
-		color: #e8e9eb;
-		text-decoration: none;
-	}
-	.cherga_post_listing_title a:hover {
-		color: #a0a7ae;
-	}
-	.cherga_excerpt {
-		color: #a0a7ae;
-		line-height: 1.7;
-		font-size: 16px;
-		margin-bottom: 24px;
-		font-weight: 400;
-	}
-	.cherga_read_more_button {
-		display: inline-block;
-		padding: 0;
-		background: none;
-		color: #a0a7ae !important;
-		text-decoration: none;
-		border-radius: 0;
-		font-size: 13px;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		font-weight: 700;
-		transition: all 0.2s;
-	}
-	.cherga_read_more_button:hover {
-		background: none;
-		color: #e8e9eb !important;
-	}
-
-	/* Widgets */
-	.widget {
-		margin-bottom: 54px;
-	}
-	.widget:last-child {
-		margin-bottom: 0;
-	}
-	.widget h6.widgettitle {
-		position: relative;
-		padding: 0 0 0 20px;
-		margin: 0 0 24px 0;
-		font-size: 13px;
-		font-weight: 700;
-		text-transform: uppercase;
-		color: #e8e9eb;
-		letter-spacing: 0.5px;
-	}
-	.widget h6.widgettitle:before {
-		content: '';
-		width: 10px;
-		height: 11px;
-		position: absolute;
-		left: 0;
-		top: 6px;
-		background: #f9c74f;
-	}
-	.widget ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-	.widget ul li {
-		padding: 0;
-		border: none;
-	}
-
-	/* Categories */
-	#blog-categories-list {
-		padding: 0;
-		margin: -5px 0 0 0;
-	}
-	#blog-categories-list li {
-		position: relative;
-		padding: 0 0 10px 15px;
-		list-style: none;
-		display: block;
-		font-size: 16px;
-		line-height: 26px;
-		font-weight: 400;
-	}
-	#blog-categories-list li:before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 11px;
-		width: 3px;
-		height: 3px;
-		display: block;
-		background: #ffffff;
-		transition: background 300ms;
-	}
-	.widget ul li a {
-		color: #a0a7ae;
-		text-decoration: none;
-		font-size: 16px;
-		display: inline-block;
-	}
-	.widget ul li a:hover {
-		color: #e8e9eb;
-	}
-
-	/* Search Widget */
-	.widget_search form {
-		margin: 0;
-		position: relative;
-	}
-	.widget_search .cherga_field_search {
-		width: 100%;
-		padding: 20px;
-		font-size: 14px;
-		border: solid 2px #2e3032;
-		border-radius: 0;
-		background: none;
-		color: #a0a7ae;
-		outline: none;
-		font-weight: 400;
-	}
-	.widget_search .cherga_field_search:focus {
-		border-color: #3a3e43;
-		color: #e8e9eb;
-	}
-	.widget_search .cherga_icon_search {
-		display: none;
-	}
-
-	/* Tag Cloud */
-	.widget_tag_cloud .tagcloud {
-		font-size: 0;
-		line-height: 0;
-		margin: -10px 0 0 -10px;
-		padding: 0 0 6px 0;
-	}
-	.widget_tag_cloud .tagcloud a {
-		margin: 10px 0 0 10px;
-		font-size: 13px !important;
-		line-height: 21px !important;
-		padding: 5px 10px 5px 10px;
-		background: #3a3e43;
-		color: #a0a7ae !important;
-		text-decoration: none !important;
-		border-radius: 0;
-		display: inline-block;
-		font-weight: 400;
-		transition: all 0.2s;
-	}
-	.widget_tag_cloud .tagcloud a:hover {
-		background: #454950;
-		color: #e8e9eb !important;
-	}
-
-	/* Featured Posts */
-	.cherga_featured_posts_list {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.cherga_featured_posts_list img {
-		width: 62px;
-		height: 62px;
-		display: block;
-		object-fit: cover;
-	}
-	.cherga_featured_post_item {
-		font-size: 0;
-		line-height: 0;
-		margin-top: 30px;
-	}
-	.cherga_featured_post_item:first-child {
-		margin-top: 0;
-	}
-	.cherga_featured_post_image {
-		display: inline-block;
-		width: 62px;
-		vertical-align: top;
-		position: relative;
-	}
-	.cherga_featured_post_image img {
-		width: 62px;
-		height: 62px;
-		display: block;
-		object-fit: cover;
-	}
-	.cherga_featured_post_content {
-		width: calc(100% - 62px);
-		display: inline-block;
-		box-sizing: border-box;
-		vertical-align: top;
-		padding-left: 20px;
-		transform: translateY(-2px);
-		font-size: 16px;
-		line-height: 26px;
-		font-weight: 400;
-		color: #a0a7ae;
-	}
-	.cherga_featured_post_title {
-		text-decoration: none;
-		color: #a0a7ae;
-		display: inline;
-	}
-	.cherga_featured_post_title:hover {
-		color: #e8e9eb;
-	}
-	.cherga_featured_post_meta {
-		font-size: 16px;
-		line-height: 26px;
-		padding-top: 1px;
-	}
-
-	/* Banner */
-	.widget_text img {
-		width: 100%;
-		height: auto;
-		border-radius: 0;
-		display: block;
-	}
-	</style>
-
 	<!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -512,7 +131,7 @@
 			<div class="cherga_mobile_menu_wrapper">
 				<div class="cherga_header_socials">
 					<a class="cherga_footer_social_button cherga_facebook" href="https://www.facebook.com/ivaylo.djounov"><i class="fa fa-facebook"></i></a>
-					<a class="cherga_footer_social_button cherga_instagram" href="https://www.instagram.com/ivaylodj"><i class="fa fa-instagram"></i></a>	
+					<a class="cherga_footer_social_button cherga_instagram" href="https://www.instagram.com/ivaylodj"><i class="fa fa-instagram"></i></a>
 					<a class="cherga_toogle_fullview" href="javascript:void(0)">
 						<span class="cherga_fullview_block01"></span>
 						<span class="cherga_fullview_block02"></span>
@@ -564,16 +183,30 @@
 				<div class="cherga_content_wrapper row cherga_right_sidebar">
 					<!-- Main Content -->
 					<div class="cherga_content col9">
-						<!-- Blog Posts Container -->
-						<div id="blog-posts-container"></div>
+						<div class="cherga_tiny">
+							<div class="cherga_widget_pm_blog_listing">
+								<div class="cherga_widget_container">
+									<div class="cherga_front_end_display">
+										<div class="cherga_blog_wrapper cherga_element_blog blog_type_standard" id="blog-posts-container"></div>
+										<div class="cherga_blog_listing_pagination">
+											<nav class="navigation pagination" role="navigation">
+												<div class="nav-links" id="blog-pagination"></div>
+											</nav>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Sidebar -->
 					<div class="cherga_sidebar col3">
 						<!-- Search Widget -->
 						<div class="widget widget_search">
-							<form id="search_form" name="search_form" method="get">
-								<input type="text" id="blog-search" name="s" placeholder="Search posts..." title="Search blog posts..." class="cherga_field_search">
+							<form id="search_form" name="search_form" method="get" class="cherga_search_form">
+								<span class="cherga_icon_search"><i class="fa fa-arrow-right"></i></span>
+								<input type="text" id="blog-search" name="s" placeholder="Search" title="Search the site..." class="cherga_field_search" form="search_form">
+								<div class="clear"></div>
 							</form>
 						</div>
 
@@ -583,22 +216,87 @@
 							<ul id="blog-categories-list"></ul>
 						</div>
 
+						<!-- Featured Posts Widget -->
+						<div class="widget widget_cherga_featured_posts">
+							<h6 class="widgettitle">Featured Posts</h6>
+							<div class="cherga_recent_posts cherga_items_2" id="featured-posts-list"></div>
+						</div>
+
 						<!-- Tag Cloud Widget -->
 						<div class="widget widget_tag_cloud">
 							<h6 class="widgettitle">Popular Tags</h6>
 							<div class="tagcloud" id="sidebar-tag-cloud"></div>
 						</div>
 
-						<!-- Featured Posts Widget -->
-						<div class="widget widget_aurel_featured_posts">
-							<h6 class="widgettitle">Latest Posts</h6>
-							<ul class="cherga_featured_posts_list" id="featured-posts-list"></ul>
-						</div>
-
-						<!-- Banner Widget -->
+						<!-- Banner -->
 						<div class="widget widget_text">
 							<img src="img/clipart/banner.jpg" alt="Banner">
 						</div>
+
+						<!-- Flickr Photostream Widget -->
+						<div class="widget widget_cherga_flickr">
+							<h6 class="widgettitle">Follow on Flickr</h6>
+							<div class="cherga_flickr_widget_wrapper" data-flickrid="5088" data-widget_id="149482210@N04" data-widget_number="6"></div>
+						</div>
+
+						<!-- Text Widget -->
+						<div class="widget widget_text">
+							<h6 class="widgettitle">About This Blog</h6>
+							<div class="textwidget">
+								<p>Welcome to my photography blog. I share stories from my travels, photography tips, and behind-the-scenes moments from my creative journey.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer Widgets -->
+		<div class="footer_widgets_wrapper">
+			<div class="cherga_footer_widgets cherga_container">
+				<div class="cherga_footer_widgets_inner cherga_widgets_in_line4">
+					<!-- Quick Contacts Widget -->
+					<div class="widget footer_widget widget_cherga_quickcontact">
+						<h6 class="widgettitle">Contact Info</h6>
+						<div class="cherga_quick_contact">
+							<div class="cherga_inner_qc">
+								<div class="cherga_qc_widget_descr">
+									Hello! I'm <span class="cherga_color">Ivaylo Djounov</span>, a passionate photographer sharing my work and experiences.
+								</div>
+								<div class="cherga_qc_widget_address">Location: Sofia, Bulgaria</div>
+								<div class="cherga_qc_widget_phone">Phone: <a href="tel:+359">+359</a></div>
+								<div class="cherga_qc_widget_email">
+									<a href="mailto:ivaylo.djounov@mypos.com">Email: ivaylo.djounov@mypos.com</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Featured Posts Widget (Footer) -->
+					<div class="widget footer_widget widget_cherga_featured_posts">
+						<h6 class="widgettitle">Featured Posts</h6>
+						<div class="cherga_recent_posts cherga_items_2" id="footer-featured-posts-list"></div>
+					</div>
+
+					<!-- Nav Menu Widget -->
+					<div class="widget footer_widget widget_nav_menu">
+						<h6 class="widgettitle">Useful Links</h6>
+						<div class="menu-usefull-links-container">
+							<ul>
+								<li><a href="galleries/index.html">All Photos</a></li>
+								<li><a href="about.html">About Me</a></li>
+								<li><a href="galleries/nightscapes.html">Nightscapes</a></li>
+								<li><a href="galleries/sunsets.html">Sunsets</a></li>
+								<li><a href="blog.html">Blog</a></li>
+								<li><a href="contacts.html">Contact Me</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Flickr Photostream Widget (Footer) -->
+					<div class="widget footer_widget widget_cherga_flickr">
+						<h6 class="widgettitle">Follow on Flickr</h6>
+						<div class="cherga_flickr_widget_wrapper" data-flickrid="5089" data-widget_id="149482210@N04" data-widget_number="6"></div>
 					</div>
 				</div>
 			</div>

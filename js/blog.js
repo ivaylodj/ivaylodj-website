@@ -105,26 +105,28 @@
     if (!list || posts.length === 0) return;
 
     list.innerHTML = '';
-    var maxFeatured = Math.min(3, posts.length);
+    var maxFeatured = Math.min(2, posts.length);
     for (var i = 0; i < maxFeatured; i++) {
       var post = posts[i];
-      var li = document.createElement('li');
-      li.className = 'cherga_featured_post_item';
+      var div = document.createElement('div');
+      div.className = 'cherga_posts_item cherga_block_with_fi';
 
       var imgSrc = post.cover_image || 'img/clipart/banner.jpg';
       var dateStr = formatDate(post.date);
       var filename = post.filename.replace(/\.md$/, '');
 
-      li.innerHTML =
-        '<a class="cherga_featured_post_image" href="blog_post.html?post=' + filename + '">' +
-          '<img src="' + imgSrc + '" alt="">' +
+      div.innerHTML =
+        '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=' + filename + '">' +
+          '<img src="' + imgSrc + '" alt="" width="62" height="62" />' +
         '</a>' +
-        '<div class="cherga_featured_post_content">' +
-          '<a class="cherga_featured_post_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
-          '<div class="cherga_featured_post_meta">' + dateStr + '</div>' +
+        '<div class="cherga_posts_item_content">' +
+          '<a class="cherga_featured_post_widget_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<div class="cherga_widget_meta">' +
+            '<div>' + dateStr + '</div>' +
+          '</div>' +
         '</div>';
 
-      list.appendChild(li);
+      list.appendChild(div);
     }
   }
 
@@ -172,7 +174,6 @@
       item.className = 'standard_post_item';
 
       var postImg = '';
-      var postHtml = '';
 
       if (post.template === 'blog_image') {
         // Carousel layout with Owl Carousel
@@ -186,7 +187,7 @@
       } else {
         // Standard layout with single image
         postImg = '<div class="cherga_post_formats cherga_pf_standard cherga_pf_boxed">' +
-          '<div class="cherga_pf_standard_cont">' +
+          '<div class="cherga_pf_standard_cont cherga_dp cherga_no_select">' +
             '<img src="' + (post.cover_image || 'img/clipart/banner.jpg') + '" alt="">' +
           '</div>' +
         '</div>';
@@ -196,10 +197,10 @@
         '<div class="cherga_post_meta_item">' + dateStr + '</div>';
 
       if (post.categories && post.categories.length > 0) {
-        metaHtml += '<div class="cherga_post_meta_item">in ';
+        metaHtml += '<div class="cherga_post_meta_item">';
         for (var j = 0; j < post.categories.length; j++) {
-          if (j > 0) metaHtml += ', ';
-          metaHtml += '<a href="javascript:void(0)" onclick="filterByCategory(\'' + post.categories[j] + '\');">' + post.categories[j] + '</a>';
+          if (j > 0) metaHtml += ' ';
+          metaHtml += '<a href="javascript:void(0)" rel="category tag" onclick="filterByCategory(\'' + post.categories[j] + '\');">' + post.categories[j] + '</a>';
         }
         metaHtml += '</div>';
       }
