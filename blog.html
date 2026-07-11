@@ -1,16 +1,244 @@
 <!DOCTYPE html>
 <html lang="en" class="cherga_non_transparent_header">
 <head>
-	<title>My Blog | Ivaylo Djounov</title>
+	<title>Blog | Ivaylo Djounov Photography</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- SEO Meta Tags -->
+	<meta name="description" content="Read blog posts about photography, travel, and behind-the-scenes stories from Ivaylo Djounov.">
+	<meta name="author" content="Ivaylo Djounov">
+	<meta name="robots" content="index, follow">
+	<link rel="canonical" href="https://ivaylodj.com/blog.html">
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Blog | Ivaylo Djounov Photography">
+	<meta property="og:description" content="Photography blog — travel stories, behind-the-scenes, and technical notes from Ivaylo Djounov.">
+	<meta property="og:url" content="https://ivaylodj.com/blog.html">
+	<meta property="og:image" content="https://ivaylodj.com/img/clipart/facebook/Nightscapes/img-1.jpg">
+	<meta property="og:site_name" content="Ivaylo Djounov Photography">
+	<meta property="og:locale" content="en_GB">
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Blog | Ivaylo Djounov Photography">
+	<meta name="twitter:description" content="Photography blog — travel stories, behind-the-scenes, and technical notes from Ivaylo Djounov.">
+	<meta name="twitter:image" content="https://ivaylodj.com/img/clipart/facebook/Nightscapes/img-1.jpg">
+
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet">
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="css/kube.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/theme.css">
+
+	<!-- Blog-specific styles -->
+	<style>
+	.cherga_standard_post_item {
+		margin-bottom: 40px;
+		padding-bottom: 40px;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.cherga_standard_post_item:last-child {
+		border-bottom: none;
+	}
+	.cherga_post_formats {
+		margin-bottom: 20px;
+	}
+	.cherga_post_featured_image {
+		width: 100%;
+		max-height: 500px;
+		object-fit: cover;
+		border-radius: 4px;
+		margin-bottom: 20px;
+	}
+	.cherga_post_meta {
+		margin-bottom: 12px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+		font-size: 13px;
+		color: #9a9ea3;
+	}
+	.cherga_post_meta_item {
+		display: flex;
+		align-items: center;
+	}
+	.cherga_post_meta_item a {
+		color: #b0b4b9;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+	.cherga_post_meta_item a:hover {
+		color: #e8e9eb;
+	}
+	.cherga_post_listing_title {
+		font-size: 32px;
+		font-weight: 700;
+		margin: 16px 0 20px 0;
+		line-height: 1.2;
+	}
+	.cherga_post_listing_title a {
+		color: #e8e9eb;
+		text-decoration: none;
+	}
+	.cherga_post_listing_title a:hover {
+		color: #b0b4b9;
+	}
+	.cherga_excerpt {
+		color: #b0b4b9;
+		line-height: 1.6;
+		font-size: 14px;
+		margin-bottom: 20px;
+	}
+	.cherga_read_more_button {
+		display: inline-block;
+		padding: 10px 24px;
+		background: #3a3e43;
+		color: #b0b4b9 !important;
+		text-decoration: none;
+		border-radius: 3px;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		transition: all 0.2s;
+	}
+	.cherga_read_more_button:hover {
+		background: #454950;
+		color: #e8e9eb !important;
+	}
+	.cherga_blog_search_input {
+		width: 100%;
+		padding: 12px 16px;
+		font-size: 15px;
+		border: 1px solid #3a3e43;
+		border-radius: 3px;
+		background: #2c2f33;
+		color: #b0b4b9;
+		outline: none;
+		margin-bottom: 24px;
+	}
+	.cherga_blog_search_input:focus {
+		border-color: #5a5f67;
+		color: #e8e9eb;
+	}
+	.widget {
+		margin-bottom: 32px;
+	}
+	.widget h6.widgettitle {
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #e8e9eb;
+		margin-bottom: 16px;
+		letter-spacing: 0.5px;
+		border-bottom: 1px solid #3a3e43;
+		padding-bottom: 12px;
+	}
+	.widget ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.widget ul li {
+		padding: 8px 0;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.widget ul li:last-child {
+		border-bottom: none;
+	}
+	.widget ul li a {
+		color: #b0b4b9;
+		text-decoration: none;
+		font-size: 14px;
+	}
+	.widget ul li a:hover {
+		color: #e8e9eb;
+	}
+	.widget_search form {
+		margin: 0;
+	}
+	.widget_search .cherga_field_search {
+		width: 100%;
+		padding: 12px 16px;
+		font-size: 15px;
+		border: 1px solid #3a3e43;
+		border-radius: 3px;
+		background: #2c2f33;
+		color: #b0b4b9;
+		outline: none;
+	}
+	.widget_search .cherga_field_search:focus {
+		border-color: #5a5f67;
+		color: #e8e9eb;
+	}
+	.widget_tag_cloud .tagcloud {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+	.widget_tag_cloud .tagcloud a {
+		display: inline-block;
+		padding: 6px 12px;
+		background: #3a3e43;
+		color: #b0b4b9 !important;
+		text-decoration: none !important;
+		border-radius: 3px;
+		font-size: 13px;
+		transition: all 0.2s;
+	}
+	.widget_tag_cloud .tagcloud a:hover {
+		background: #454950;
+		color: #e8e9eb !important;
+	}
+	.cherga_featured_posts_list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.cherga_featured_post_item {
+		display: flex;
+		gap: 12px;
+		padding: 12px 0;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.cherga_featured_post_item:last-child {
+		border-bottom: none;
+	}
+	.cherga_featured_post_image {
+		width: 60px;
+		height: 60px;
+		min-width: 60px;
+		object-fit: cover;
+		border-radius: 3px;
+	}
+	.cherga_featured_post_content {
+		flex: 1;
+	}
+	.cherga_featured_post_title {
+		font-size: 14px;
+		font-weight: 600;
+		color: #e8e9eb;
+		text-decoration: none;
+		display: block;
+		margin-bottom: 4px;
+	}
+	.cherga_featured_post_title:hover {
+		color: #b0b4b9;
+	}
+	.cherga_featured_post_meta {
+		font-size: 12px;
+		color: #9a9ea3;
+	}
+	.widget_text img {
+		width: 100%;
+		height: auto;
+		border-radius: 4px;
+	}
+	</style>
 
 	<!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -19,12 +247,19 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-WR3X354K');</script>
   <!-- End Google Tag Manager -->
+
+	<!-- Cloudflare Web Analytics -->
+	<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e0fa5ba9f8b74e24bcc6328763108513"}'></script>
 </head>
 
-<body class="cherga_drag_protection">
+
+<body class="cherga_drag_protection cherga_single_post">
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR3X354K"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<div class="cherga_site_wrapper static_header_footer fadeOnLoad">
 		<!-- Header -->
-		<header class="cherga_main_header cherga_logo_left cherga_border_off cherga_header_solid_style cherga_sticky_menu_on">
+		<header class="cherga_main_header cherga_logo_left cherga_border_on cherga_header_solid_style cherga_sticky_menu_on">
 			<div class="cherga_main_header_wrapper">
 				<div class="cherga_header_left_part cherga_header_logo_part">
 					<div class="cherga_logo_cont">
@@ -35,18 +270,50 @@
 				<div class="cherga_header_middle_part cherga_header_menu_part">
 					<nav class="cherga_nav">
 						<ul class="cherga_menu">
-							<li><a href="galleries/index.html">PHOTOS</a></li>
-							<li class="current-menu-item"><a href="blog.html">MY BLOG</a></li>
-							<li><a href="about.html">ABOUT ME</a></li>
-							<li><a href="contacts.html">CONTACTS</a></li>
+							<li class="menu-item-has-children">
+								<a href="javascript:void(0)">Photos</a>
+
+								<ul class="sub-menu">
+									<li><a href="galleries/index.html">All Photos</a></li>
+									<li><a href="galleries/nightscapes.html">Nightscapes</a></li>
+									<li><a href="galleries/sunsets.html">Sunsets</a></li>
+									<li><a href="galleries/world-travels/index.html">World Travels</a></li>
+									<li><a href="galleries/europe-travels/index.html">Europe Travels</a></li>
+									<li><a href="galleries/birds.html">Birds</a></li>
+									<li><a href="galleries/varna/index.html">Varna</a></li>
+									<li><a href="galleries/neowise.html">Neowise</a></li>
+									<li><a href="galleries/sunrises.html">Sunrises</a></li>
+									<li><a href="galleries/seasons/index.html">Seasons</a></li>
+									<li><a href="galleries/vera-su.html">Vera Su</a></li>
+									<li><a href="galleries/unsorted.html">Unsorted</a></li>
+								</ul>
+							</li>
+
+							<li class="current-menu-item">
+								<a href="blog.html">My Blog</a>
+							</li>
+
+							<li>
+								<a href="about.html">About Me</a>
+							</li>
+
+							<li>
+								<a href="contacts.html">Contacts</a>
+							</li>
 						</ul>
 					</nav>
 				</div>
 
 				<div class="cherga_header_right_part cherga_header_socials_part">
 					<div class="cherga_header_socials">
-						<a class="cherga_footer_social_button cherga_facebook" href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
-						<a class="cherga_footer_social_button cherga_instagram" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+						<a class="cherga_footer_social_button cherga_facebook" href="https://www.facebook.com/ivaylo.djounov"><i class="fa fa-facebook"></i></a>
+						<a class="cherga_footer_social_button cherga_instagram" href="https://www.instagram.com/ivaylodj"><i class="fa fa-instagram"></i></a>
+						<a class="cherga_toogle_fullview" href="javascript:void(0)">
+							<span class="cherga_fullview_block01"></span>
+							<span class="cherga_fullview_block02"></span>
+							<span class="cherga_fullview_block03"></span>
+							<span class="cherga_fullview_block04"></span>
+						</a>
 					</div>
 				</div>
 
@@ -69,91 +336,93 @@
 			<!-- Mobile Menu -->
 			<div class="cherga_mobile_menu_wrapper">
 				<div class="cherga_header_socials">
-					<a class="cherga_footer_social_button cherga_facebook" href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
-					<a class="cherga_footer_social_button cherga_instagram" href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+					<a class="cherga_footer_social_button cherga_facebook" href="https://www.facebook.com/ivaylo.djounov"><i class="fa fa-facebook"></i></a>
+					<a class="cherga_footer_social_button cherga_instagram" href="https://www.instagram.com/ivaylodj"><i class="fa fa-instagram"></i></a>	
+					<a class="cherga_toogle_fullview" href="javascript:void(0)">
+						<span class="cherga_fullview_block01"></span>
+						<span class="cherga_fullview_block02"></span>
+						<span class="cherga_fullview_block03"></span>
+						<span class="cherga_fullview_block04"></span>
+					</a>
 				</div>
 
 				<nav class="cherga_mobile_nav">
 					<ul class="cherga_menu">
-						<li><a href="galleries/index.html">PHOTOS</a></li>
-						<li class="current-menu-item"><a href="blog.html">MY BLOG</a></li>
-						<li><a href="about.html">ABOUT ME</a></li>
-						<li><a href="contacts.html">CONTACTS</a></li>
-					</ul>
-				</nav>
-			</div>
+						<li class="menu-item-has-children">
+							<a href="javascript:void(0)">Photos</a>
 
-			<!-- Google Tag Manager (noscript) -->
-			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR3X354K"
-			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-			<!-- End Google Tag Manager (noscript) -->
-		</header>
+								<ul class="sub-menu">
+									<li><a href="galleries/index.html">All Photos</a></li>
+									<li><a href="galleries/nightscapes.html">Nightscapes</a></li>
+									<li><a href="galleries/sunsets.html">Sunsets</a></li>
+									<li><a href="galleries/world-travels/index.html">World Travels</a></li>
+									<li><a href="galleries/europe-travels/index.html">Europe Travels</a></li>
+									<li><a href="galleries/birds.html">Birds</a></li>
+									<li><a href="galleries/varna/index.html">Varna</a></li>
+									<li><a href="galleries/neowise.html">Neowise</a></li>
+									<li><a href="galleries/sunrises.html">Sunrises</a></li>
+									<li><a href="galleries/seasons/index.html">Seasons</a></li>
+									<li><a href="galleries/vera-su.html">Vera Su</a></li>
+									<li><a href="galleries/unsorted.html">Unsorted</a></li>
+								</ul>
+							</li>
+
+							<li class="current-menu-item">
+								<a href="blog.html">My Blog</a>
+							</li>
+
+							<li>
+								<a href="about.html">About Me</a>
+							</li>
+
+							<li>
+								<a href="contacts.html">Contacts</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</header>
 
 		<!-- Content -->
 		<div class="cherga_main_wrapper cherga_top_padding_yes cherga_bottom_padding_yes">
 			<div class="cherga_container">
 				<div class="cherga_content_wrapper row cherga_right_sidebar">
-					<!-- Blog Posts Container -->
+					<!-- Main Content -->
 					<div class="cherga_content col9">
-						<div class="cherga_tiny">
-							<div class="cherga_widget_pm_blog_listing">
-								<div class="cherga_widget_container">
-									<div class="cherga_front_end_display">
-										<div class="cherga_blog_wrapper cherga_element_blog blog_type_standard" id="blog-posts-container">
-											<!-- Posts will be rendered here by blog.js -->
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						<!-- Blog Posts Container -->
+						<div id="blog-posts-container"></div>
 					</div>
 
 					<!-- Sidebar -->
 					<div class="cherga_sidebar col3">
 						<!-- Search Widget -->
 						<div class="widget widget_search">
-							<form method="get" class="cherga_search_form">
-								<span class="cherga_icon_search"><i class="fa fa-arrow-right"></i></span>
-								<input type="text" id="blog-search" placeholder="Search" title="Search the site..." class="cherga_field_search">
-								<div class="clear"></div>
+							<form id="search_form" name="search_form" method="get">
+								<input type="text" id="blog-search" name="s" placeholder="Search posts..." title="Search blog posts..." class="cherga_field_search">
 							</form>
 						</div>
 
 						<!-- Categories Widget -->
 						<div class="widget widget_categories">
-							<h6 class="widgettitle">CATEGORIES</h6>
-							<ul id="blog-categories-list">
-								<!-- Categories will be rendered here by blog.js -->
-							</ul>
-						</div>
-
-						<!-- Featured Posts Widget -->
-						<div class="widget widget_cherga_featured_posts">
-							<h6 class="widgettitle">FEATURED POSTS</h6>
-							<div class="cherga_recent_posts cherga_items_2" id="featured-posts-list">
-								<!-- Featured posts will be rendered here by blog.js -->
-							</div>
+							<h6 class="widgettitle">Categories</h6>
+							<ul id="blog-categories-list"></ul>
 						</div>
 
 						<!-- Tag Cloud Widget -->
 						<div class="widget widget_tag_cloud">
-							<h6 class="widgettitle">POPULAR TAGS</h6>
-							<div class="tagcloud" id="sidebar-tag-cloud">
-								<!-- Tags will be rendered here by blog.js -->
-							</div>
+							<h6 class="widgettitle">Popular Tags</h6>
+							<div class="tagcloud" id="sidebar-tag-cloud"></div>
 						</div>
 
-						<!-- Banner -->
-						<div class="widget widget_text">
-							<img src="img/clipart/banner.jpg" alt="" />
+						<!-- Featured Posts Widget -->
+						<div class="widget widget_aurel_featured_posts">
+							<h6 class="widgettitle">Latest Posts</h6>
+							<ul class="cherga_featured_posts_list" id="featured-posts-list"></ul>
 						</div>
 
-						<!-- CTA Widget -->
+						<!-- Banner Widget -->
 						<div class="widget widget_text">
-							<h6 class="widgettitle">DID YOU LIKED MY BLOG?</h6>
-							<div class="textwidget">
-								<p>Leave a comment below or drop me a line.</p>
-							</div>
+							<img src="img/clipart/banner.jpg" alt="Banner">
 						</div>
 					</div>
 				</div>
@@ -161,13 +430,13 @@
 		</div>
 
 		<!-- Footer -->
-		<footer class="cherga_footer cherga_with_prefooter cherga_border_off">
+		<footer class="cherga_footer cherga_border_on">
 			<div class="cherga_footer_inner cherga_container">
 				<div class="cherga_logo_cont">
 					<a href="index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
 				</div>
 
-				<div class="cherga_copyright">© 2026 Ivaylo Djounov Photography. All Rights Reserved.</div>
+				<div class="cherga_copyright"><span id="copyright-year"></span></div>
 			</div>
 		</footer>
 
@@ -175,12 +444,22 @@
 		<div class="cherga_back_to_top"></div>
 	</div>
 
-	<!-- Scripts -->
+	<!-- Preloader -->
+	<div class="cherga_preloader_wrapper">
+		<div class="cherga_preloader_content">
+			<div class="cherga_preloader_bar"></div>
+			<h6 class="cherga_preloader_text">LOADING</h6>
+		</div>
+	</div>
+
+	<!-- JS Files -->
 	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery.fullscreen.min.js"></script>
 	<script src="js/jquery.swipebox.js"></script>
+	<script src="js/jquery.fullscreen.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/theme.js"></script>
+
 	<script src="js/blog.js"></script>
+	<script src="js/theme.js"></script>
+	<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 </body>
 </html>
