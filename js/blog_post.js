@@ -306,6 +306,50 @@
 
         html += '</div>';
 
+        // "You may also like" - show 2 other posts
+        html += '<div class="cherga_single_divider"></div>';
+        html += '<h4 class="cherga_featured_posts_heading">You may also like</h4>';
+        html += '<div class="cherga_featured_posts cherga_items_2 row">';
+
+        var relatedCount = 0;
+        for (var ri = 0; ri < allPosts.length && relatedCount < 2; ri++) {
+          if (allPosts[ri].filename === postFilename) continue; // Skip current post
+
+          var relPost = allPosts[ri];
+          var relFilename = relPost.filename.replace(/\.md$/, '');
+          var relDateStr = new Date(relPost.date).toLocaleDateString('en-GB', {
+            year: 'numeric', month: 'long', day: 'numeric'
+          });
+
+          html += '<div class="cherga_posts_item col col6">';
+          html +=   '<div class="cherga_fimage_cont">';
+          if (relPost.cover_image) {
+            html +=     '<a href="blog_post.html?post=' + relFilename + '" class="cherga_dp cherga_no_select">';
+            html +=       '<img src="' + relPost.cover_image + '" alt="' + relPost.title + '"/>';
+            html +=     '</a>';
+          }
+          html +=   '</div>';
+          html +=   '<div class="cherga_post_meta">';
+          html +=     '<div class="cherga_post_meta_item">' + relDateStr + '</div>';
+          if (relPost.categories && relPost.categories.length) {
+            var relCats = [];
+            for (var rc = 0; rc < relPost.categories.length; rc++) {
+              relCats.push('<a rel="category tag" href="javascript:void(0)">' + relPost.categories[rc] + '</a>');
+            }
+            html += '<div class="cherga_post_meta_item">in ' + relCats.join(', ') + '</div>';
+          }
+          html +=     '<h4 class="cherga_post_title">';
+          html +=       '<a href="blog_post.html?post=' + relFilename + '">' + relPost.title + '</a>';
+          html +=     '</h4>';
+          html +=     '<div class="cherga_excerpt">' + (relPost.excerpt || '') + '</div>';
+          html +=   '</div>';
+          html += '</div>';
+
+          relatedCount++;
+        }
+
+        html += '</div>';
+
         // Comments section (matches old template exactly)
         html += '<div class="cherga_comments_cont">';
         html +=   '<div class="cherga_comments_wrapper">';
@@ -323,6 +367,25 @@
         html += '</div>';
 
         document.getElementById('blog-post-content').innerHTML = html;
+
+        // Initialize owl carousel if present (for blog_image template)
+        if (jQuery && jQuery.fn.owlCarousel && jQuery('.cherga_owlCarousel').length > 0) {
+          jQuery('.cherga_owlCarousel').each(function() {
+            jQuery(this).owlCarousel({
+              loop: true,
+              margin: 0,
+              nav: false,
+              dots: true,
+              autoplay: false,
+              autoplayTimeout: 5000,
+              responsive: {
+                0: { items: 1 },
+                768: { items: 1 },
+                1024: { items: 1 }
+              }
+            });
+          });
+        }
 
         // ---- Update page metadata dynamically ----
         document.title = title + ' | Ivaylo Djounov Photography Blog';
