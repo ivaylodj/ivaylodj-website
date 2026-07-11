@@ -2185,8 +2185,9 @@ blockquote div {
 /* --- Featured Posts Widget --- */
 .widget_cherga_featured_posts img {
 	width: 62px;
-	height: auto;
+	height: 62px;
 	display: block;
+	object-fit: cover;
 }
 .widget_cherga_featured_posts .cherga_posts_item {
 	font-size: 0;
