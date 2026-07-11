@@ -183,7 +183,7 @@
 
       if (post.template === 'blog_image') {
         // Carousel layout with Owl Carousel (matching Aurel)
-        var imgSrc = '/' + post.cover_image;
+        var imgSrc = post.cover_image;
         postImg = '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">' +
           '<div class="cherga_owlCarousel owl-carousel owl-theme">' +
             '<div class="item">' +
