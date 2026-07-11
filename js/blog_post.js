@@ -163,8 +163,9 @@
 
       var allPosts = JSON.parse(postIdx.responseText);
       var post = null;
+      var postFilename = postFile.match(/\.md$/) ? postFile : postFile + '.md';
       for (var i = 0; i < allPosts.length; i++) {
-        if (allPosts[i].filename === postFile) { post = allPosts[i]; break; }
+        if (allPosts[i].filename === postFilename) { post = allPosts[i]; break; }
       }
 
       if (!post) {
@@ -173,8 +174,9 @@
         return;
       }
 
+      var fullPostPath = postFile.match(/\.md$/) ? postFile : postFile + '.md';
       var contentXhr = new XMLHttpRequest();
-      contentXhr.open('GET', '_posts/' + postFile, true);
+      contentXhr.open('GET', '_posts/' + fullPostPath, true);
       contentXhr.onload = function() {
         if (contentXhr.status !== 200) {
           document.getElementById('blog-post-content').innerHTML = 

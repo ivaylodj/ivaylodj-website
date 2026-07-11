@@ -1,7 +1,7 @@
 ---
 title: "Welcome Message"
 date: 2022-01-22
-cover_image: Welcome-Post/img-7.jpg
+cover_image: "img/clipart/facebook/Sunrises/img-1.jpg"
 categories:
   - General
 tags:
