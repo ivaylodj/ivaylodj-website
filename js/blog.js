@@ -236,10 +236,10 @@
         var $carousel = jQuery(this);
         $carousel.on('initialized.owl.carousel', function(e) {
           $carousel.css('opacity', '1');
+          $carousel.trigger('refresh.owl.carousel');
         });
         $carousel.owlCarousel({
           items: 1,
-          lazyLoad: true,
           loop: true,
           dots: false,
           nav: true,
@@ -250,7 +250,7 @@
           autoHeight: true
         });
       });
-    }, 100);
+    }, 500);
   }
 
   function renderPagination(postCount) {
