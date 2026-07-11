@@ -330,66 +330,68 @@
 	.cherga_flickr_follow_btn i {
 		margin-right: 6px;
 	}
-	/* Footer Sections */
-	.cherga_footer_inner {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 40px;
-		padding: 60px 0;
-		border-bottom: 1px solid #3a3e43;
+	/* Footer Layout */
+	.cherga_footer_content {
+		padding: 60px 0 40px 0;
 	}
-	.cherga_footer_section {
+	.cherga_footer_cols {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 50px;
+	}
+	.cherga_footer_col {
 		display: flex;
 		flex-direction: column;
 	}
-	.cherga_footer_logo_section {
-		grid-column: 1;
-	}
 	.cherga_footer_heading {
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: 700;
 		text-transform: uppercase;
 		color: #e8e9eb;
-		margin-bottom: 16px;
-		letter-spacing: 0.5px;
+		margin-bottom: 20px;
+		letter-spacing: 1px;
 	}
-	.cherga_footer_section p {
+	/* Contact Info */
+	.cherga_footer_col p {
 		font-size: 13px;
 		line-height: 1.6;
 		color: #b0b4b9;
 		margin-bottom: 12px;
 	}
-	.cherga_footer_section p:last-child {
+	.cherga_footer_col p:last-child {
 		margin-bottom: 0;
 	}
-	.cherga_footer_section a {
+	.cherga_footer_col a {
 		color: #b0b4b9;
 		text-decoration: none;
 		transition: color 0.2s;
 	}
-	.cherga_footer_section a:hover {
+	.cherga_footer_col a:hover {
 		color: #e8e9eb;
 	}
-	.cherga_footer_section i {
-		margin-right: 6px;
-	}
-	/* Footer Featured Posts */
-	.cherga_footer_featured_posts {
+	/* Featured Posts */
+	.cherga_footer_posts {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
-	.cherga_footer_featured_posts li {
+	.cherga_footer_posts li {
+		display: flex;
+		gap: 12px;
 		margin-bottom: 16px;
-		padding-bottom: 16px;
-		border-bottom: 1px solid #3a3e43;
-	}
-	.cherga_footer_featured_posts li:last-child {
-		border-bottom: none;
-		margin-bottom: 0;
 		padding-bottom: 0;
 	}
-	.cherga_footer_featured_posts a {
+	.cherga_footer_posts li:last-child {
+		margin-bottom: 0;
+	}
+	.cherga_footer_posts li img {
+		width: 80px;
+		height: 80px;
+		object-fit: cover;
+		border-radius: 3px;
+		flex-shrink: 0;
+	}
+	.cherga_footer_posts li a {
 		display: block;
 		font-size: 13px;
 		font-weight: 600;
@@ -397,14 +399,14 @@
 		text-decoration: none;
 		margin-bottom: 4px;
 	}
-	.cherga_footer_featured_posts a:hover {
+	.cherga_footer_posts li a:hover {
 		color: #b0b4b9;
 	}
-	.cherga_footer_featured_posts .cherga_post_date {
+	.cherga_footer_posts .post-date {
 		font-size: 12px;
 		color: #9a9ea3;
 	}
-	/* Footer Links */
+	/* Useful Links */
 	.cherga_footer_links {
 		list-style: none;
 		margin: 0;
@@ -412,9 +414,14 @@
 	}
 	.cherga_footer_links li {
 		margin-bottom: 8px;
+		padding-left: 12px;
+		position: relative;
 	}
-	.cherga_footer_links li:last-child {
-		margin-bottom: 0;
+	.cherga_footer_links li:before {
+		content: '•';
+		position: absolute;
+		left: 0;
+		color: #f5a623;
 	}
 	.cherga_footer_links a {
 		font-size: 13px;
@@ -424,37 +431,64 @@
 	.cherga_footer_links a:hover {
 		color: #e8e9eb;
 	}
+	/* Flickr Grid */
+	.cherga_flickr_grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
+	}
+	.cherga_flickr_grid a {
+		display: block;
+		overflow: hidden;
+		border-radius: 3px;
+	}
+	.cherga_flickr_grid img {
+		width: 100%;
+		height: 80px;
+		object-fit: cover;
+		display: block;
+		transition: opacity 0.2s;
+	}
+	.cherga_flickr_grid a:hover img {
+		opacity: 0.8;
+	}
 	/* Footer Bottom */
 	.cherga_footer_bottom {
-		grid-column: 1 / -1;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding-top: 20px;
+		padding: 30px 0;
 		border-top: 1px solid #3a3e43;
+		text-align: center;
+	}
+	.cherga_footer_logo {
+		flex: 1;
+	}
+	.cherga_footer_logo .cherga_image_logo {
+		max-height: 60px;
 	}
 	.cherga_copyright {
+		flex: 1;
 		font-size: 12px;
 		color: #9a9ea3;
 	}
-	.cherga_footer_go_to_top {
+	.cherga_go_to_top {
+		flex: 1;
 		display: inline-block;
-		padding: 8px 16px;
-		background: #3a3e43;
+		width: 40px;
+		height: 40px;
+		border: 1px solid #b0b4b9;
+		border-radius: 0;
 		color: #b0b4b9 !important;
 		text-decoration: none !important;
-		border-radius: 3px;
-		font-size: 12px;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		transition: all 0.2s;
 	}
-	.cherga_footer_go_to_top:hover {
-		background: #454950;
+	.cherga_go_to_top:hover {
+		border-color: #e8e9eb;
 		color: #e8e9eb !important;
-	}
-	.cherga_footer_go_to_top i {
-		margin-right: 4px;
 	}
 	</style>
 
@@ -668,50 +702,53 @@
 
 		<!-- Footer -->
 		<footer class="cherga_footer cherga_border_on">
-			<div class="cherga_footer_inner cherga_container">
-				<!-- Footer Logo -->
-				<div class="cherga_footer_section cherga_footer_logo_section">
-					<div class="cherga_logo_cont">
-						<a href="index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
+			<div class="cherga_footer_content">
+				<div class="cherga_container cherga_footer_cols">
+					<!-- Contact Info -->
+					<div class="cherga_footer_col">
+						<h6 class="cherga_footer_heading">Contact Info</h6>
+						<p>Hey! Thanks for stopping by! My name is Ivaylo Djounov and I'm a professional photographer.</p>
+						<p><strong>Address:</strong> Your City, Your State<br>
+						<strong>Phone:</strong> +1 (800) 456 37 96<br>
+						<strong>Email:</strong> <a href="mailto:ivaylo.djounov@mypos.com">ivaylo.djounov@mypos.com</a></p>
+					</div>
+
+					<!-- Featured Posts -->
+					<div class="cherga_footer_col">
+						<h6 class="cherga_footer_heading">Featured Posts</h6>
+						<ul class="cherga_footer_posts" id="footer-featured-posts-list"></ul>
+					</div>
+
+					<!-- Useful Links -->
+					<div class="cherga_footer_col">
+						<h6 class="cherga_footer_heading">Useful Links</h6>
+						<ul class="cherga_footer_links">
+							<li><a href="galleries/index.html">Albums</a></li>
+							<li><a href="about.html">About Me</a></li>
+							<li><a href="blog.html">Aurel Blog</a></li>
+							<li><a href="contacts.html">Contact Me</a></li>
+						</ul>
+					</div>
+
+					<!-- Follow on Flickr -->
+					<div class="cherga_footer_col">
+						<h6 class="cherga_footer_heading">Follow on Flickr</h6>
+						<div class="cherga_flickr_grid">
+							<a href="https://www.flickr.com/photos/ivaylodj/" target="_blank"><img src="img/clipart/facebook/Sunsets/img-1.jpg" alt=""></a>
+							<a href="https://www.flickr.com/photos/ivaylodj/" target="_blank"><img src="img/clipart/facebook/Sunrises/img-1.jpg" alt=""></a>
+							<a href="https://www.flickr.com/photos/ivaylodj/" target="_blank"><img src="img/clipart/facebook/Nightscapes/img-1.jpg" alt=""></a>
+						</div>
 					</div>
 				</div>
+			</div>
 
-				<!-- Footer Contact Info -->
-				<div class="cherga_footer_section">
-					<h6 class="cherga_footer_heading">Contact Info</h6>
-					<p>
-						<a href="contacts.html">Get in touch</a> — I'd love to hear from you about photography, travel, or any collaboration opportunities.
-					</p>
-					<p>
-						<a href="https://www.facebook.com/ivaylo.djounov" target="_blank"><i class="fa fa-facebook"></i> Facebook</a> |
-						<a href="https://www.instagram.com/ivaylodj" target="_blank"><i class="fa fa-instagram"></i> Instagram</a> |
-						<a href="https://www.flickr.com/photos/ivaylodj/" target="_blank"><i class="fa fa-flickr"></i> Flickr</a>
-					</p>
+			<!-- Footer Bottom: Logo + Copyright + Go to Top -->
+			<div class="cherga_footer_bottom">
+				<div class="cherga_footer_logo">
+					<a href="index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
 				</div>
-
-				<!-- Footer Featured Posts -->
-				<div class="cherga_footer_section">
-					<h6 class="cherga_footer_heading">Featured Posts</h6>
-					<ul class="cherga_footer_featured_posts" id="footer-featured-posts-list"></ul>
-				</div>
-
-				<!-- Footer Useful Links -->
-				<div class="cherga_footer_section">
-					<h6 class="cherga_footer_heading">Useful Links</h6>
-					<ul class="cherga_footer_links">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="galleries/index.html">Photos</a></li>
-						<li><a href="blog.html">Blog</a></li>
-						<li><a href="about.html">About Me</a></li>
-						<li><a href="contacts.html">Contacts</a></li>
-					</ul>
-				</div>
-
-				<!-- Footer Copyright & Go to Top -->
-				<div class="cherga_footer_bottom">
-					<div class="cherga_copyright"><span id="copyright-year"></span></div>
-					<a href="#" class="cherga_footer_go_to_top"><i class="fa fa-chevron-up"></i> Go to Top</a>
-				</div>
+				<div class="cherga_copyright"><span id="copyright-year"></span></div>
+				<a href="#" class="cherga_go_to_top"><i class="fa fa-chevron-up"></i></a>
 			</div>
 		</footer>
 

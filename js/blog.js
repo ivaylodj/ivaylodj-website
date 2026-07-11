@@ -133,16 +133,20 @@
     if (!list || posts.length === 0) return;
 
     list.innerHTML = '';
-    var maxFeatured = Math.min(3, posts.length);
+    var maxFeatured = Math.min(2, posts.length);
     for (var i = 0; i < maxFeatured; i++) {
       var post = posts[i];
       var li = document.createElement('li');
       var dateStr = formatDate(post.date);
       var filename = post.filename.replace(/\.md$/, '');
+      var imgSrc = post.cover_image || 'img/clipart/banner.jpg';
 
       li.innerHTML =
-        '<a href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
-        '<div class="cherga_post_date">' + dateStr + '</div>';
+        '<img src="' + imgSrc + '" alt="">' +
+        '<div>' +
+          '<a href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<div class="post-date">' + dateStr + '</div>' +
+        '</div>';
 
       list.appendChild(li);
     }
