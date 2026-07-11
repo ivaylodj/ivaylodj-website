@@ -36,6 +36,7 @@
     buildCategories();
     buildTagCloud();
     buildFeaturedPosts();
+    buildFooterFeaturedPosts();
   }
 
   function buildCategories() {
@@ -127,6 +128,26 @@
     }
   }
 
+  function buildFooterFeaturedPosts() {
+    var list = document.getElementById('footer-featured-posts-list');
+    if (!list || posts.length === 0) return;
+
+    list.innerHTML = '';
+    var maxFeatured = Math.min(3, posts.length);
+    for (var i = 0; i < maxFeatured; i++) {
+      var post = posts[i];
+      var li = document.createElement('li');
+      var dateStr = formatDate(post.date);
+      var filename = post.filename.replace(/\.md$/, '');
+
+      li.innerHTML =
+        '<a href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+        '<div class="cherga_post_date">' + dateStr + '</div>';
+
+      list.appendChild(li);
+    }
+  }
+
   function renderPosts(postList) {
     var container = document.getElementById('blog-posts-container');
     if (!container) return;
@@ -178,6 +199,26 @@
 
       container.appendChild(item);
     }
+
+    renderPagination(postList.length);
+  }
+
+  function renderPagination(postCount) {
+    var paginationContainer = document.getElementById('blog-pagination');
+    if (!paginationContainer) return;
+
+    paginationContainer.innerHTML = '';
+
+    if (postCount <= 0) return;
+
+    var html = '<span class="current">Page 1</span>';
+
+    if (postCount > 1) {
+      html += ' <span style="color:#5a5f67;">of</span> ';
+      html += '<span class="current">' + Math.ceil(postCount / 10) + '</span>';
+    }
+
+    paginationContainer.innerHTML = html;
   }
 
   function filterByTag(tag) {
