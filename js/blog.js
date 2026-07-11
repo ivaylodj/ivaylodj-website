@@ -138,19 +138,25 @@
     var maxFeatured = Math.min(2, posts.length);
     for (var i = 0; i < maxFeatured; i++) {
       var post = posts[i];
-      var li = document.createElement('li');
+      var div = document.createElement('div');
+      div.className = 'cherga_posts_item cherga_block_with_fi';
+
+      var imgSrc = post.cover_image || 'img/clipart/banner.jpg';
       var dateStr = formatDate(post.date);
       var filename = post.filename.replace(/\.md$/, '');
-      var imgSrc = post.cover_image || 'img/clipart/banner.jpg';
 
-      li.innerHTML =
-        '<img src="' + imgSrc + '" alt="">' +
-        '<div>' +
-          '<a href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
-          '<div class="post-date">' + dateStr + '</div>' +
+      div.innerHTML =
+        '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=' + filename + '">' +
+          '<img src="' + imgSrc + '" alt="" width="62" height="62" />' +
+        '</a>' +
+        '<div class="cherga_posts_item_content">' +
+          '<a class="cherga_featured_post_widget_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<div class="cherga_widget_meta">' +
+            '<div>' + dateStr + '</div>' +
+          '</div>' +
         '</div>';
 
-      list.appendChild(li);
+      list.appendChild(div);
     }
   }
 
