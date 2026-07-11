@@ -399,10 +399,109 @@
     postIdx.send();
   }
 
+  function formatDate(dateStr) {
+    var date = new Date(dateStr);
+    return date.toLocaleDateString('en-GB', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+  }
+
+  function buildSidebarWidgets(allPosts, currentPostFilename) {
+    // Featured Posts
+    var featuredList = document.getElementById('blog-featured-posts-list');
+    if (featuredList && allPosts.length > 0) {
+      featuredList.innerHTML = '';
+      var maxFeatured = Math.min(3, allPosts.length);
+      for (var i = 0; i < maxFeatured; i++) {
+        var post = allPosts[i];
+        var li = document.createElement('li');
+        li.className = 'cherga_featured_post_item';
+        var imgSrc = post.cover_image || 'img/clipart/banner.jpg';
+        var dateStr = formatDate(post.date);
+        var filename = post.filename.replace(/\.md$/, '');
+        li.innerHTML =
+          '<a class="cherga_featured_post_image" href="blog_post.html?post=' + filename + '">' +
+            '<img src="' + imgSrc + '" alt="">' +
+          '</a>' +
+          '<div class="cherga_featured_post_content">' +
+            '<a class="cherga_featured_post_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+            '<div class="cherga_featured_post_meta">' + dateStr + '</div>' +
+          '</div>';
+        featuredList.appendChild(li);
+      }
+    }
+
+    // Categories
+    var catList = document.getElementById('post-category-list');
+    if (catList && allPosts.length > 0) {
+      var catMap = {};
+      for (var i = 0; i < allPosts.length; i++) {
+        var post = allPosts[i];
+        if (post.categories && post.categories.length > 0) {
+          for (var j = 0; j < post.categories.length; j++) {
+            var cat = post.categories[j];
+            catMap[cat] = (catMap[cat] || 0) + 1;
+          }
+        }
+      }
+      catList.innerHTML = '';
+      for (var c in catMap) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = 'javascript:void(0)';
+        a.textContent = c + ' (' + catMap[c] + ')';
+        li.appendChild(a);
+        catList.appendChild(li);
+      }
+    }
+
+    // Tags
+    var tagCloud = document.getElementById('post-tag-cloud');
+    if (tagCloud && allPosts.length > 0) {
+      var tagCounts = {};
+      for (var i = 0; i < allPosts.length; i++) {
+        var post = allPosts[i];
+        if (post.tags && post.tags.length > 0) {
+          for (var j = 0; j < post.tags.length; j++) {
+            var tag = post.tags[j];
+            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+          }
+        }
+      }
+      tagCloud.innerHTML = '';
+      var sortedTags = Object.keys(tagCounts).sort(function(a, b) {
+        return tagCounts[b] - tagCounts[a];
+      });
+      for (var t = 0; t < sortedTags.length; t++) {
+        var link = document.createElement('a');
+        link.href = 'javascript:void(0)';
+        link.textContent = sortedTags[t];
+        tagCloud.appendChild(link);
+      }
+    }
+
+    // Footer Featured Posts
+    var footerList = document.getElementById('footer-featured-posts-list');
+    if (footerList && allPosts.length > 0) {
+      footerList.innerHTML = '';
+      var maxFeatured = Math.min(3, allPosts.length);
+      for (var i = 0; i < maxFeatured; i++) {
+        var post = allPosts[i];
+        var li = document.createElement('li');
+        var dateStr = formatDate(post.date);
+        var filename = post.filename.replace(/\.md$/, '');
+        li.innerHTML =
+          '<a href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<div class="cherga_post_date">' + dateStr + '</div>';
+        footerList.appendChild(li);
+      }
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     loadPost();
 
-    // After post loads, adjust layout based on template
+    // After post loads, adjust layout based on template and build sidebar widgets
     setTimeout(function() {
       var params = new URLSearchParams(window.location.search);
       var postFile = params.get('post');
@@ -420,6 +519,9 @@
           for (var i = 0; i < allPosts.length; i++) {
             if (allPosts[i].filename === postFilename) { post = allPosts[i]; break; }
           }
+
+          // Build sidebar widgets
+          buildSidebarWidgets(allPosts, postFilename);
 
           if (post && post.template === 'blog_image') {
             // blog_image template: full-width, no sidebar

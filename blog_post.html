@@ -146,6 +146,295 @@
 		height: auto;
 		display: block;
 	}
+	/* Widget Styles */
+	.widget {
+		margin-bottom: 32px;
+	}
+	.widget h6.widgettitle {
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #e8e9eb;
+		margin-bottom: 16px;
+		letter-spacing: 0.5px;
+		border-bottom: 1px solid #3a3e43;
+		padding-bottom: 12px;
+		position: relative;
+		padding-left: 16px;
+	}
+	.widget h6.widgettitle:before {
+		content: '';
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		background: #f5a623;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	.widget ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.widget ul li {
+		padding: 8px 0;
+		border-bottom: 1px solid #3a3e43;
+		display: flex;
+		align-items: center;
+		min-height: 20px;
+	}
+	.widget ul li:last-child {
+		border-bottom: none;
+	}
+	.widget ul li a {
+		color: #b0b4b9;
+		text-decoration: none;
+		font-size: 14px;
+		white-space: nowrap;
+	}
+	.widget ul li a:hover {
+		color: #e8e9eb;
+	}
+	/* Tag Cloud */
+	.widget_tag_cloud .tagcloud {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+	.widget_tag_cloud .tagcloud a {
+		display: inline-block;
+		padding: 6px 12px;
+		background: #3a3e43;
+		color: #b0b4b9 !important;
+		text-decoration: none !important;
+		border-radius: 3px;
+		font-size: 13px;
+		transition: all 0.2s;
+	}
+	.widget_tag_cloud .tagcloud a:hover {
+		background: #454950;
+		color: #e8e9eb !important;
+	}
+	/* Featured Posts in Sidebar */
+	.cherga_featured_posts_list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.cherga_featured_post_item {
+		display: flex;
+		gap: 12px;
+		padding: 12px 0;
+		border-bottom: 1px solid #3a3e43;
+		align-items: flex-start;
+	}
+	.cherga_featured_post_item:last-child {
+		border-bottom: none;
+	}
+	.cherga_featured_post_image {
+		width: 60px;
+		height: 60px;
+		min-width: 60px;
+		object-fit: cover;
+		border-radius: 3px;
+		display: block;
+	}
+	.cherga_featured_post_content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.cherga_featured_post_title {
+		font-size: 14px;
+		font-weight: 600;
+		color: #e8e9eb;
+		text-decoration: none;
+		display: block;
+		margin: 0;
+		line-height: 1.3;
+	}
+	.cherga_featured_post_title:hover {
+		color: #b0b4b9;
+	}
+	.cherga_featured_post_meta {
+		font-size: 12px;
+		color: #9a9ea3;
+		margin: 0;
+	}
+	/* Text Widget */
+	.widget_text .widgettitle {
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #e8e9eb;
+		margin-bottom: 12px;
+		letter-spacing: 0.5px;
+		border-bottom: 1px solid #3a3e43;
+		padding-bottom: 12px;
+	}
+	.widget_text p {
+		font-size: 13px;
+		line-height: 1.6;
+		color: #b0b4b9;
+		margin-bottom: 12px;
+	}
+	.widget_text p:last-child {
+		margin-bottom: 0;
+	}
+	.widget_text img {
+		width: 100%;
+		height: auto;
+		border-radius: 4px;
+	}
+	/* Flickr Button */
+	.cherga_flickr_follow_btn {
+		display: inline-block;
+		padding: 10px 16px;
+		background: #3a3e43;
+		color: #b0b4b9 !important;
+		text-decoration: none !important;
+		border-radius: 3px;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		transition: all 0.2s;
+	}
+	.cherga_flickr_follow_btn:hover {
+		background: #454950;
+		color: #e8e9eb !important;
+	}
+	.cherga_flickr_follow_btn i {
+		margin-right: 6px;
+	}
+	/* Footer Styles */
+	.cherga_footer_inner {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 40px;
+		padding: 60px 0;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.cherga_footer_section {
+		display: flex;
+		flex-direction: column;
+	}
+	.cherga_footer_logo_section {
+		grid-column: 1;
+	}
+	.cherga_footer_heading {
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #e8e9eb;
+		margin-bottom: 16px;
+		letter-spacing: 0.5px;
+	}
+	.cherga_footer_section p {
+		font-size: 13px;
+		line-height: 1.6;
+		color: #b0b4b9;
+		margin-bottom: 12px;
+	}
+	.cherga_footer_section p:last-child {
+		margin-bottom: 0;
+	}
+	.cherga_footer_section a {
+		color: #b0b4b9;
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+	.cherga_footer_section a:hover {
+		color: #e8e9eb;
+	}
+	.cherga_footer_section i {
+		margin-right: 6px;
+	}
+	/* Footer Featured Posts */
+	.cherga_footer_featured_posts {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.cherga_footer_featured_posts li {
+		margin-bottom: 16px;
+		padding-bottom: 16px;
+		border-bottom: 1px solid #3a3e43;
+	}
+	.cherga_footer_featured_posts li:last-child {
+		border-bottom: none;
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+	.cherga_footer_featured_posts a {
+		display: block;
+		font-size: 13px;
+		font-weight: 600;
+		color: #e8e9eb;
+		text-decoration: none;
+		margin-bottom: 4px;
+	}
+	.cherga_footer_featured_posts a:hover {
+		color: #b0b4b9;
+	}
+	.cherga_footer_featured_posts .cherga_post_date {
+		font-size: 12px;
+		color: #9a9ea3;
+	}
+	/* Footer Links */
+	.cherga_footer_links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.cherga_footer_links li {
+		margin-bottom: 8px;
+	}
+	.cherga_footer_links li:last-child {
+		margin-bottom: 0;
+	}
+	.cherga_footer_links a {
+		font-size: 13px;
+		color: #b0b4b9;
+		text-decoration: none;
+	}
+	.cherga_footer_links a:hover {
+		color: #e8e9eb;
+	}
+	/* Footer Bottom */
+	.cherga_footer_bottom {
+		grid-column: 1 / -1;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 20px;
+		border-top: 1px solid #3a3e43;
+	}
+	.cherga_copyright {
+		font-size: 12px;
+		color: #9a9ea3;
+	}
+	.cherga_footer_go_to_top {
+		display: inline-block;
+		padding: 8px 16px;
+		background: #3a3e43;
+		color: #b0b4b9 !important;
+		text-decoration: none !important;
+		border-radius: 3px;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		transition: all 0.2s;
+	}
+	.cherga_footer_go_to_top:hover {
+		background: #454950;
+		color: #e8e9eb !important;
+	}
+	.cherga_footer_go_to_top i {
+		margin-right: 4px;
+	}
 	</style>
 </head>
 
@@ -297,30 +586,57 @@
 
 					<!-- Sidebar -->
 					<div class="cherga_sidebar col3">
-						<!-- Back to blog -->
+						<!-- Back to Blog Link -->
 						<div class="widget widget_text" style="margin-bottom:16px;">
-							<h6 class="widgettitle">Navigation</h6>
-							<p><a href="/">&larr; Back to Blog</a></p>
+							<p><a href="blog.html">&larr; Back to Blog</a></p>
 						</div>
 
-						<!-- Categories widget -->
+						<!-- Categories Widget -->
 						<div class="widget widget_categories" id="blog-sidebar-categories">
-							<h6 class="widgettitle">More by Category</h6>
+							<h6 class="widgettitle">Categories</h6>
 							<ul id="post-category-list"></ul>
+						</div>
+
+						<!-- Featured Posts Widget -->
+						<div class="widget widget_aurel_featured_posts">
+							<h6 class="widgettitle">Featured Posts</h6>
+							<ul class="cherga_featured_posts_list" id="blog-featured-posts-list"></ul>
+						</div>
+
+						<!-- Tag Cloud Widget -->
+						<div class="widget widget_tag_cloud">
+							<h6 class="widgettitle">Popular Tags</h6>
+							<div class="tagcloud" id="post-tag-cloud"></div>
+						</div>
+
+						<!-- Banner Widget -->
+						<div class="widget widget_text">
+							<img src="img/clipart/banner.jpg" alt="Banner">
+						</div>
+
+						<!-- Text Widget -->
+						<div class="widget widget_text">
+							<h6 class="widgettitle">Did you liked my blog?</h6>
+							<p>Leave a comment below or drop me a line.</p>
+						</div>
+
+						<!-- Flickr Follow Widget -->
+						<div class="widget widget_text">
+							<h6 class="widgettitle">Follow on Flickr</h6>
+							<p>
+								<a href="https://www.flickr.com/photos/ivaylodj/" target="_blank" class="cherga_flickr_follow_btn">
+									<i class="fa fa-flickr"></i> Follow on Flickr
+								</a>
+							</p>
 						</div>
 
 						<!-- Share widget -->
 						<div class="widget widget_text">
-							<div class="cherga_post_tags" style="margin-top:0;">
-								<span style="font-weight:bold; font-size:13px;">Share:</span><br><br>
-								<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ivaylodj.com%2Fblog_post.html" target="_blank">Facebook</a> | 
-								<a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.ivaylodj.com%2Fblog_post.html" target="_blank">Twitter/X</a>
-							</div>
-						</div>
-
-						<!-- Banner -->
-						<div class="widget widget_text">
-							<img src="img/clipart/banner.jpg" alt="">
+							<h6 class="widgettitle">Share Post</h6>
+							<p>
+								<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ivaylodj.com%2Fblog_post.html" target="_blank"><i class="fa fa-facebook"></i> Facebook</a><br>
+								<a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.ivaylodj.com%2Fblog_post.html" target="_blank"><i class="fa fa-twitter"></i> Twitter/X</a>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -330,11 +646,49 @@
 		<!-- Footer -->
 		<footer class="cherga_footer cherga_border_on">
 			<div class="cherga_footer_inner cherga_container">
-				<div class="cherga_logo_cont">
-					<a href="index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
+				<!-- Footer Logo -->
+				<div class="cherga_footer_section cherga_footer_logo_section">
+					<div class="cherga_logo_cont">
+						<a href="index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
+					</div>
 				</div>
 
-				<div class="cherga_copyright"><span id="copyright-year"></span></div>
+				<!-- Footer Contact Info -->
+				<div class="cherga_footer_section">
+					<h6 class="cherga_footer_heading">Contact Info</h6>
+					<p>
+						<a href="contacts.html">Get in touch</a> — I'd love to hear from you about photography, travel, or any collaboration opportunities.
+					</p>
+					<p>
+						<a href="https://www.facebook.com/ivaylo.djounov" target="_blank"><i class="fa fa-facebook"></i> Facebook</a> |
+						<a href="https://www.instagram.com/ivaylodj" target="_blank"><i class="fa fa-instagram"></i> Instagram</a> |
+						<a href="https://www.flickr.com/photos/ivaylodj/" target="_blank"><i class="fa fa-flickr"></i> Flickr</a>
+					</p>
+				</div>
+
+				<!-- Footer Featured Posts -->
+				<div class="cherga_footer_section">
+					<h6 class="cherga_footer_heading">Featured Posts</h6>
+					<ul class="cherga_footer_featured_posts" id="footer-featured-posts-list"></ul>
+				</div>
+
+				<!-- Footer Useful Links -->
+				<div class="cherga_footer_section">
+					<h6 class="cherga_footer_heading">Useful Links</h6>
+					<ul class="cherga_footer_links">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="galleries/index.html">Photos</a></li>
+						<li><a href="blog.html">Blog</a></li>
+						<li><a href="about.html">About Me</a></li>
+						<li><a href="contacts.html">Contacts</a></li>
+					</ul>
+				</div>
+
+				<!-- Footer Bottom -->
+				<div class="cherga_footer_bottom">
+					<div class="cherga_copyright"><span id="copyright-year"></span></div>
+					<a href="#" class="cherga_footer_go_to_top"><i class="fa fa-chevron-up"></i> Go to Top</a>
+				</div>
 			</div>
 		</footer>
 
