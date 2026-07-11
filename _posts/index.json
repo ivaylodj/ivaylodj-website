@@ -5,8 +5,8 @@
     "date": "2022-01-22",
     "template": "blog_image",
     "cover_image": "img/clipart/facebook/Sunsets/img-1.jpg",
-    "categories": [],
-    "tags": ["General"],
+    "categories": ["Sunsets", "Nature"],
+    "tags": ["photography", "sunsets", "nature"],
     "excerpt": "Welcome to my photography blog. More posts coming soon."
   },
   {
@@ -15,8 +15,8 @@
     "date": "2022-01-22",
     "template": "blog_standard",
     "cover_image": "img/clipart/facebook/Sunrises/img-1.jpg",
-    "categories": ["General"],
-    "tags": ["General", "Photography"],
+    "categories": ["Photography", "Behind the Scenes"],
+    "tags": ["photography", "travel", "behind-the-scenes"],
     "excerpt": "Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new humble amateur photographer website."
   }
 ]
