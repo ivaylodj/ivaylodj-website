@@ -246,7 +246,6 @@
           autoplayHoverPause: true,
           autoHeight: true
         });
-        $carousel.css('opacity', '1');
       });
     }, 500);
   }
