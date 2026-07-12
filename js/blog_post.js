@@ -167,8 +167,8 @@
         allPosts[i]._originalIndex = i;
       }
       allPosts.sort(function(a, b) {
-        var dateA = new Date(a.date);
-        var dateB = new Date(b.date);
+        var dateA = new Date(a.date).getTime();
+        var dateB = new Date(b.date).getTime();
         if (dateA !== dateB) {
           return dateB - dateA;
         }
@@ -553,8 +553,8 @@
             allPosts[i]._originalIndex = i;
           }
           allPosts.sort(function(a, b) {
-            var dateA = new Date(a.date);
-            var dateB = new Date(b.date);
+            var dateA = new Date(a.date).getTime();
+            var dateB = new Date(b.date).getTime();
             if (dateA !== dateB) {
               return dateB - dateA;
             }

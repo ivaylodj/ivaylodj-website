@@ -28,8 +28,8 @@
         }
         // Stable sort: by date descending, then by original order
         posts.sort(function(a, b) {
-          var dateA = new Date(a.date);
-          var dateB = new Date(b.date);
+          var dateA = new Date(a.date).getTime();
+          var dateB = new Date(b.date).getTime();
           if (dateA !== dateB) {
             return dateB - dateA;
           }
