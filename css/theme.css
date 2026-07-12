@@ -2603,6 +2603,11 @@ a.cherga_read_more_button {
 	font-weight: 400;
 	color: #ffffff;
 	background: #3a3e43;
+	cursor: pointer;
+	pointer-events: auto;
+	text-decoration: none;
+	position: relative;
+	z-index: 10;
 }
 body .standard_post_item .cherga_excerpt {
 	margin-bottom:24px;
