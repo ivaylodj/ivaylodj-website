@@ -162,6 +162,18 @@
       if (postIdx.status !== 200) return;
 
       var allPosts = JSON.parse(postIdx.responseText);
+      // Apply stable sort: by date descending, then by original order
+      for (var i = 0; i < allPosts.length; i++) {
+        allPosts[i]._originalIndex = i;
+      }
+      allPosts.sort(function(a, b) {
+        var dateA = new Date(a.date);
+        var dateB = new Date(b.date);
+        if (dateA !== dateB) {
+          return dateB - dateA;
+        }
+        return a._originalIndex - b._originalIndex;
+      });
       var post = null;
       var postFilename = postFile.match(/\.md$/) ? postFile : postFile + '.md';
       for (var i = 0; i < allPosts.length; i++) {
@@ -536,6 +548,18 @@
           if (postIdx.status !== 200) return;
 
           var allPosts = JSON.parse(postIdx.responseText);
+          // Apply stable sort: by date descending, then by original order
+          for (var i = 0; i < allPosts.length; i++) {
+            allPosts[i]._originalIndex = i;
+          }
+          allPosts.sort(function(a, b) {
+            var dateA = new Date(a.date);
+            var dateB = new Date(b.date);
+            if (dateA !== dateB) {
+              return dateB - dateA;
+            }
+            return a._originalIndex - b._originalIndex;
+          });
           var postFilename = postFile.match(/\.md$/) ? postFile : postFile + '.md';
           var post = null;
 

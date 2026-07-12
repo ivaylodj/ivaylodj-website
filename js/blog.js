@@ -22,8 +22,18 @@
     xhr.onload = function() {
       if (xhr.status === 200) {
         posts = JSON.parse(xhr.responseText);
+        // Add original index to maintain stable sort for same-dated posts
+        for (var i = 0; i < posts.length; i++) {
+          posts[i]._originalIndex = i;
+        }
+        // Stable sort: by date descending, then by original order
         posts.sort(function(a, b) {
-          return new Date(b.date) - new Date(a.date);
+          var dateA = new Date(a.date);
+          var dateB = new Date(b.date);
+          if (dateA !== dateB) {
+            return dateB - dateA;
+          }
+          return a._originalIndex - b._originalIndex;
         });
         buildWidgets();
         renderPosts(posts);
