@@ -18,7 +18,18 @@
 
 ## Important Notes
 
-**Aurel = Cherga (rebranded):** The Aurel theme used in `/Users/ivaylodj/html-themes/other themes/html/aurel/` is the same as the Cherga theme in this project—Aurel is the old name. Both use identical CSS/JS structure, just different class prefixes (aurel_ vs cherga_) in the HTML. When copying Aurel templates, they work with this project's Cherga CSS and JS files.
+**⚠️ CRITICAL: Aurel Theme Reference**
+The Aurel theme codebase is the single source of truth for correct HTML structure and menu patterns:
+```
+/Users/ivaylodj/html-themes/other themes/html/aurel
+```
+**ALWAYS reference this path when:**
+- Analyzing HTML structure and menu patterns
+- Identifying correct CSS class usage (menu-item-has-children, current-menu-item, etc.)
+- Checking submenu nesting and markup patterns
+- Auditing template consistency
+
+**Aurel = Cherga (rebranded):** The Aurel theme is the same as the Cherga theme in this project—Aurel is the old name. Both use identical CSS/JS structure, just different class prefixes (aurel_ vs cherga_) in the HTML. When copying Aurel templates, they work with this project's Cherga CSS and JS files.
 
 ## Current State (as of commit 2c25b91)
 
@@ -140,17 +151,18 @@
 
 ### For Any Agent Working On This Project
 
-1. **Before editing** — read the file with `Read` tool, inspect with `grep/find`
-2. **Verify assumptions** — if code looks wrong, check the actual file; don't guess
-3. **Flag discrepancies** — if reality differs from spec, note it AND fix per intent
-4. **Commit + Push** — always do BOTH in sequence, then verify git push output shows remote change
-5. **Test before claiming** — run `npm test` and show output
-6. **Check live** — after deployment, actually test the feature in browser (not just "tests pass")
-7. **Be precise** — exact file paths (no `./` prefix), exact line numbers, exact strings for find/replace
-8. **Gallery paths** — galleries/ uses `../` for root-level files; galleries/subfolder/ uses `../../`
-9. **No AI attribution** — never add "Co-Authored-By: Claude..." unless explicitly asked
-10. **One task at a time** — commit per logical change, don't batch unrelated fixes
-11. **Always push** — verify git push output shows changes reached GitHub before saying "deployed"
+1. **REFERENCE AUREL FIRST** — Before analyzing or changing HTML structure, check `/Users/ivaylodj/html-themes/other themes/html/aurel` to understand correct patterns
+2. **Before editing** — read the file with `Read` tool, inspect with `grep/find`
+3. **Verify assumptions** — if code looks wrong, check the actual file; don't guess
+4. **Flag discrepancies** — if reality differs from spec, note it AND fix per intent
+5. **Commit + Push** — always do BOTH in sequence, then verify git push output shows remote change
+6. **Test before claiming** — run `npm test` and show output
+7. **Check live** — after deployment, actually test the feature in browser (not just "tests pass")
+8. **Be precise** — exact file paths (no `./` prefix), exact line numbers, exact strings for find/replace
+9. **Gallery paths** — galleries/ uses `../` for root-level files; galleries/subfolder/ uses `../../`
+10. **No AI attribution** — never add "Co-Authored-By: Claude..." unless explicitly asked
+11. **One task at a time** — commit per logical change, don't batch unrelated fixes
+12. **Always push** — verify git push output shows changes reached GitHub before saying "deployed"
 
 ### Feedback Rules
 - **User gives exact instructions** — follow them exactly
