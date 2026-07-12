@@ -230,15 +230,10 @@
 
     renderPagination(postList.length);
 
-    // Initialize carousels for blog_image posts (matching blog_post.js pattern)
+    // Initialize carousels for blog_image posts
     setTimeout(function() {
       jQuery('.cherga_owlCarousel').each(function() {
-        var $carousel = jQuery(this);
-        if ($carousel.hasClass('owl-loaded')) return;
-        $carousel.on('initialized.owl.carousel', function(e) {
-          $carousel.css('opacity', '1');
-        });
-        $carousel.owlCarousel({
+        jQuery(this).owlCarousel({
           items: 1,
           loop: true,
           dots: false,
