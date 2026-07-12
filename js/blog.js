@@ -230,11 +230,14 @@
 
     renderPagination(postList.length);
 
-    // Initialize carousels for blog_image posts
+    // Initialize carousels for blog_image posts (matching blog_post.js pattern)
     setTimeout(function() {
       jQuery('.cherga_owlCarousel').each(function() {
         var $carousel = jQuery(this);
         if ($carousel.hasClass('owl-loaded')) return;
+        $carousel.on('initialized.owl.carousel', function(e) {
+          $carousel.css('opacity', '1');
+        });
         $carousel.owlCarousel({
           items: 1,
           loop: true,
@@ -247,7 +250,7 @@
           autoHeight: true
         });
       });
-    }, 500);
+    }, 100);
   }
 
   function renderPagination(postCount) {

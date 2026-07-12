@@ -793,26 +793,17 @@ input[type="submit"] {
 /* ---------- OWL Carousel ---------- */
 /* ---------------------------------- */
 .cherga_owlCarousel {
+	opacity: 0;
 	position: relative;
-	min-height: 300px;
-}
-.cherga_owlCarousel .owl-stage-outer {
-	display: block !important;
-}
-.cherga_owlCarousel .owl-stage {
-	display: block !important;
 }
 .cherga_owlCarousel .item {
-	display: block !important;
-	width: 100% !important;
-	height: 300px !important;
-	overflow: hidden;
+	display: block;
+	width: 100%;
 }
 .cherga_owlCarousel .item img {
-	display: block !important;
-	width: 100% !important;
-	height: 100% !important;
-	object-fit: cover;
+	display: block;
+	width: 100%;
+	height: auto;
 }
 
 .cherga_ribbon_slider_wrapper.owl-theme .owl-nav,
