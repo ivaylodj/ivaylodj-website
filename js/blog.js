@@ -234,10 +234,6 @@
     setTimeout(function() {
       jQuery('.cherga_owlCarousel:not(.owl-loaded)').each(function() {
         var $carousel = jQuery(this);
-        $carousel.on('initialized.owl.carousel', function(e) {
-          $carousel.css('opacity', '1');
-          $carousel.trigger('refresh.owl.carousel');
-        });
         $carousel.owlCarousel({
           items: 1,
           loop: true,
@@ -249,6 +245,7 @@
           autoplayHoverPause: true,
           autoHeight: true
         });
+        $carousel.css('opacity', '1');
       });
     }, 500);
   }
