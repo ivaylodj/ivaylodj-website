@@ -795,16 +795,24 @@ input[type="submit"] {
 .cherga_owlCarousel {
 	position: relative;
 	min-height: 300px;
-	background-color: #000;
+}
+.cherga_owlCarousel .owl-stage-outer {
+	display: block !important;
+}
+.cherga_owlCarousel .owl-stage {
+	display: block !important;
 }
 .cherga_owlCarousel .item {
-	display: block;
-	width: 100%;
+	display: block !important;
+	width: 100% !important;
+	height: 300px !important;
+	overflow: hidden;
 }
 .cherga_owlCarousel .item img {
-	display: block;
-	width: 100%;
-	height: auto;
+	display: block !important;
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover;
 }
 
 .cherga_ribbon_slider_wrapper.owl-theme .owl-nav,
