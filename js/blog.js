@@ -232,8 +232,9 @@
 
     // Initialize carousels for blog_image posts
     setTimeout(function() {
-      jQuery('.cherga_owlCarousel:not(.owl-loaded)').each(function() {
+      jQuery('.cherga_owlCarousel').each(function() {
         var $carousel = jQuery(this);
+        if ($carousel.hasClass('owl-loaded')) return;
         $carousel.owlCarousel({
           items: 1,
           loop: true,
