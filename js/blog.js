@@ -233,13 +233,15 @@
     // Initialize carousels for blog_image posts
     setTimeout(function() {
       jQuery('.cherga_owlCarousel').each(function() {
+        var $carousel = jQuery(this);
+        var itemCount = $carousel.find('.item').length;
         jQuery(this).owlCarousel({
           items: 1,
-          loop: true,
+          loop: itemCount > 1,
           dots: false,
-          nav: true,
+          nav: itemCount > 1,
           navText: ['', ''],
-          autoplay: true,
+          autoplay: itemCount > 1,
           autoplayTimeout: 5000,
           autoplayHoverPause: true,
           autoHeight: true
