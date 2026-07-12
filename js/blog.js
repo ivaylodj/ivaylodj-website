@@ -23,7 +23,10 @@
       if (xhr.status === 200) {
         posts = JSON.parse(xhr.responseText);
         posts.sort(function(a, b) {
-          return new Date(b.date) - new Date(a.date);
+          var dateCompare = new Date(b.date) - new Date(a.date);
+          if (dateCompare !== 0) return dateCompare;
+          // Secondary sort by filename for stable ordering when dates are equal
+          return a.filename.localeCompare(b.filename);
         });
         buildWidgets();
         renderPosts(posts);
