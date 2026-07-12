@@ -368,6 +368,29 @@
 
         document.getElementById('blog-post-content').innerHTML = html;
 
+        // Initialize Owl Carousel for blog_image template (dynamically inserted)
+        if (template === 'blog_image') {
+          setTimeout(function() {
+            var $carousel = jQuery('.cherga_owlCarousel');
+            if ($carousel.length > 0) {
+              $carousel.on('initialized.owl.carousel', function(e) {
+                $carousel.css('opacity', '1');
+              });
+              $carousel.owlCarousel({
+                items: 1,
+                loop: true,
+                dots: false,
+                nav: true,
+                navText: ['', ''],
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                autoHeight: true
+              });
+            }
+          }, 100);
+        }
+
         // ---- Update page metadata dynamically ----
         document.title = title + ' | Ivaylo Djounov Photography Blog';
 
