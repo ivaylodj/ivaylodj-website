@@ -379,16 +379,14 @@
           setTimeout(function() {
             var $carousel = jQuery('.cherga_owlCarousel');
             if ($carousel.length > 0) {
-              $carousel.on('initialized.owl.carousel', function(e) {
-                $carousel.css('opacity', '1');
-              });
+              var itemCount = $carousel.find('.item').length;
               $carousel.owlCarousel({
                 items: 1,
-                loop: true,
+                loop: itemCount > 1,
                 dots: false,
-                nav: true,
+                nav: itemCount > 1,
                 navText: ['', ''],
-                autoplay: true,
+                autoplay: itemCount > 1,
                 autoplayTimeout: 5000,
                 autoplayHoverPause: true,
                 autoHeight: true
