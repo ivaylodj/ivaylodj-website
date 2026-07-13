@@ -6662,6 +6662,7 @@ body .cherga-counter .cherga-counter-number-suffix:empty {
 /* --- Main Color --- */
 header.cherga_main_header nav.cherga_nav ul.cherga_menu > li:hover > a,
 header.cherga_main_header nav.cherga_nav ul.sub-menu > li:hover > a,
+header.cherga_main_header nav.cherga_nav ul.cherga_menu > li.current-menu-item > a,
 header.cherga_main_header nav.cherga_nav ul.cherga_menu > li.current-menu-ancestor > a,
 header.cherga_main_header nav.cherga_nav ul.sub-menu > li.current-menu-item > a,
 header.cherga_main_header nav.cherga_nav ul.sub-menu > li.current-menu-ancestor > a,
