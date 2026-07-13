@@ -1206,6 +1206,14 @@ jQuery(document).on("click", '.open_sub_menu', function () {
 	jQuery(this).parent('li').children('ul.sub-menu').toggleClass('cherga_mobile_submenu_showed').slideToggle(400);
 });
 
+// Nested Portfolio Menu Toggle for Mobile
+jQuery(document).on("click", '.nested-toggle', function (e) {
+	e.preventDefault();
+	var parent_li = jQuery(this).parent('li');
+	parent_li.toggleClass('expanded');
+	parent_li.children('ul.sub-menu').slideToggle(300);
+});
+
 function cherga_isotop_el_loading() {
 	if (jQuery('.cherga_isotop_el_loading:first').length > 0) {
 		jQuery('.cherga_isotop_el_loading:first').removeClass('cherga_isotop_el_loading');

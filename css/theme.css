@@ -8607,3 +8607,60 @@ body .gm-style .gm-style-mtc div {
 	height: 386px;
 	margin-bottom: 35px;
 }
+
+/* Portfolio Nested Menu Styling */
+.menu-toggle {
+	display: inline-block;
+	margin-left: 4px;
+	font-size: 0.9em;
+	opacity: 0.6;
+	transition: opacity 0.2s ease;
+}
+
+.menu-item-has-children .menu-toggle {
+	position: relative;
+}
+
+/* Mobile Menu Toggle Indicator */
+.menu-toggle-mobile {
+	display: inline-block;
+	margin-left: 6px;
+	font-size: 0.85em;
+	opacity: 0.7;
+	transition: transform 0.3s ease;
+}
+
+/* Nested toggle for mobile menu items */
+.cherga_mobile_nav .nested-toggle {
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.cherga_mobile_nav .nested-toggle:hover {
+	opacity: 0.8;
+}
+
+.cherga_mobile_nav .menu-item-has-children.expanded .menu-toggle-mobile {
+	transform: rotate(90deg);
+}
+
+.cherga_mobile_nav .menu-item-has-children:not(.expanded) > .sub-menu {
+	display: none !important;
+}
+
+.cherga_mobile_nav .menu-item-has-children.expanded > .sub-menu {
+	display: block !important;
+	padding-left: 15px;
+}
+
+.cherga_mobile_nav .menu-item-has-children .sub-menu li {
+	list-style: none;
+	padding: 8px 0;
+}
+
+.cherga_mobile_nav .menu-item-has-children .sub-menu a {
+	padding-left: 10px;
+}
