@@ -21,12 +21,24 @@
   },
   {
     "filename": "2024-06-15-gallery-collection.md",
-    "title": "Interactive Gallery Collection",
+    "title": "Golden Hour Sunsets",
     "date": "2024-06-15",
     "template": "blog_gallery",
-    "cover_image": "img/clipart/facebook/Sunsets/img-2.jpg",
-    "categories": ["Gallery", "Sunsets"],
-    "tags": ["photography", "gallery", "interactive"],
-    "excerpt": "Explore an interactive gallery of sunset photography with clickable lightbox viewer."
+    "cover_image": "img/clipart/facebook/Sunsets/img-1.jpg",
+    "gallery_images": [
+      "img/clipart/facebook/Sunsets/img-1.jpg",
+      "img/clipart/facebook/Sunsets/img-2.jpg",
+      "img/clipart/facebook/Sunsets/img-3.jpg",
+      "img/clipart/facebook/Sunsets/img-4.jpg",
+      "img/clipart/facebook/Sunsets/img-5.jpg",
+      "img/clipart/facebook/Sunsets/img-6.jpg",
+      "img/clipart/facebook/Sunsets/img-7.jpg",
+      "img/clipart/facebook/Sunsets/img-8.jpg",
+      "img/clipart/facebook/Sunsets/img-9.jpg",
+      "img/clipart/facebook/Sunsets/img-10.jpg"
+    ],
+    "categories": ["Sunsets", "Photography"],
+    "tags": ["photography", "sunsets", "golden hour", "landscape"],
+    "excerpt": "A stunning collection of sunset photography exploring the interplay of light, color, and atmosphere during golden hour."
   }
 ]

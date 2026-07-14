@@ -1,28 +1,39 @@
 ---
-title: "Interactive Gallery Collection"
+title: "Golden Hour Sunsets"
 date: 2024-06-15
 template: "blog_gallery"
-cover_image: "img/clipart/facebook/Sunsets/img-2.jpg"
-categories: ["Gallery", "Sunsets"]
-tags: ["photography", "gallery", "interactive"]
-excerpt: "Explore an interactive gallery of sunset photography with clickable lightbox viewer."
+cover_image: "img/clipart/facebook/Sunsets/img-1.jpg"
+categories: ["Sunsets", "Photography"]
+tags: ["photography", "sunsets", "golden hour", "landscape"]
+excerpt: "A stunning collection of sunset photography exploring the interplay of light, color, and atmosphere during golden hour."
 ---
 
-This post demonstrates the **blog_gallery** template, which features an interactive image grid with a PhotoSwipe lightbox viewer. This template is perfect for showcasing multiple images within a single post.
+Sunsets represent some of the most dynamic and emotional moments in landscape photography. The golden hour—that fleeting window of time just before sunset—bathes the landscape in warm, directional light that transforms ordinary scenes into something extraordinary. This collection showcases the endless variety of sunset compositions available to patient photographers.
 
-## Gallery Features
+## The Magic of Golden Hour
 
-- Click any image to enlarge it in a lightbox
-- Navigate between images with arrow keys
-- Responsive grid layout for all screen sizes
-- Full-width presentation optimized for visual impact
+The power of sunset photography lies in understanding how light behaves during these final hours of the day. As the sun descends toward the horizon, its light travels through more atmospheric particles, scattering shorter blue wavelengths and allowing longer red and orange wavelengths to dominate. This creates the characteristic warm tones that define golden hour photography.
 
-The gallery template removes the sidebar to maximize the viewing area for your photography. This makes it ideal for thematic collections or before-and-after comparisons.
+## Composition Strategies
 
-## About This Collection
+The strongest sunset images typically incorporate several compositional elements: a compelling foreground to anchor the viewer, a balanced middle ground, and a dramatic sky that justifies the image's primary focus. Leading lines—whether from terrain, water, or architectural elements—guide the eye through the composition.
 
-Sunsets represent some of the most dynamic moments in landscape photography. The interplay of light, color, and atmosphere creates endless compositional opportunities. Whether you're photographing coastal sunsets or mountain horizons, the key is positioning yourself to capture that fleeting moment when the sun kisses the horizon.
+### Featured Sunset Series
 
----
+The images below showcase different approaches to sunset composition:
 
-**Photography Tip**: Golden hour occurs twice a day—during the hour before sunset and the hour after sunrise. Plan your shoots during these windows for the most dramatic and flattering light.
+![img/clipart/facebook/Sunsets/img-7.jpg](img/clipart/facebook/Sunsets/img-7.jpg)
+
+![img/clipart/facebook/Sunsets/img-8.jpg](img/clipart/facebook/Sunsets/img-8.jpg)
+
+![img/clipart/facebook/Sunsets/img-9.jpg](img/clipart/facebook/Sunsets/img-9.jpg)
+
+![img/clipart/facebook/Sunsets/img-10.jpg](img/clipart/facebook/Sunsets/img-10.jpg)
+
+## Technical Considerations
+
+**Exposure Management**: Sunsets are challenging for metering because of the extreme tonal contrast between sky and foreground. Bracket your exposures liberally—shoot at your meter reading, then at +1 and -1 stops to preserve either the sky or foreground detail.
+
+**White Balance**: While automated white balance often overcompensates during golden hour, shooting in RAW format allows you complete control over color temperature in post-processing. This freedom is invaluable when establishing the mood of your sunset images.
+
+**Timing is Everything**: The best sunset light typically lasts only 20-30 minutes. Scout locations in advance, arrive early, and have your composition previsualized before the peak light arrives.

@@ -217,12 +217,19 @@
             html +=   '</div>';
             html += '</div>';
           } else if (template === 'blog_gallery') {
-            // blog_gallery template: interactive gallery with PhotoSwipe lightbox
+            // blog_gallery template: 3x2 grid gallery with lightbox
             html += '<div class="cherga_post_formats cherga_pf_gallery cherga_pf_boxed">';
-            html +=   '<div class="cherga_gallery_grid" id="blog-gallery">';
-            html +=     '<a href="' + post.cover_image + '" class="cherga_gallery_item">';
-            html +=       '<img src="' + post.cover_image + '" alt="" />';
-            html +=     '</a>';
+            html +=   '<div class="cherga_gallery_grid" id="blog-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">';
+
+            // Render first 6 images in 3x2 grid
+            var galleryImages = post.gallery_images && post.gallery_images.length > 0 ? post.gallery_images : [post.cover_image];
+            var topGridCount = Math.min(6, galleryImages.length);
+            for (var gi = 0; gi < topGridCount; gi++) {
+              html +=     '<a href="' + galleryImages[gi] + '" class="cherga_gallery_item" style="overflow: hidden; display: block;">';
+              html +=       '<img src="' + galleryImages[gi] + '" alt="" style="width: 100%; height: auto; display: block;" />';
+              html +=     '</a>';
+            }
+
             html +=   '</div>';
             html += '</div>';
           } else if (template === 'blog_video') {
