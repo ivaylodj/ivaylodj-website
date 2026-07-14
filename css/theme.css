@@ -2888,6 +2888,7 @@ body .nav-links a.next i {
 }
 .cherga_single_post .cherga_post_formats {
 	margin-bottom: 35px;
+	margin-top: 30px;
 }
 .cherga_post_nav_button a,
 .cherga_post_tags,
@@ -5122,7 +5123,7 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 }
 .cherga_grid_inner.grid_columns4 .grid-item {
 	width: 25%;
-	aspect-ratio: 16 / 9;
+	aspect-ratio: 1 / 1;
 	overflow: hidden;
 }
 .cherga_grid_inner.grid_columns4 .grid-item img {

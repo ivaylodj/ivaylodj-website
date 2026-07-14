@@ -71,28 +71,6 @@ The images below showcase different approaches to sunset composition. Click any 
 </a>
 </div>
 </div>
-<div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
-<div class="grid-item-inner">
-<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-11.jpg" data-size="1920x1280" data-count="10">
-<img src="img/clipart/facebook/Sunsets/img-11.jpg" alt=""/>
-<div class="grid-item-content">
-<h4>Twilight Shores</h4>
-</div>
-<div class="grid-item-overlay cherga_js_bg_color" data-bgcolor="rgba(17,17,17,0.3)"></div>
-</a>
-</div>
-</div>
-<div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
-<div class="grid-item-inner">
-<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-12.jpg" data-size="1920x1280" data-count="11">
-<img src="img/clipart/facebook/Sunsets/img-12.jpg" alt=""/>
-<div class="grid-item-content">
-<h4>Dusk Over Water</h4>
-</div>
-<div class="grid-item-overlay cherga_js_bg_color" data-bgcolor="rgba(17,17,17,0.3)"></div>
-</a>
-</div>
-</div>
 </div>
 </div>
 </div>
