@@ -206,14 +206,37 @@
         var html = '';
 
         // Cover image (post-format block - varies by template)
-        if (post.cover_image) {
+        if (post.cover_image || template === 'blog_video' || template === 'blog_audio') {
           if (template === 'blog_image') {
-            // blog_image template: owl carousel
+            // blog_image template: owl carousel slider
             html += '<div class="cherga_post_formats cherga_pf_image cherga_pf_boxed">';
             html +=   '<div class="cherga_owlCarousel owl-carousel owl-theme">';
             html +=     '<div class="item">';
             html +=       '<img src="' + post.cover_image + '" alt="" />';
             html +=     '</div>';
+            html +=   '</div>';
+            html += '</div>';
+          } else if (template === 'blog_gallery') {
+            // blog_gallery template: interactive gallery with PhotoSwipe lightbox
+            html += '<div class="cherga_post_formats cherga_pf_gallery cherga_pf_boxed">';
+            html +=   '<div class="cherga_gallery_grid" id="blog-gallery">';
+            html +=     '<a href="' + post.cover_image + '" class="cherga_gallery_item">';
+            html +=       '<img src="' + post.cover_image + '" alt="" />';
+            html +=     '</a>';
+            html +=   '</div>';
+            html += '</div>';
+          } else if (template === 'blog_video') {
+            // blog_video template: embedded video (Vimeo)
+            html += '<div class="cherga_post_formats cherga_pf_video cherga_pf_boxed">';
+            html +=   '<div class="cherga_video_container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">';
+            html +=     '<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="' + post.cover_image + '" allowfullscreen allow="autoplay"></iframe>';
+            html +=   '</div>';
+            html += '</div>';
+          } else if (template === 'blog_audio') {
+            // blog_audio template: embedded audio (SoundCloud)
+            html += '<div class="cherga_post_formats cherga_pf_audio cherga_pf_boxed">';
+            html +=   '<div class="cherga_audio_container">';
+            html +=     '<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="' + post.cover_image + '"></iframe>';
             html +=   '</div>';
             html += '</div>';
           } else {
@@ -374,9 +397,10 @@
 
         document.getElementById('blog-post-content').innerHTML = html;
 
-        // Initialize Owl Carousel for blog_image template (dynamically inserted)
-        if (template === 'blog_image') {
-          setTimeout(function() {
+        // Initialize template-specific functionality
+        setTimeout(function() {
+          if (template === 'blog_image') {
+            // Initialize Owl Carousel for blog_image template
             var $carousel = jQuery('.cherga_owlCarousel');
             if ($carousel.length > 0) {
               var itemCount = $carousel.find('.item').length;
@@ -392,8 +416,21 @@
                 autoHeight: true
               });
             }
-          }, 100);
-        }
+          } else if (template === 'blog_gallery') {
+            // Initialize PhotoSwipe for blog_gallery template
+            var galleryLinks = document.querySelectorAll('#blog-gallery a');
+            if (galleryLinks.length > 0) {
+              galleryLinks.forEach(function(link) {
+                link.onclick = function(e) {
+                  e.preventDefault();
+                  // Basic lightbox behavior: open link in new tab as fallback
+                  window.open(link.href, '_blank');
+                };
+              });
+            }
+          }
+        }, 100);
+
 
         // ---- Update page metadata dynamically ----
         document.title = title + ' | Ivaylo Djounov Photography Blog';
@@ -562,8 +599,12 @@
           // Build sidebar widgets
           buildSidebarWidgets(allPosts, postFilename);
 
-          if (post && post.template === 'blog_image') {
-            // blog_image template: full-width, no sidebar
+          // Determine if template should use full width (no sidebar)
+          var fullWidthTemplates = ['blog_image', 'blog_gallery', 'blog_video'];
+          var shouldBeFullWidth = post && fullWidthTemplates.indexOf(post.template) !== -1;
+
+          if (shouldBeFullWidth) {
+            // These templates are full-width, no sidebar
             var wrapper = document.querySelector('.cherga_content_wrapper');
             if (wrapper) {
               wrapper.classList.remove('cherga_right_sidebar');
