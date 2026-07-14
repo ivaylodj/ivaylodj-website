@@ -2545,6 +2545,13 @@ body .standard_post_item .cherga_post_formats {
 }
 .cherga_pf_gallery3 .cherga_pf_gallery_item {
 	width: 33.33%;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+}
+.cherga_pf_gallery3 .cherga_pf_gallery_item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .cherga_pf_gallery4 .cherga_pf_gallery_item {
 	width: 25%;
@@ -5115,6 +5122,13 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 }
 .cherga_grid_inner.grid_columns4 .grid-item {
 	width: 25%;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+}
+.cherga_grid_inner.grid_columns4 .grid-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .cherga_grid_inner.grid_columns5 .grid-item {
 	width: 20%;

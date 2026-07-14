@@ -29,7 +29,7 @@ The images below showcase different approaches to sunset composition. Click any 
 <div class="cherga_grid_inner cherga_isotope_trigger grid_columns4 hover_type_gradient_caption side_paddings_on cherga_ml_-10">
 <div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
 <div class="grid-item-inner">
-<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-7.jpg" data-size="1920x1280" data-count="0">
+<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-7.jpg" data-size="1920x1280" data-count="6">
 <img src="img/clipart/facebook/Sunsets/img-7.jpg" alt=""/>
 <div class="grid-item-content">
 <h4>Coastal Serenity</h4>
@@ -40,7 +40,7 @@ The images below showcase different approaches to sunset composition. Click any 
 </div>
 <div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
 <div class="grid-item-inner">
-<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-8.jpg" data-size="1920x1280" data-count="1">
+<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-8.jpg" data-size="1920x1280" data-count="7">
 <img src="img/clipart/facebook/Sunsets/img-8.jpg" alt=""/>
 <div class="grid-item-content">
 <h4>Desert Horizon</h4>
@@ -51,7 +51,7 @@ The images below showcase different approaches to sunset composition. Click any 
 </div>
 <div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
 <div class="grid-item-inner">
-<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-9.jpg" data-size="1920x1280" data-count="2">
+<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-9.jpg" data-size="1920x1280" data-count="8">
 <img src="img/clipart/facebook/Sunsets/img-9.jpg" alt=""/>
 <div class="grid-item-content">
 <h4>Mountain Glow</h4>
@@ -62,10 +62,32 @@ The images below showcase different approaches to sunset composition. Click any 
 </div>
 <div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
 <div class="grid-item-inner">
-<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-10.jpg" data-size="1920x1280" data-count="3">
+<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-10.jpg" data-size="1920x1280" data-count="9">
 <img src="img/clipart/facebook/Sunsets/img-10.jpg" alt=""/>
 <div class="grid-item-content">
 <h4>Water Reflection</h4>
+</div>
+<div class="grid-item-overlay cherga_js_bg_color" data-bgcolor="rgba(17,17,17,0.3)"></div>
+</a>
+</div>
+</div>
+<div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
+<div class="grid-item-inner">
+<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-11.jpg" data-size="1920x1280" data-count="10">
+<img src="img/clipart/facebook/Sunsets/img-11.jpg" alt=""/>
+<div class="grid-item-content">
+<h4>Twilight Shores</h4>
+</div>
+<div class="grid-item-overlay cherga_js_bg_color" data-bgcolor="rgba(17,17,17,0.3)"></div>
+</a>
+</div>
+</div>
+<div class="grid-item element grid_b2p cherga_pb_10 cherga_pl_10">
+<div class="grid-item-inner">
+<a class="cherga_pswp_slide cherga_drag_protect cherga_dp cherga_no_select" href="img/clipart/facebook/Sunsets/img-12.jpg" data-size="1920x1280" data-count="11">
+<img src="img/clipart/facebook/Sunsets/img-12.jpg" alt=""/>
+<div class="grid-item-content">
+<h4>Dusk Over Water</h4>
 </div>
 <div class="grid-item-overlay cherga_js_bg_color" data-bgcolor="rgba(17,17,17,0.3)"></div>
 </a>
