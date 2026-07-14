@@ -217,17 +217,19 @@
             html +=   '</div>';
             html += '</div>';
           } else if (template === 'blog_gallery') {
-            // blog_gallery template: 3x2 grid gallery with lightbox
+            // blog_gallery template: 3x2 grid (top) with lightbox, matching Aurel style
             html += '<div class="cherga_post_formats cherga_pf_gallery cherga_pf_boxed">';
-            html +=   '<div class="cherga_gallery_grid" id="blog-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">';
+            html +=   '<div class="cherga_pf_gallery cherga_pf_gallery3 cherga_photoswipe_wrapper" data-uniqid="' + Math.random().toString(36).substr(2, 9) + '">';
 
             // Render first 6 images in 3x2 grid
             var galleryImages = post.gallery_images && post.gallery_images.length > 0 ? post.gallery_images : [post.cover_image];
             var topGridCount = Math.min(6, galleryImages.length);
             for (var gi = 0; gi < topGridCount; gi++) {
-              html +=     '<a href="' + galleryImages[gi] + '" class="cherga_gallery_item" style="overflow: hidden; display: block;">';
-              html +=       '<img src="' + galleryImages[gi] + '" alt="" style="width: 100%; height: auto; display: block;" />';
-              html +=     '</a>';
+              html +=     '<div class="cherga_pf_gallery_item">';
+              html +=       '<a rel="pf_gallery_' + post.filename + '" href="' + galleryImages[gi] + '" class="cherga_pswp_slide cherga_dp cherga_no_select" data-size="1920x1280" data-count="' + gi + '">';
+              html +=         '<img src="' + galleryImages[gi] + '" alt="" />';
+              html +=       '</a>';
+              html +=     '</div>';
             }
 
             html +=   '</div>';
@@ -423,19 +425,8 @@
                 autoHeight: true
               });
             }
-          } else if (template === 'blog_gallery') {
-            // Initialize PhotoSwipe for blog_gallery template
-            var galleryLinks = document.querySelectorAll('#blog-gallery a');
-            if (galleryLinks.length > 0) {
-              galleryLinks.forEach(function(link) {
-                link.onclick = function(e) {
-                  e.preventDefault();
-                  // Basic lightbox behavior: open link in new tab as fallback
-                  window.open(link.href, '_blank');
-                };
-              });
-            }
           }
+          // PhotoSwipe galleries are initialized by theme.js for all .cherga_photoswipe_wrapper elements
         }, 100);
 
 
