@@ -838,34 +838,21 @@ jQuery(window).on('load', function () {
 	}
 
 	// Sticky Menu Scroll Listener
-	console.log('cherga_header element:', cherga_header[0], 'length:', cherga_header.length);
-	console.log('Checking sticky menu conditions:', {
-		hasClass: cherga_header.hasClass('cherga_sticky_menu_on'),
-		fixedFooter: jQuery('.cherga_site_wrapper').hasClass('fixed_header_footer')
-	});
-
 	if (cherga_header.hasClass('cherga_sticky_menu_on') && !jQuery('.cherga_site_wrapper').hasClass('fixed_header_footer')) {
-		console.log('Attaching scroll listener');
 		window.addEventListener('scroll', function() {
 			var scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-			console.log('Scroll event fired:', scrollTop, 'width:', window.innerWidth);
 			if (scrollTop > 0 && window.innerWidth > 1024) {
 				if (!cherga_header.hasClass('cherga_stick_me')) {
-					console.log('Adding cherga_stick_me class');
 					cherga_header.addClass('cherga_stick_me');
-					console.log('After addClass, classes are:', cherga_header.attr('class'));
 					cherga_theme_setup();
 				}
 			} else {
 				if (cherga_header.hasClass('cherga_stick_me')) {
-					console.log('Removing cherga_stick_me class');
 					cherga_header.removeClass('cherga_stick_me');
 					cherga_theme_setup();
 				}
 			}
 		});
-	} else {
-		console.log('Scroll listener NOT attached - conditions failed');
 	}
 
 	// Isotope Activation
