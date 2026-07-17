@@ -22,12 +22,23 @@ The strongest sunset images typically incorporate several compositional elements
 
 The images below showcase different approaches to sunset composition. Click any image to view it enlarged in an interactive lightbox viewer.
 
+<!-- GALLERY_CONFIG
+top_gallery:
+  columns: 3
+  rows: 2
+  aspect_ratio: 5/4
+bottom_gallery:
+  columns: 4
+  rows: 1
+  aspect_ratio: 1/1
+END_GALLERY_CONFIG -->
+
 <!-- 
 ================================================================================
 PARAMETRIZED GALLERY SYSTEM
 ================================================================================
 
-CONFIGURATION LOCATION: _posts/index.json (gallery_config object)
+CONFIGURATION LOCATION: This .md file (GALLERY_CONFIG comment at top of file - FULLY EDITABLE)
 
 GALLERY LAYOUT: TOP GALLERY (3x2 GRID)
   - Columns: 3 (width: 33.33% each)
@@ -56,19 +67,17 @@ IMAGE FITTING RULES (ALL GALLERIES):
      
   c) IMPLEMENTATION: object-fit: cover with object-position: center
 
-PARAMETRIZATION EXAMPLE (from _posts/index.json):
-  "gallery_config": {
-    "top_gallery": {
-      "count": 6,
-      "columns": 3,
-      "aspect_ratio": "5/4"
-    },
-    "bottom_gallery": {
-      "count": 4,
-      "columns": 4,
-      "aspect_ratio": "1/1"
-    }
-  }
+PARAMETRIZATION (from GALLERY_CONFIG comment in this .md file):
+  <!-- GALLERY_CONFIG
+  top_gallery:
+    columns: 3
+    rows: 2
+    aspect_ratio: 5/4
+  bottom_gallery:
+    columns: 4
+    rows: 1
+    aspect_ratio: 1/1
+  END_GALLERY_CONFIG -->
 
 SUPPORTED ASPECT RATIOS:
   - 5/4    (1.25:1) - landscape, default for multi-image grids

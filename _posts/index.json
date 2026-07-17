@@ -37,18 +37,6 @@
       "img/clipart/facebook/Sunsets/img-9.jpg",
       "img/clipart/facebook/Sunsets/img-10.jpg"
     ],
-    "gallery_config": {
-      "top_gallery": {
-        "count": 6,
-        "columns": 3,
-        "aspect_ratio": "5/4"
-      },
-      "bottom_gallery": {
-        "count": 4,
-        "columns": 4,
-        "aspect_ratio": "1/1"
-      }
-    },
     "categories": ["Sunsets", "Photography"],
     "tags": ["photography", "sunsets", "golden hour", "landscape"],
     "excerpt": "A stunning collection of sunset photography exploring the interplay of light, color, and atmosphere during golden hour."
