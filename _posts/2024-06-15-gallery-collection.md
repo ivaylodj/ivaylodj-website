@@ -8,6 +8,17 @@ tags: ["photography", "sunsets", "golden hour", "landscape"]
 excerpt: "A stunning collection of sunset photography exploring the interplay of light, color, and atmosphere during golden hour."
 ---
 
+<!-- GALLERY_CONFIG
+top_gallery:
+  columns: 3
+  rows: 2
+  aspect_ratio: 5/4
+bottom_gallery:
+  columns: 4
+  rows: 1
+  aspect_ratio: 1/1
+END_GALLERY_CONFIG -->
+
 Sunsets represent some of the most dynamic and emotional moments in landscape photography. The golden hour—that fleeting window of time just before sunset—bathes the landscape in warm, directional light that transforms ordinary scenes into something extraordinary. This collection showcases the endless variety of sunset compositions available to patient photographers.
 
 ## The Magic of Golden Hour
@@ -21,94 +32,6 @@ The strongest sunset images typically incorporate several compositional elements
 ### Featured Sunset Series
 
 The images below showcase different approaches to sunset composition. Click any image to view it enlarged in an interactive lightbox viewer.
-
-<!-- GALLERY_CONFIG
-top_gallery:
-  columns: 3
-  rows: 2
-  aspect_ratio: 5/4
-bottom_gallery:
-  columns: 4
-  rows: 1
-  aspect_ratio: 1/1
-END_GALLERY_CONFIG -->
-
-<!-- 
-================================================================================
-PARAMETRIZED GALLERY SYSTEM
-================================================================================
-
-CONFIGURATION LOCATION: This .md file (GALLERY_CONFIG comment at top of file - FULLY EDITABLE)
-
-GALLERY LAYOUT: TOP GALLERY (3x2 GRID)
-  - Columns: 3 (width: 33.33% each)
-  - Rows: 2
-  - Images: 1-6 from gallery_images array
-  - Aspect Ratio: 5:4 (landscape orientation)
-  - Config in index.json: top_gallery
-
-GRID STRUCTURE (TOP):
-  ROW 1: img-1.jpg | img-2.jpg | img-3.jpg
-  ROW 2: img-4.jpg | img-5.jpg | img-6.jpg
-
-PLACEHOLDER DIMENSIONS (TOP):
-  - Per item width: 33.33% of container
-  - Per item height: calculated from 5:4 aspect ratio
-  - Example: 300px × 240px for 900px container width
-
-IMAGE FITTING RULES (ALL GALLERIES):
-  a) LANDSCAPE IMAGES (width > height):
-     - Scale to fill placeholder height
-     - Centered horizontally, no black bars
-     
-  b) PORTRAIT IMAGES (height > width):
-     - Scale to fill placeholder width
-     - Centered vertically, no black bars
-     
-  c) IMPLEMENTATION: object-fit: cover with object-position: center
-
-PARAMETRIZATION (from GALLERY_CONFIG comment in this .md file):
-  <!-- GALLERY_CONFIG
-  top_gallery:
-    columns: 3
-    rows: 2
-    aspect_ratio: 5/4
-  bottom_gallery:
-    columns: 4
-    rows: 1
-    aspect_ratio: 1/1
-  END_GALLERY_CONFIG -->
-
-SUPPORTED ASPECT RATIOS:
-  - 5/4    (1.25:1) - landscape, default for multi-image grids
-  - 1/1    (1:1)    - square, for gallery grids
-  - 16/9   (1.78:1) - widescreen
-  - 4/3    (1.33:1) - classic
-  - 3/2    (1.5:1)  - medium landscape
-
-INTERACTIVITY:
-  - PhotoSwipe lightbox on click
-  - Full-resolution images in lightbox
-  - Metadata: data-size and data-count attributes
-
-HOW TO CUSTOMIZE:
-  1. Edit _posts/index.json gallery_config section
-  2. Change "columns" for different grid layouts (2-5 columns)
-  3. Change "aspect_ratio" to use different proportions
-  4. Change "count" to show more/fewer images
-  5. CSS automatically applies via data-aspect-ratio attribute
-
-================================================================================
--->
-
-<!-- GALLERY LAYOUT: 4x1 GRID (4 SQUARE IMAGES WITH CAPTIONS)
-  ROW 1: img-7.jpg | img-8.jpg | img-9.jpg | img-10.jpg
-  
-  Images img-7 through img-10 use grid_columns4 layout (4 equal columns,
-  1:1 square aspect ratio with object-fit: cover). Each image includes
-  a caption and hover gradient overlay. PhotoSwipe lightbox available
-  on click.
--->
 
 <div class="cherga_widget_pm_grid_gallery cherga_mb_15">
 <div class="cherga_widget_container">
