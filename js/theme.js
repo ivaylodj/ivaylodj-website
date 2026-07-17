@@ -837,8 +837,15 @@ jQuery(window).on('load', function () {
 		setTimeout("jQuery('.cherga_preloader_wrapper').remove()", 1200);
 	}
 
-	// Sticky Menu Scroll Listener
+	// Sticky Menu Setup
 	if (cherga_header.hasClass('cherga_sticky_menu_on') && !jQuery('.cherga_site_wrapper').hasClass('fixed_header_footer')) {
+		// Create header placeholder to prevent content jump when header becomes fixed
+		if (cherga_header.hasClass('cherga_header_solid_style')) {
+			cherga_header.after('<div class="cherga_header_holder"></div>');
+			jQuery('.cherga_header_holder').height(cherga_header.height());
+		}
+
+		// Scroll Listener
 		window.addEventListener('scroll', function() {
 			var scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 			if (scrollTop > 0 && window.innerWidth > 1024) {
