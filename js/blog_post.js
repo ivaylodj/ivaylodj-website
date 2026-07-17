@@ -462,8 +462,10 @@
                 autoHeight: true
               });
             }
+          } else if (template === 'blog_gallery') {
+            // Initialize PhotoSwipe for blog_gallery template
+            initializePhotoSwipe();
           }
-          // PhotoSwipe galleries are initialized by theme.js for all .cherga_photoswipe_wrapper elements
         }, 100);
 
 
@@ -496,6 +498,69 @@
       contentXhr.send();
     };
     postIdx.send();
+  }
+
+  function initializePhotoSwipe() {
+    // Ensure PhotoSwipe container exists
+    var pswp = document.querySelector('.pswp');
+    if (!pswp) {
+      var pswpHtml = '<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">' +
+        '<div class="pswp__bg"></div>' +
+        '<div class="pswp__scroll-wrap">' +
+          '<div class="pswp__container"><div class="pswp__item"></div><div class="pswp__item"></div><div class="pswp__item"></div></div>' +
+          '<div class="pswp__ui pswp__ui--hidden">' +
+            '<div class="pswp__top-bar"><div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button><button class="pswp__button pswp__button--share" title="Share"></button><button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button></div>' +
+            '<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>' +
+            '<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>' +
+            '<div class="pswp__caption"><div class="pswp__caption__center"></div></div>' +
+          '</div>' +
+        '</div>' +
+        '</div>';
+      document.body.appendChild((function() {
+        var div = document.createElement('div');
+        div.innerHTML = pswpHtml;
+        return div.firstChild;
+      })());
+      pswp = document.querySelector('.pswp');
+    }
+
+    // Build gallery array indexed by data-uniqid
+    var galleryArray = {};
+    jQuery('.cherga_photoswipe_wrapper').each(function() {
+      var galleryId = jQuery(this).attr('data-uniqid');
+      galleryArray['gallery_' + galleryId] = { slides: [] };
+
+      jQuery(this).find('.cherga_pswp_slide').each(function() {
+        var href = jQuery(this).attr('href');
+        var size = jQuery(this).data('size') || '1920x1280';
+        var sizeParts = size.split('x');
+        galleryArray['gallery_' + galleryId].slides.push({
+          src: href,
+          w: parseInt(sizeParts[0]),
+          h: parseInt(sizeParts[1])
+        });
+      });
+    });
+
+    // Handle clicks on gallery images
+    jQuery(document).on('click', '.cherga_pswp_slide', function(e) {
+      e.preventDefault();
+      var $this = jQuery(this);
+      var galleryId = $this.parents('.cherga_photoswipe_wrapper').attr('data-uniqid');
+      var index = parseInt($this.attr('data-count'), 10);
+
+      var gallery = galleryArray['gallery_' + galleryId];
+      if (!gallery || !gallery.slides) return;
+
+      var options = {
+        index: index,
+        bgOpacity: 0.7,
+        showHideOpacity: true
+      };
+
+      var lightBox = new PhotoSwipe(pswp, PhotoSwipeUI_Default, gallery.slides, options);
+      lightBox.init();
+    });
   }
 
   function formatDate(dateStr) {
