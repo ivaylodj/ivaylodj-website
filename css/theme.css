@@ -2545,7 +2545,7 @@ body .standard_post_item .cherga_post_formats {
 }
 .cherga_pf_gallery3 .cherga_pf_gallery_item {
 	width: 33.33%;
-	aspect-ratio: 3 / 2;
+	aspect-ratio: 5 / 4;
 	overflow: hidden;
 }
 .cherga_pf_gallery3 .cherga_pf_gallery_item a {

@@ -22,18 +22,43 @@ The strongest sunset images typically incorporate several compositional elements
 
 The images below showcase different approaches to sunset composition. Click any image to view it enlarged in an interactive lightbox viewer.
 
-<!-- GALLERY LAYOUT: 3x2 GRID (6 IMAGES FROM gallery_images ARRAY)
+<!-- 
+================================================================================
+GALLERY LAYOUT: 3x2 GRID (3 IMAGES PER ROW, 2 ROWS)
+================================================================================
+
+GRID STRUCTURE:
   ROW 1: img-1.jpg | img-2.jpg | img-3.jpg
   ROW 2: img-4.jpg | img-5.jpg | img-6.jpg
-  
-  PLACEHOLDER SIZE: 3:2 aspect ratio (landscape orientation)
-  IMAGE FITTING: object-fit: cover with object-position: center
-  - Landscape images: match placeholder height, no black bars
-  - Portrait images: centered vertically, shorter side fills placeholder width
-  
-  Images img-1 through img-6 are rendered automatically by blog_post.js
-  based on the gallery_images metadata array (from _posts/index.json).
-  PhotoSwipe lightbox available on click for full-screen viewing.
+
+IMAGE SOURCE:
+  - Images 1-6 are rendered by blog_post.js using gallery_images array
+  - Metadata source: _posts/index.json (first 6 entries of gallery_images)
+
+PLACEHOLDER DIMENSIONS:
+  - Width: 33.33% of container (3 columns)
+  - Aspect Ratio: 5:4 (exactly matches Aurel reference template)
+  - Size example: 300px wide × 240px tall
+
+IMAGE FITTING RULES (per Aurel template):
+  a) LANDSCAPE IMAGES (width > height):
+     - Scale to fill placeholder height
+     - Centered horizontally
+     - No black bars on sides
+     
+  b) PORTRAIT IMAGES (height > width):
+     - Scale to fill placeholder width
+     - Centered vertically
+     - No black bars top/bottom
+     
+  c) IMPLEMENTATION: object-fit: cover with object-position: center
+
+INTERACTIVITY:
+  - PhotoSwipe lightbox available on click
+  - Full-resolution images available in lightbox
+  - Lightbox metadata from data-size and data-count attributes
+
+================================================================================
 -->
 
 <!-- GALLERY LAYOUT: 4x1 GRID (4 SQUARE IMAGES WITH CAPTIONS)
