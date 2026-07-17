@@ -26,10 +26,15 @@ The images below showcase different approaches to sunset composition. Click any 
   ROW 1: img-1.jpg | img-2.jpg | img-3.jpg
   ROW 2: img-4.jpg | img-5.jpg | img-6.jpg
   
+  PLACEHOLDER SIZE: 16:9 aspect ratio (fixed dimensions per column)
+  IMAGE FITTING: object-fit: cover with object-position: center
+  - Landscape images: scale to fill placeholder height
+  - Portrait images: centered vertically within placeholder
+  
   Images img-1 through img-6 are rendered automatically by blog_post.js
-  based on the gallery_images metadata array. Each image maintains its
-  natural aspect ratio (not forced to uniform size). PhotoSwipe lightbox
-  is available on click for full-screen viewing.
+  based on the gallery_images metadata array (from _posts/index.json).
+  No image distortion; all images properly centered in their placeholders.
+  PhotoSwipe lightbox available on click for full-screen viewing.
 -->
 
 <!-- GALLERY LAYOUT: 4x1 GRID (4 SQUARE IMAGES WITH CAPTIONS)
