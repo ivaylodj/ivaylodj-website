@@ -996,6 +996,8 @@ function cherga_theme_setup() {
 			} else {
 				cherga_header.removeClass('cherga_stick_me');
 			}
+			// Update header holder height when header collapses/expands
+			jQuery('.cherga_header_holder').height(cherga_header.height());
 		});
 	}
 
