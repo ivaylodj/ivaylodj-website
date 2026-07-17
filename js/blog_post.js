@@ -11,6 +11,9 @@
   // ---------------------------------------------------------------
 
   function parseMd(md) {
+    // Strip HTML comments before parsing
+    md = md.replace(/<!--[\s\S]*?-->/g, '');
+
     var lines = md.split('\n');
     var result = [];
     var inList = false;
