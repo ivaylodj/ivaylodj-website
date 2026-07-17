@@ -22,6 +22,25 @@ The strongest sunset images typically incorporate several compositional elements
 
 The images below showcase different approaches to sunset composition. Click any image to view it enlarged in an interactive lightbox viewer.
 
+<!-- GALLERY LAYOUT: 3x2 GRID (6 IMAGES FROM gallery_images ARRAY)
+  ROW 1: img-1.jpg | img-2.jpg | img-3.jpg
+  ROW 2: img-4.jpg | img-5.jpg | img-6.jpg
+  
+  Images img-1 through img-6 are rendered automatically by blog_post.js
+  based on the gallery_images metadata array. Each image maintains its
+  natural aspect ratio (not forced to uniform size). PhotoSwipe lightbox
+  is available on click for full-screen viewing.
+-->
+
+<!-- GALLERY LAYOUT: 4x1 GRID (4 SQUARE IMAGES WITH CAPTIONS)
+  ROW 1: img-7.jpg | img-8.jpg | img-9.jpg | img-10.jpg
+  
+  Images img-7 through img-10 use grid_columns4 layout (4 equal columns,
+  1:1 square aspect ratio with object-fit: cover). Each image includes
+  a caption and hover gradient overlay. PhotoSwipe lightbox available
+  on click.
+-->
+
 <div class="cherga_widget_pm_grid_gallery cherga_mb_15">
 <div class="cherga_widget_container">
 <div class="cherga_front_end_display">
