@@ -1183,6 +1183,9 @@ header.cherga_main_header .cherga_header_right_part {
 header.cherga_main_header .cherga_logo_cont {
 	padding: 40px 0;
 }
+header.cherga_sticky_menu_on .cherga_logo_cont {
+	transition: all 200ms;
+}
 header.cherga_sticky_menu_on.cherga_stick_me .cherga_logo_cont {
 	padding: 10px 0;
 }
@@ -1205,6 +1208,7 @@ header.cherga_main_header.cherga_logo_middle .cherga_header_socials,
 header.cherga_main_header.cherga_logo_left .cherga_header_socials {
 	margin-right: 40px;
 	white-space: nowrap;
+	transition: margin 200ms;
 }
 header.cherga_main_header.cherga_logo_middle nav.cherga_nav {
 	padding-left: 24px;
