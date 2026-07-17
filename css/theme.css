@@ -2543,16 +2543,56 @@ body .standard_post_item .cherga_post_formats {
 .cherga_pf_gallery2 .cherga_pf_gallery_item {
 	width: 50%;
 }
+/* Gallery column layouts */
+.cherga_pf_gallery2 .cherga_pf_gallery_item {
+	width: 50%;
+}
 .cherga_pf_gallery3 .cherga_pf_gallery_item {
 	width: 33.33%;
-	aspect-ratio: 5 / 4;
+}
+.cherga_pf_gallery4 .cherga_pf_gallery_item {
+	width: 25%;
+}
+.cherga_pf_gallery5 .cherga_pf_gallery_item {
+	width: 20%;
+}
+
+/* Aspect ratio control via data attribute */
+.cherga_pf_gallery[data-aspect-ratio] .cherga_pf_gallery_item {
 	overflow: hidden;
 }
-.cherga_pf_gallery3 .cherga_pf_gallery_item a {
+
+/* Default: 5:4 (landscape) */
+.cherga_pf_gallery[data-aspect-ratio="5/4"] .cherga_pf_gallery_item {
+	aspect-ratio: 5 / 4;
+}
+
+/* Square: 1:1 */
+.cherga_pf_gallery[data-aspect-ratio="1/1"] .cherga_pf_gallery_item {
+	aspect-ratio: 1 / 1;
+}
+
+/* Other ratios for future use */
+.cherga_pf_gallery[data-aspect-ratio="16/9"] .cherga_pf_gallery_item {
+	aspect-ratio: 16 / 9;
+}
+
+.cherga_pf_gallery[data-aspect-ratio="4/3"] .cherga_pf_gallery_item {
+	aspect-ratio: 4 / 3;
+}
+
+.cherga_pf_gallery[data-aspect-ratio="3/2"] .cherga_pf_gallery_item {
+	aspect-ratio: 3 / 2;
+}
+
+/* Image fitting in gallery items */
+.cherga_pf_gallery_item a {
 	width: 100%;
 	height: 100%;
+	display: block;
 }
-.cherga_pf_gallery3 .cherga_pf_gallery_item img {
+
+.cherga_pf_gallery_item img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;

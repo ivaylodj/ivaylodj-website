@@ -24,39 +24,70 @@ The images below showcase different approaches to sunset composition. Click any 
 
 <!-- 
 ================================================================================
-GALLERY LAYOUT: 3x2 GRID (3 IMAGES PER ROW, 2 ROWS)
+PARAMETRIZED GALLERY SYSTEM
 ================================================================================
 
-GRID STRUCTURE:
+CONFIGURATION LOCATION: _posts/index.json (gallery_config object)
+
+GALLERY LAYOUT: TOP GALLERY (3x2 GRID)
+  - Columns: 3 (width: 33.33% each)
+  - Rows: 2
+  - Images: 1-6 from gallery_images array
+  - Aspect Ratio: 5:4 (landscape orientation)
+  - Config in index.json: top_gallery
+
+GRID STRUCTURE (TOP):
   ROW 1: img-1.jpg | img-2.jpg | img-3.jpg
   ROW 2: img-4.jpg | img-5.jpg | img-6.jpg
 
-IMAGE SOURCE:
-  - Images 1-6 are rendered by blog_post.js using gallery_images array
-  - Metadata source: _posts/index.json (first 6 entries of gallery_images)
+PLACEHOLDER DIMENSIONS (TOP):
+  - Per item width: 33.33% of container
+  - Per item height: calculated from 5:4 aspect ratio
+  - Example: 300px × 240px for 900px container width
 
-PLACEHOLDER DIMENSIONS:
-  - Width: 33.33% of container (3 columns)
-  - Aspect Ratio: 5:4 (exactly matches Aurel reference template)
-  - Size example: 300px wide × 240px tall
-
-IMAGE FITTING RULES (per Aurel template):
+IMAGE FITTING RULES (ALL GALLERIES):
   a) LANDSCAPE IMAGES (width > height):
      - Scale to fill placeholder height
-     - Centered horizontally
-     - No black bars on sides
+     - Centered horizontally, no black bars
      
   b) PORTRAIT IMAGES (height > width):
      - Scale to fill placeholder width
-     - Centered vertically
-     - No black bars top/bottom
+     - Centered vertically, no black bars
      
   c) IMPLEMENTATION: object-fit: cover with object-position: center
 
+PARAMETRIZATION EXAMPLE (from _posts/index.json):
+  "gallery_config": {
+    "top_gallery": {
+      "count": 6,
+      "columns": 3,
+      "aspect_ratio": "5/4"
+    },
+    "bottom_gallery": {
+      "count": 4,
+      "columns": 4,
+      "aspect_ratio": "1/1"
+    }
+  }
+
+SUPPORTED ASPECT RATIOS:
+  - 5/4    (1.25:1) - landscape, default for multi-image grids
+  - 1/1    (1:1)    - square, for gallery grids
+  - 16/9   (1.78:1) - widescreen
+  - 4/3    (1.33:1) - classic
+  - 3/2    (1.5:1)  - medium landscape
+
 INTERACTIVITY:
-  - PhotoSwipe lightbox available on click
-  - Full-resolution images available in lightbox
-  - Lightbox metadata from data-size and data-count attributes
+  - PhotoSwipe lightbox on click
+  - Full-resolution images in lightbox
+  - Metadata: data-size and data-count attributes
+
+HOW TO CUSTOMIZE:
+  1. Edit _posts/index.json gallery_config section
+  2. Change "columns" for different grid layouts (2-5 columns)
+  3. Change "aspect_ratio" to use different proportions
+  4. Change "count" to show more/fewer images
+  5. CSS automatically applies via data-aspect-ratio attribute
 
 ================================================================================
 -->

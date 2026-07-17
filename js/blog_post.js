@@ -217,13 +217,18 @@
             html +=   '</div>';
             html += '</div>';
           } else if (template === 'blog_gallery') {
-            // blog_gallery template: 3x2 grid (top) with lightbox, matching Aurel style
-            html += '<div class="cherga_post_formats cherga_pf_gallery cherga_pf_boxed">';
-            html +=   '<div class="cherga_pf_gallery cherga_pf_gallery3 cherga_photoswipe_wrapper" data-uniqid="' + Math.random().toString(36).substr(2, 9) + '">';
-
-            // Render first 6 images in 3x2 grid
+            // blog_gallery template: parametrized grid layouts with configurable aspect ratios
             var galleryImages = post.gallery_images && post.gallery_images.length > 0 ? post.gallery_images : [post.cover_image];
-            var topGridCount = Math.min(6, galleryImages.length);
+            var config = post.gallery_config || {};
+            var topConfig = config.top_gallery || { count: 6, columns: 3, aspect_ratio: '5/4' };
+            var bottomConfig = config.bottom_gallery || { count: 4, columns: 4, aspect_ratio: '1/1' };
+
+            // Top gallery
+            html += '<div class="cherga_post_formats cherga_pf_gallery cherga_pf_boxed">';
+            var topColClass = 'cherga_pf_gallery' + topConfig.columns;
+            html +=   '<div class="cherga_pf_gallery ' + topColClass + ' cherga_photoswipe_wrapper" data-uniqid="' + Math.random().toString(36).substr(2, 9) + '" data-aspect-ratio="' + topConfig.aspect_ratio + '">';
+
+            var topGridCount = Math.min(topConfig.count, galleryImages.length);
             for (var gi = 0; gi < topGridCount; gi++) {
               html +=     '<div class="cherga_pf_gallery_item">';
               html +=       '<a rel="pf_gallery_' + post.filename + '" href="' + galleryImages[gi] + '" class="cherga_pswp_slide cherga_dp cherga_no_select" data-size="1920x1280" data-count="' + gi + '">';
