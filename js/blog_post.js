@@ -526,20 +526,26 @@
 
     // Build gallery array indexed by data-uniqid
     var galleryArray = {};
-    jQuery('.cherga_photoswipe_wrapper').each(function() {
+    var wrappers = jQuery('.cherga_photoswipe_wrapper');
+    console.log('Found ' + wrappers.length + ' photoswipe wrappers');
+
+    wrappers.each(function() {
       var galleryId = jQuery(this).attr('data-uniqid');
-      galleryArray['gallery_' + galleryId] = { slides: [] };
+      var slides = [];
 
       jQuery(this).find('.cherga_pswp_slide').each(function() {
         var href = jQuery(this).attr('href');
         var size = jQuery(this).data('size') || '1920x1280';
         var sizeParts = size.split('x');
-        galleryArray['gallery_' + galleryId].slides.push({
+        slides.push({
           src: href,
           w: parseInt(sizeParts[0]),
           h: parseInt(sizeParts[1])
         });
       });
+
+      galleryArray['gallery_' + galleryId] = { slides: slides };
+      console.log('Gallery ' + galleryId + ': ' + slides.length + ' slides');
     });
 
     // Handle clicks on gallery images
@@ -549,9 +555,15 @@
       var galleryId = $this.parents('.cherga_photoswipe_wrapper').attr('data-uniqid');
       var index = parseInt($this.attr('data-count'), 10);
 
-      var gallery = galleryArray['gallery_' + galleryId];
-      if (!gallery || !gallery.slides) return;
+      console.log('Click: Gallery ' + galleryId + ', Index ' + index);
 
+      var gallery = galleryArray['gallery_' + galleryId];
+      if (!gallery || !gallery.slides) {
+        console.log('No gallery found for id: ' + galleryId);
+        return;
+      }
+
+      console.log('Opening PhotoSwipe with ' + gallery.slides.length + ' slides');
       var options = {
         index: index,
         bgOpacity: 0.7,
