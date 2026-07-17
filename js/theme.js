@@ -985,31 +985,12 @@ function cherga_theme_setup() {
 
 	// Sticky Menu Scroll Listener
 	if (cherga_header.hasClass('cherga_sticky_menu_on') && !jQuery('.cherga_site_wrapper').hasClass('fixed_header_footer')) {
-		if (cherga_header.hasClass('cherga_header_solid_style')) {
-			// Add Header Holder
-			if (!jQuery('.cherga_header_holder').length) {
-				cherga_header.after('<div class="cherga_header_holder"></div>');
-			}
-			jQuery('.cherga_header_holder').height(cherga_header.height());
-		}
-
 		// Scroll listener
 		cherga_window.on('scroll', function() {
 			if (cherga_window.scrollTop() > 0 && cherga_window.width() > 1024) {
 				cherga_header.addClass('cherga_stick_me');
 			} else {
 				cherga_header.removeClass('cherga_stick_me');
-			}
-			// Update header holder height
-			if (jQuery('.cherga_header_holder').length) {
-				jQuery('.cherga_header_holder').height(cherga_header.height());
-			}
-		});
-
-		// Resize listener to update header holder on window resize
-		cherga_window.on('resize', function() {
-			if (jQuery('.cherga_header_holder').length) {
-				jQuery('.cherga_header_holder').height(cherga_header.height());
 			}
 		});
 	}
