@@ -111,6 +111,41 @@ if (jQuery('.cherga_photoswipe_wrapper').length > 0) {
 			}
 		});
 	});
+
+	// PhotoSwipe click handler - inside if block so $pswp_gallery_array is defined
+	jQuery(document).on('click', '.cherga_pswp_slide', function (event) {
+		event.preventDefault();
+		var $index = parseInt(jQuery(this).attr('data-count'), 10),
+			this_id = jQuery(this).parents('.cherga_photoswipe_wrapper').attr('data-uniqid'),
+			options = {
+			index: $index,
+			bgOpacity: 0.7,
+			showHideOpacity: true
+		};
+
+		// Initialize PhotoSwipe
+		var cherga_lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, $pswp_gallery_array['cherga_gallery_' + this_id].slides, options);
+		cherga_lightBox.init();
+		cherga_lightBox.listen('gettingData', function(index, item) {
+			if (jQuery('.cherga_pswp_video_wrapper').length > 0) {
+				var cherga_window_height = cherga_window.height();
+				if (jQuery('.pswp__top-bar').length > 0) {
+					cherga_window_height = cherga_window_height - jQuery('.pswp__top-bar').height()*2;
+				}
+				if (jQuery('#wpadminbar').length > 0) {
+					cherga_window_height = cherga_window_height - jQuery('#wpadminbar').height();
+				}
+				if ((cherga_window.width()/16)*9 > cherga_window_height) {
+					var set_width = (cherga_window_height/9)*16,
+						set_height = cherga_window_height;
+				} else {
+					var set_height = (cherga_window.width()/16)*9,
+						set_width = cherga_window.width();
+				}
+				jQuery('.cherga_pswp_video_wrapper').width(set_width).height(set_height);
+			}
+		});
+	});
 }
 
 jQuery(document).on('contextmenu', function (e) {
@@ -120,39 +155,6 @@ jQuery(document).on('contextmenu', function (e) {
             alert(jQuery('.cherga_drc_trigger').attr('data-alert'));
         }
     }
-});
-jQuery(document).on('click', '.cherga_pswp_slide', function (event) {
-	event.preventDefault();
-	var $index = parseInt(jQuery(this).attr('data-count'), 10),
-		this_id = jQuery(this).parents('.cherga_photoswipe_wrapper').attr('data-uniqid'),
-		options = {
-		index: $index,
-		bgOpacity: 0.7,
-		showHideOpacity: true
-	};
-
-	// Initialize PhotoSwipe
-	var cherga_lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, $pswp_gallery_array['cherga_gallery_' + this_id].slides, options);
-	cherga_lightBox.init();
-	cherga_lightBox.listen('gettingData', function(index, item) {
-		if (jQuery('.cherga_pswp_video_wrapper').length > 0) {
-			var cherga_window_height = cherga_window.height();
-			if (jQuery('.pswp__top-bar').length > 0) {
-				cherga_window_height = cherga_window_height - jQuery('.pswp__top-bar').height()*2;
-			}
-			if (jQuery('#wpadminbar').length > 0) {
-				cherga_window_height = cherga_window_height - jQuery('#wpadminbar').height();
-			}
-			if ((cherga_window.width()/16)*9 > cherga_window_height) {
-				var set_width = (cherga_window_height/9)*16,
-					set_height = cherga_window_height;
-			} else {
-				var set_height = (cherga_window.width()/16)*9,
-					set_width = cherga_window.width();
-			}
-			jQuery('.cherga_pswp_video_wrapper').width(set_width).height(set_height);
-		}
-	});
 });
 
 jQuery(document).on('click', '.grid-item-button-approve', function (event) {
