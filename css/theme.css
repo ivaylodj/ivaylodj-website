@@ -1199,6 +1199,9 @@ header.cherga_main_header.cherga_logo_left .cherga_logo_cont a {
 	background: url("../img/logo.png") no-repeat center;
 	background-size: 87px 87px;
 }
+header.cherga_main_header.cherga_sticky_menu_on .cherga_image_logo {
+	transition: all 200ms;
+}
 header.cherga_main_header.cherga_sticky_menu_on.cherga_stick_me .cherga_image_logo {
 	width: 44px;
 	height: 44px;
