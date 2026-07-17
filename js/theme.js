@@ -845,6 +845,13 @@ jQuery(window).on('load', function () {
 			jQuery('.cherga_header_holder').height(cherga_header.height());
 		}
 
+		// Initial scroll state check
+		if (cherga_window.scrollTop() > 0 && cherga_window.width() > 1024) {
+			cherga_header.addClass('cherga_stick_me');
+		} else {
+			cherga_header.removeClass('cherga_stick_me');
+		}
+
 		// Scroll Listener
 		window.addEventListener('scroll', function() {
 			var scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
