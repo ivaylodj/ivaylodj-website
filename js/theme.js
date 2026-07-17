@@ -844,10 +844,12 @@ jQuery(window).on('load', function () {
 			if (scrollTop > 0 && window.innerWidth > 1024) {
 				if (!cherga_header.hasClass('cherga_stick_me')) {
 					cherga_header.addClass('cherga_stick_me');
+					cherga_theme_setup();
 				}
 			} else {
 				if (cherga_header.hasClass('cherga_stick_me')) {
 					cherga_header.removeClass('cherga_stick_me');
+					cherga_theme_setup();
 				}
 			}
 		});
