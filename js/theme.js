@@ -838,6 +838,7 @@ jQuery(window).on('load', function () {
 	}
 
 	// Sticky Menu Scroll Listener
+	console.log('cherga_header element:', cherga_header[0], 'length:', cherga_header.length);
 	console.log('Checking sticky menu conditions:', {
 		hasClass: cherga_header.hasClass('cherga_sticky_menu_on'),
 		fixedFooter: jQuery('.cherga_site_wrapper').hasClass('fixed_header_footer')
@@ -852,6 +853,7 @@ jQuery(window).on('load', function () {
 				if (!cherga_header.hasClass('cherga_stick_me')) {
 					console.log('Adding cherga_stick_me class');
 					cherga_header.addClass('cherga_stick_me');
+					console.log('After addClass, classes are:', cherga_header.attr('class'));
 					cherga_theme_setup();
 				}
 			} else {
