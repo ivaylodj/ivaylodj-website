@@ -208,15 +208,20 @@
           var lines = configText.split('\n');
           var currentSection = null;
           for (var i = 0; i < lines.length; i++) {
-            var line = lines[i].trim();
-            if (line.endsWith(':') && !line.includes(':')) {
-              currentSection = line.replace(':', '');
+            var line = lines[i];
+            if (!line.trim()) continue;
+
+            // Section header: no leading spaces, ends with colon, no value
+            if (line[0] !== ' ' && line.trim().endsWith(':')) {
+              currentSection = line.trim().replace(':', '');
               galleryConfigFromMd[currentSection] = {};
-            } else if (line && line.includes(':')) {
+            }
+            // Property: starts with spaces, has key: value
+            else if (line[0] === ' ' && line.includes(':')) {
               var parts = line.split(':');
               var key = parts[0].trim();
               var value = parts[1].trim();
-              if (currentSection) {
+              if (currentSection && key && value) {
                 galleryConfigFromMd[currentSection][key] = value;
               }
             }
