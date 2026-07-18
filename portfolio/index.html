@@ -63,36 +63,40 @@
 .cherga_albums_grid_page .cherga_albums_grid_item .cherga_dp { display: block; height: 100%; position: relative; overflow: hidden; }
 .cherga_albums_grid_page .cherga_albums_grid_item .cherga_dp img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Load More Styling */
-.cherga_load_more_item {
-    display: none !important;
+
+
+/* Load More Button - Aurel Style */
+.cherga_button,
+.cherga_load_more_button {
+	padding: 15px 20px 15px 20px;
+	height: 50px;
+	line-height: 20px;
+	border: none;
+	text-transform: uppercase;
+	letter-spacing: 0.6px;
+	border-radius: 0;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	transition: background 400ms, color 400ms, border 400ms;
+	font-size: 14px;
+	font-weight: 700;
+	color: #ffffff;
+	background: #ffbf00;
+	text-decoration: none;
+	cursor: pointer;
 }
-.cherga_load_more_item.loaded {
-    display: block !important;
+.cherga_button:hover,
+.cherga_load_more_button:hover {
+	background: #ffc61f;
+	opacity: 0.95;
 }
 .cherga_load_more_button_wrapper {
-    text-align: center;
-    padding: 40px 0;
-}
-.cherga_load_more_button {
-    display: inline-block;
-    padding: 15px 40px;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.8px;
-    background: transparent;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    cursor: pointer;
-    transition: all 300ms;
-}
-.cherga_load_more_button:hover {
-    background: #ffffff;
-    color: #1c1d1f;
+	text-align: center;
+	padding-bottom: 30px;
 }
 .cherga_load_more_button_wrapper.all_posts_loaded {
-    display: none !important;
+	display: none !important;
 }
 </style>
 </head>
@@ -341,7 +345,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 													</div>
 
 													<!-- Seasons -->
-										<div class="cherga_albums_grid_item cherga_load_more_item columns_4 seasons nature cherga_isotop_el_loading">
+										<div class="cherga_albums_grid_item columns_4 seasons nature cherga_isotop_el_loading">
 														<div class="cherga_inner_cont">
 															<a href="seasons/index.html" class="cherga_dp cherga_no_select">
 																<img src="../img/clipart/facebook/Spring/img-1.jpg" alt="Seasons"/>
@@ -355,7 +359,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 													</div>
 
 													<!-- Vera Su -->
-										<div class="cherga_albums_grid_item cherga_load_more_item columns_4 black-sea cherga_isotop_el_loading">
+										<div class="cherga_albums_grid_item columns_4 black-sea cherga_isotop_el_loading">
 														<div class="cherga_inner_cont">
 															<a href="vera-su.html" class="cherga_dp cherga_no_select">
 																<img src="../img/clipart/facebook/Vera%20Su/img-1.jpg" alt="Vera Su"/>
@@ -369,7 +373,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 													</div>
 
 													<!-- Unsorted -->
-										<div class="cherga_albums_grid_item cherga_load_more_item columns_4 various cherga_isotop_el_loading">
+										<div class="cherga_albums_grid_item columns_4 various cherga_isotop_el_loading">
 														<div class="cherga_inner_cont">
 															<a href="unsorted.html" class="cherga_dp cherga_no_select">
 																<img src="../img/clipart/facebook/Unsorted/img-1.jpg" alt="Unsorted"/>
@@ -386,7 +390,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 												<div class="clear"></div>
 
 												<div class="cherga_load_more_button_wrapper">
-													<button class="cherga_load_more_button" id="portfolio_load_more">Load More</button>
+													<a class="cherga_button cherga_load_more_button grid_albums_trigger" href="javascript:void(0)">Load More</a>
 												</div>
 											</div>
 										</div>
@@ -432,35 +436,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<script src="../js/theme.js"></script>
 <script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 
+
+
 	<script>
 	jQuery(document).ready(function() {
-		var loadMoreBtn = jQuery('#portfolio_load_more');
-		var loadMoreItems = jQuery('.cherga_load_more_item');
-		var itemsCount = loadMoreItems.length;
-		var currentIndex = 0;
-		var itemsPerLoad = 4; // Load 1 row (4 items) at a time
-		
-		function loadMoreItems() {
-			var loaded = 0;
-			for (var i = currentIndex; i < loadMoreItems.length && loaded < itemsPerLoad; i++) {
-				jQuery(loadMoreItems[i]).addClass('loaded');
-				loaded++;
-				currentIndex++;
+		// Hide items 9 and beyond initially
+		jQuery('.cherga_albums_grid_item').each(function(index) {
+			if (index >= 8) {
+				jQuery(this).hide().addClass('cherga_hidden_item');
 			}
+		});
+		
+		// Load more functionality
+		jQuery('.grid_albums_trigger').on('click', function(e) {
+			e.preventDefault();
 			
-			// Relayout Isotope after loading new items
+			var hiddenItems = jQuery('.cherga_hidden_item:hidden');
+			var itemsPerLoad = 4;
+			var itemsToShow = hiddenItems.slice(0, itemsPerLoad);
+			
+			itemsToShow.each(function() {
+				jQuery(this).show();
+			});
+			
+			// Trigger Isotope reLayout
 			setTimeout(function() {
 				jQuery('.cherga_isotope_trigger').isotope('reLayout');
-			}, 100);
+			}, 50);
 			
-			// Hide button if all items are loaded
-			if (currentIndex >= loadMoreItems.length) {
-				loadMoreBtn.parent().addClass('all_posts_loaded');
+			// Hide button if all items are now visible
+			if (jQuery('.cherga_hidden_item:hidden').length === 0) {
+				jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
 			}
-		}
-		
-		loadMoreBtn.on('click', function() {
-			loadMoreItems();
 		});
 	});
 	</script>
