@@ -34,11 +34,107 @@
 	<link rel="stylesheet" href="../css/theme.css">
 
 	<!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-WR3X354K');</script>
+	<script>
+	var PORTFOLIO_CONFIG = {
+		itemsPerPage: 8,
+		itemsPerLoad: 4
+	};
+
+	var portfolioPagination = {
+		shownCount: 0,
+		currentFilter: "*",
+
+		showItems: function(count) {
+			this.shownCount += count;
+			this.updateVisibility();
+			this.updateLoadMoreButton();
+		},
+
+		resetFilter: function(newFilter) {
+			this.currentFilter = newFilter;
+			this.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
+			this.updateVisibility();
+			this.updateLoadMoreButton();
+		},
+
+		updateVisibility: function() {
+			var filter = this.currentFilter;
+			var shown = 0;
+
+			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
+				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
+
+				if (matches) {
+					if (shown < portfolioPagination.shownCount) {
+						jQuery(this).removeClass("cherga_hidden_item").show();
+						shown++;
+					} else {
+						jQuery(this).addClass("cherga_hidden_item").hide();
+					}
+				} else {
+					jQuery(this).removeClass("cherga_hidden_item");
+				}
+			});
+		},
+
+		updateLoadMoreButton: function() {
+			var filter = this.currentFilter;
+			var totalMatching = 0;
+			var shownMatching = 0;
+
+			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
+				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
+				if (matches) {
+					totalMatching++;
+					if (!jQuery(this).hasClass("cherga_hidden_item")) {
+						shownMatching++;
+					}
+				}
+			});
+
+			if (shownMatching >= totalMatching) {
+				jQuery(".cherga_load_more_button_wrapper").addClass("all_posts_loaded");
+			} else {
+				jQuery(".cherga_load_more_button_wrapper").removeClass("all_posts_loaded");
+			}
+		}
+	};
+
+	function cherga_isotop_el_loading() {
+		if (jQuery(".cherga_isotop_el_loading:first").length > 0) {
+			jQuery(".cherga_isotop_el_loading:first").removeClass("cherga_isotop_el_loading");
+			setTimeout("cherga_isotop_el_loading()",200);
+		}
+	}
+
+	jQuery(document).ready(function() {
+		cherga_isotop_el_loading();
+
+		portfolioPagination.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
+		portfolioPagination.updateVisibility();
+		portfolioPagination.updateLoadMoreButton();
+
+		jQuery(".cherga_grid_filter").on("click", "a", function() {
+			setTimeout(function() {
+				var newFilter = jQuery(".cherga_grid_filter .is-checked a").attr("data-category");
+				portfolioPagination.resetFilter(newFilter);
+
+				setTimeout(function() {
+					jQuery(".cherga_isotope_trigger").isotope("reLayout");
+				}, 50);
+			}, 100);
+		});
+
+		jQuery(".grid_albums_trigger").on("click", function(e) {
+			e.preventDefault();
+			portfolioPagination.showItems(PORTFOLIO_CONFIG.itemsPerLoad);
+
+			setTimeout(function() {
+				jQuery(".cherga_isotope_trigger").isotope("reLayout");
+			}, 50);
+		});
+	});
+	</script>
   <!-- End Google Tag Manager -->
 <script type="application/ld+json">
 {
@@ -438,128 +534,104 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<script src="../js/owl.carousel.min.js"></script>
 
 	<script src="../js/theme.js"></script>
-<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
-
-
-
 	<script>
 	var PORTFOLIO_CONFIG = {
 		itemsPerPage: 8,
 		itemsPerLoad: 4
 	};
 
+	var portfolioPagination = {
+		shownCount: 0,
+		currentFilter: "*",
+
+		showItems: function(count) {
+			this.shownCount += count;
+			this.updateVisibility();
+			this.updateLoadMoreButton();
+		},
+
+		resetFilter: function(newFilter) {
+			this.currentFilter = newFilter;
+			this.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
+			this.updateVisibility();
+			this.updateLoadMoreButton();
+		},
+
+		updateVisibility: function() {
+			var filter = this.currentFilter;
+			var shown = 0;
+
+			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
+				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
+
+				if (matches) {
+					if (shown < portfolioPagination.shownCount) {
+						jQuery(this).removeClass("cherga_hidden_item").show();
+						shown++;
+					} else {
+						jQuery(this).addClass("cherga_hidden_item").hide();
+					}
+				} else {
+					jQuery(this).removeClass("cherga_hidden_item");
+				}
+			});
+		},
+
+		updateLoadMoreButton: function() {
+			var filter = this.currentFilter;
+			var totalMatching = 0;
+			var shownMatching = 0;
+
+			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
+				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
+				if (matches) {
+					totalMatching++;
+					if (!jQuery(this).hasClass("cherga_hidden_item")) {
+						shownMatching++;
+					}
+				}
+			});
+
+			if (shownMatching >= totalMatching) {
+				jQuery(".cherga_load_more_button_wrapper").addClass("all_posts_loaded");
+			} else {
+				jQuery(".cherga_load_more_button_wrapper").removeClass("all_posts_loaded");
+			}
+		}
+	};
+
 	function cherga_isotop_el_loading() {
-		if (jQuery('.cherga_isotop_el_loading:first').length > 0) {
-			jQuery('.cherga_isotop_el_loading:first').removeClass('cherga_isotop_el_loading');
+		if (jQuery(".cherga_isotop_el_loading:first").length > 0) {
+			jQuery(".cherga_isotop_el_loading:first").removeClass("cherga_isotop_el_loading");
 			setTimeout("cherga_isotop_el_loading()",200);
 		}
 	}
 
-	function initializePortfolioPagination() {
-		// Show items by removing loading class
+	jQuery(document).ready(function() {
 		cherga_isotop_el_loading();
 
-		// Hide items beyond itemsPerPage - mark them with .added and cherga_hidden_item
-		jQuery('.cherga_albums_grid_item').each(function(index) {
-			if (index >= PORTFOLIO_CONFIG.itemsPerPage) {
-				jQuery(this).addClass('added cherga_hidden_item');
-			}
-		});
+		portfolioPagination.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
+		portfolioPagination.updateVisibility();
+		portfolioPagination.updateLoadMoreButton();
 
-		updateLoadMoreButton();
-	}
-
-	function updateLoadMoreButton() {
-		var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
-		var hiddenMatching = 0;
-
-		// Count items that match current filter AND have pagination class
-		jQuery('.cherga_isotope_trigger').find('.cherga_hidden_item').each(function() {
-			var matches = false;
-			if (currentFilter === '*') {
-				matches = true;
-			} else {
-				var className = currentFilter.substring(1);
-				matches = jQuery(this).hasClass(className);
-			}
-			if (matches) hiddenMatching++;
-		});
-
-		// Show Load More only if there are matching items hidden by pagination
-		if (hiddenMatching > 0) {
-			jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
-		} else {
-			jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
-		}
-	}
-
-	jQuery(document).ready(function() {
-		// Initialize pagination on page load
-		initializePortfolioPagination();
-
-		// Handle filter clicks - reset pagination when filter changes
-		jQuery('.cherga_grid_filter').on('click', 'a', function() {
-			// Wait for theme.js to apply the filter
+		jQuery(".cherga_grid_filter").on("click", "a", function() {
 			setTimeout(function() {
-				// Reset all items initially - show first 8, hide rest
-				var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
-				var shownCount = 0;
+				var newFilter = jQuery(".cherga_grid_filter .is-checked a").attr("data-category");
+				portfolioPagination.resetFilter(newFilter);
 
-				jQuery('.cherga_isotope_trigger').find('.cherga_albums_grid_item').each(function() {
-					var matches = false;
-					if (currentFilter === '*') {
-						matches = true;
-					} else {
-						var className = currentFilter.substring(1);
-						matches = jQuery(this).hasClass(className);
-					}
-
-					if (matches) {
-						if (shownCount < PORTFOLIO_CONFIG.itemsPerPage) {
-							jQuery(this).removeClass('cherga_hidden_item');
-							shownCount++;
-						} else {
-							jQuery(this).addClass('cherga_hidden_item');
-						}
-					} else {
-						// Items that don't match filter should not have pagination class
-						jQuery(this).removeClass('cherga_hidden_item');
-					}
-				});
-
-				// Update Load More button state
-				updateLoadMoreButton();
-
-				// Trigger Isotope layout
 				setTimeout(function() {
-					jQuery('.cherga_isotope_trigger').isotope('reLayout');
+					jQuery(".cherga_isotope_trigger").isotope("reLayout");
 				}, 50);
 			}, 100);
 		});
 
-		// Load More button click handler
-		jQuery('.grid_albums_trigger').on('click', function(e) {
+		jQuery(".grid_albums_trigger").on("click", function(e) {
 			e.preventDefault();
+			portfolioPagination.showItems(PORTFOLIO_CONFIG.itemsPerLoad);
 
-			// Show next itemsPerLoad hidden items
-			var shownCount = 0;
-			jQuery('.cherga_hidden_item').each(function() {
-				if (shownCount < PORTFOLIO_CONFIG.itemsPerLoad) {
-					jQuery(this).removeClass('cherga_hidden_item');
-					shownCount++;
-				}
-			});
-
-			// Update button state
-			updateLoadMoreButton();
-
-			// Trigger Isotope layout
 			setTimeout(function() {
-				jQuery('.cherga_isotope_trigger').isotope('reLayout');
+				jQuery(".cherga_isotope_trigger").isotope("reLayout");
 			}, 50);
-			setTimeout(function() {
-				jQuery('.cherga_isotope_trigger').isotope('layout');
-			}, 300);
 		});
 	});
 	</script>
