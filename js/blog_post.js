@@ -829,7 +829,7 @@
       for (var c in catMap) {
         var li = document.createElement('li');
         var a = document.createElement('a');
-        a.href = 'javascript:void(0)';
+        a.href = 'blog.html?category=' + encodeURIComponent(c);
         a.textContent = c;
         li.appendChild(a);
         catList.appendChild(li);
@@ -855,7 +855,7 @@
       });
       for (var t = 0; t < sortedTags.length; t++) {
         var link = document.createElement('a');
-        link.href = 'javascript:void(0)';
+        link.href = 'blog.html?tag=' + encodeURIComponent(sortedTags[t]);
         link.textContent = sortedTags[t];
         tagCloud.appendChild(link);
       }

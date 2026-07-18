@@ -47,6 +47,7 @@
 - [x] Added SEO/OG/Twitter/canonical head to `blog.html`, `blog_standard.html`, `blog_post.html` (blog_post.js already updates title/canonical/description/og per-post — now those tags exist for it to update).
 - [x] Unified the two `index.json` sort comparators (were divergent: `localeCompare` vs `_originalIndex`; two posts share date 2022-01-22 so order actually differed). Double-fetch itself left as-is (perf only, not a bug) — noted below.
 - [x] Reordered post sections to match Aurel `blog_standard.html`: tags → sharing → posts navigation → **Comments** → **"You may also like"** (was: related before comments). Applies to all templates (single renderer `blog_post.js`).
+- [x] Made single-post sidebar Categories/Tags functional: link to `blog.html?category=`/`blog.html?tag=` (were inert `javascript:void(0)` placeholders, faithful to Aurel but useless). Consistent with post-body tag links + blog-listing filters.
 - [ ] (optional, perf) `blog_post.js` still fetches `index.json` twice — consolidate later if desired.
 
 ## Phase 4 — Consistency & polish (low risk)
