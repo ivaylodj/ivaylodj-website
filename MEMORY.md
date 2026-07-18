@@ -55,14 +55,17 @@ collapse) remains. Galleries live under `portfolio/`; the nav label is "Portfoli
 
 ---
 
-## Gallery Restructure Project
+## Gallery / Site Remediation
 
-**Status:** In progress  
-**Open items:**
+**Status:** Site-wide audit + phased remediation **complete** (2026-07-19).
+Galleries live under `portfolio/`; PhotoSwipe lightbox, masonry, and footers fixed;
+blog single-post repaired; SEO/links/hygiene done. Full record in `REMEDIATION.md`.
+
+**Minor nice-to-haves still open (optional):**
 - Demo captions for gallery images
 - Carousel headings on blog post view
 
-See `AGENTS.md` for full project state and next steps.
+See `AGENTS.md` for full project state and `REMEDIATION.md` for the remediation record.
 
 ---
 

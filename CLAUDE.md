@@ -88,5 +88,7 @@ These files need extra attention - they're prone to problems:
 - Will not accept "fully audited" claims unless genuinely comprehensive
 
 ---
-**Last Updated:** 2026-07-18  
+**Last Updated:** 2026-07-19  
 **Status:** Active project - maintaining high standards for all work
+
+**Recent:** A full site-wide audit + phased remediation completed 2026-07-19 — see `REMEDIATION.md` for the phase-by-phase record (broken links/sitemap, PhotoSwipe lightbox, masonry galleries, blog single-post repair, consistency polish, hygiene & docs; sticky header verified faithful to Aurel).

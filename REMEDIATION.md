@@ -1,5 +1,7 @@
 # ivaylodj.com — Remediation Tracking Doc
 
+**STATUS: ✅ COMPLETE (2026-07-19).** All phases (1–6) merged to `main`. Phase 5 (sticky header) was investigated and needed no code change (already faithful to Aurel). Remaining items are explicitly *deferred/optional* and marked below. 52 tests passing.
+
 **Purpose:** Living checklist for the site-wide audit remediation. Update the status boxes as work lands so we can resume at any point.
 
 **Legend:** `[ ]` todo · `[~]` in progress · `[x]` done (committed+pushed) · `[!]` blocked/needs decision

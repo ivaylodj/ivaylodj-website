@@ -33,7 +33,9 @@ The Aurel theme codebase is the single source of truth for correct HTML structur
 
 **Aurel = Cherga (rebranded):** The Aurel theme is the same as the Cherga theme in this project—Aurel is the old name. Both use identical CSS/JS structure, just different class prefixes (aurel_ vs cherga_) in the HTML. When copying Aurel templates, they work with this project's Cherga CSS and JS files.
 
-## Current State (as of commit 2c25b91)
+## Current State
+
+> A full site-wide audit + phased remediation completed 2026-07-19 (see `REMEDIATION.md` for the phase-by-phase record). Highlights: fixed the sitemap (`/galleries/`→`/portfolio/`), broken links, the PhotoSwipe lightbox, masonry galleries, blog single-post duplication + dynamic sidebar, and a large hygiene/docs pass. Sticky header verified faithful to Aurel.
 
 ### ✅ Completed
 
@@ -57,34 +59,21 @@ The Aurel theme codebase is the single source of truth for correct HTML structur
    - Related posts: "You may also like" section showing 2 other posts
    - Filename matching fixed (.md extension handling)
 
-4. **Blog Sidebar Enhanced** (commit 2c25b91)
-   - Post metadata enriched with meaningful categories and tags
-   - Categories: Sunsets, Nature, Photography, Behind the Scenes
-   - Tags: photography, sunsets, nature, travel, behind-the-scenes
-   - Sidebar renders: search, categories with counts, tag cloud, featured posts (up to 3)
+4. **Blog Single-Post Page** (repaired in remediation Phase 3)
+   - `blog_post.js` renders the whole post into `#blog-post-content` (body, tags, share, prev/next, comments, then "You may also like" — Aurel section order)
+   - Duplicated static sections removed from `blog_post.html` (they used to render twice)
+   - Sidebar is dynamic + theme-styled: categories, tag cloud, featured posts; category/tag links open `blog.html?category=`/`?tag=` (listing auto-filters)
+   - Categories: Sunsets, Nature, Photography, Behind the Scenes; Tags: photography, sunsets, nature, travel, behind-the-scenes, golden hour, landscape
 
 5. **CI/CD Pipeline Active**
    - GitHub Actions: runs tests on Node 18.x and 20.x
    - Tests must pass before code can deploy
    - CloudFlare Pages auto-deploys on git push to main
 
-### ⚠️ Known Issues (NEEDS FIXING)
+### ⚠️ Known Issues / Deferred
 
-1. **Blog Pages Layout Broken** (user feedback: "They are still wrong/bad")
-   - Images not displaying properly in blog_image template (carousel)
-   - Layout/styling issues with blog_standard template
-   - Post content rendering may have issues
-   - Sidebar visibility on single post page needs verification
-
-2. **Blog Sidebar Rendering** 
-   - Widget structure in HTML is correct but visual layout may need CSS fixes
-   - Featured posts section styling (images, spacing, alignment)
-   - Categories/tags styling consistency
-
-3. **Carousel (Owl Carousel)**
-   - CSS fixes added but may still need tweaking
-   - Image sizing and alignment in carousel items
-   - Transform/flex layout issues resolved but verify visually
+- **Sticky-header micro-quirk (matches Aurel):** at 1025–1199px the logo shrinks on scroll a moment before the header becomes fixed. This is inherent Aurel behavior; changing it would deviate from the reference. Not a bug.
+- **Deferred code hygiene (low value, higher risk on shared `theme.js`):** the ~27 `setTimeout` string-eval calls and a dead `nested-toggle` handler are left as-is (they work; no CSP in use).
 
 ---
 
@@ -92,33 +81,31 @@ The Aurel theme codebase is the single source of truth for correct HTML structur
 
 ```
 /
-├── index.html, about.html, contacts.html, blog.html, blog_post.html
-├── blog_standard.html (template page)
-├── portfolio/
-│   ├── index.html, nightscapes.html, sunsets.html, birds.html, etc.
-│   └── [subfolder galleries with index.html]
+├── index.html, about.html, contacts.html, blog.html, blog_post.html   (5 served root pages)
+├── portfolio/            (22 pages: index + galleries; 4 subdirs: varna, seasons, world-travels, europe-travels)
+│   ├── index.html (filterable Isotope albums grid + Load More), nightscapes.html, sunsets.html, birds.html, ...
+│   └── <subdir>/index.html + album/gallery pages
+├── _templates/           (reference-only templates; disallowed in robots.txt — NOT served)
 ├── css/
-│   ├── kube.css (framework)
-│   ├── theme.css (main theme)
-│   └── font-awesome.min.css
+│   ├── kube.css (framework), theme.css (main theme), font-awesome.min.css
+│   ├── photoswipe.css, default-skin/ (lightbox), owl.carousel.css
 ├── js/
-│   ├── blog.js (blog listing page — renders posts, sidebar, search, filtering)
-│   ├── blog_post.js (single post page — loads markdown, renders template, navigation, related posts)
-│   ├── theme.js (global theme, carousel init, animations)
-│   ├── jquery.min.js, owl.carousel.min.js, etc.
-├── _posts/
-│   ├── index.json (post metadata: filename, title, date, template, cover_image, categories, tags, excerpt)
-│   ├── 2022-01-22-first-post.md (blog_image template)
-│   └── 2022-01-22-welcome-post.md (blog_standard template)
-├── _tests/ (52 tests, 8 test files)
-│   ├── setup.js (mock XMLHttpRequest, jQuery, URLSearchParams)
-│   ├── unit/ (markdown-parser, date-formatter)
+│   ├── blog.js (blog listing — renders posts, sidebar, search, ?tag=/?category= filtering)
+│   ├── blog_post.js (single post — loads markdown, renders template + sidebar, navigation, related posts)
+│   ├── theme.js (global theme, PhotoSwipe, sticky header, carousel, animations)
+│   ├── jquery.min.js, isotope.pkgd.min.js, imagesloaded.pkgd.min.js, owl.carousel.min.js, photoswipe*.js, etc.
+├── _posts/               (3 posts)
+│   ├── index.json (metadata: filename, title, date, template, cover_image, categories, tags, excerpt)
+│   ├── 2022-01-22-first-post.md, 2022-01-22-welcome-post.md, 2024-06-15-gallery-collection.md
+├── static/admin/config.yml (Decap CMS: blog + portfolio collections)
+├── sitemap.xml, robots.txt
+├── _tests/ (52 tests, 8 suites)
+│   ├── setup.js, unit/ (markdown-parser, date-formatter)
 │   ├── integration/ (blog-post-loading, template-system, blog-sidebar)
 │   └── regression/ (post-navigation, layout-switching, related-posts)
-├── .github/workflows/
-│   └── test-and-deploy.yml (GitHub Actions: runs tests on push to main)
-├── package.json (Node 18+, Jest, npm scripts)
-├── jest.config.js (test config, 70% coverage threshold)
+├── .github/workflows/test-and-deploy.yml (GitHub Actions: tests on push to main)
+├── package.json (Node 18+, Jest), jest.config.js (70% coverage threshold)
+├── REMEDIATION.md (audit + phased remediation record)
 └── AGENTS.md (this file — keep updated!)
 ```
 
@@ -324,25 +311,18 @@ grep -r "test description" _tests/   # Find specific test
 
 ---
 
-## Next Steps (User's Stated Goals)
+## Next Steps
 
-### Immediate (BLOCKING)
-1. **Fix blog pages layout** — images, carousel, post content rendering
-   - Test in browser: https://ivaylodj-website.pages.dev/blog_post.html?post=2022-01-22-first-post
-   - Compare with expected vs actual layout
-   - Likely issues: CSS constraints, carousel not displaying, image sizing
-
-2. **Verify sidebar appearance** — styling, spacing, alignment
-   - Check featured posts images load
-   - Check category/tag counts display
-   - Check responsive design on mobile
+### Done (remediation, 2026-07-19 — see `REMEDIATION.md`)
+- ✅ Blog single-post layout: de-duplicated sections, dynamic styled sidebar, correct Aurel section order, functional category/tag links
+- ✅ Galleries: PhotoSwipe lightbox fixed, masonry init restored, footers/back-to-top normalized
+- ✅ SEO/sitemap/links, consistency polish, hygiene & docs
 
 ### Future (Nice to Have)
 - Add more posts to blog (build out `_posts/index.json` with real content)
 - Add Cypress E2E tests for visual/interaction verification
-- Improve carousel functionality (lazy loading, transitions)
-- Add search functionality improvements
-- Add pagination or infinite scroll to blog listing
+- Real blog pagination if post count grows (listing currently renders all posts on one page)
+- Optional: the deferred `theme.js` `setTimeout`/`nested-toggle` cleanup, and the sticky-header deviation-from-Aurel tweak (only if desired)
 
 ---
 
