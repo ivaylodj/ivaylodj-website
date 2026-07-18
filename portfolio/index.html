@@ -34,115 +34,11 @@
 	<link rel="stylesheet" href="../css/theme.css">
 
 	<!-- Google Tag Manager -->
-	<script>
-	var PORTFOLIO_CONFIG = {
-		itemsPerPage: 8,
-		itemsPerLoad: 4
-	};
-
-	var portfolioPagination = {
-		shownCount: 0,
-		currentFilter: "*",
-
-		showItems: function(count) {
-			this.shownCount += count;
-			this.updateVisibility();
-			this.updateLoadMoreButton();
-		},
-
-		resetFilter: function(newFilter) {
-			this.currentFilter = newFilter;
-			this.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
-			this.updateVisibility();
-			this.updateLoadMoreButton();
-		},
-
-		updateVisibility: function() {
-			var filter = this.currentFilter;
-			var shown = 0;
-
-			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
-				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
-
-				if (matches) {
-					if (shown < portfolioPagination.shownCount) {
-						jQuery(this).show();
-						shown++;
-					} else {
-						jQuery(this).hide();
-					}
-				} else {
-					jQuery(this).hide();
-				}
-			});
-		},
-
-		updateLoadMoreButton: function() {
-			var filter = this.currentFilter;
-			var totalMatching = 0;
-			var shownMatching = 0;
-
-			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
-				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
-				if (matches) {
-					totalMatching++;
-					if (jQuery(this).is(":visible")) {
-						shownMatching++;
-					}
-				}
-			});
-
-			if (shownMatching >= totalMatching) {
-				jQuery(".cherga_load_more_button_wrapper").addClass("all_posts_loaded");
-			} else {
-				jQuery(".cherga_load_more_button_wrapper").removeClass("all_posts_loaded");
-			}
-		}
-	};
-
-	function cherga_isotop_el_loading() {
-		if (jQuery(".cherga_isotop_el_loading:first").length > 0) {
-			jQuery(".cherga_isotop_el_loading:first").removeClass("cherga_isotop_el_loading");
-			setTimeout("cherga_isotop_el_loading()",200);
-		}
-	}
-
-	jQuery(document).ready(function() {
-		cherga_isotop_el_loading();
-
-		portfolioPagination.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
-		portfolioPagination.updateVisibility();
-		portfolioPagination.updateLoadMoreButton();
-
-		jQuery(".cherga_grid_filter").on("click", "a", function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-
-			// Update active filter button
-			jQuery(".cherga_grid_filter .is-checked").removeClass("is-checked");
-			jQuery(this).parent().addClass("is-checked");
-			jQuery(this).addClass("is-checked");
-
-			// Reset pagination with new filter
-			var newFilter = jQuery(this).attr("data-category");
-			portfolioPagination.resetFilter(newFilter);
-
-			// Trigger Isotope layout only (not filter)
-			setTimeout(function() {
-				jQuery(".cherga_isotope_trigger").isotope("layout");
-			}, 50);
-		});
-
-		jQuery(".grid_albums_trigger").on("click", function(e) {
-			e.preventDefault();
-			portfolioPagination.showItems(PORTFOLIO_CONFIG.itemsPerLoad);
-
-			setTimeout(function() {
-				jQuery(".cherga_isotope_trigger").isotope("reLayout");
-			}, 50);
-		});
-	});
-	</script>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WR3X354K');</script>
   <!-- End Google Tag Manager -->
 <script type="application/ld+json">
 {
@@ -203,7 +99,7 @@
 	display: none !important;
 }
 
-.cherga_hidden_item {
+.pagination-hidden {
 	display: none !important;
 }
 </style>
@@ -543,64 +439,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	<script src="../js/theme.js"></script>
 	<script>
-	var PORTFOLIO_CONFIG = {
-		itemsPerPage: 8,
-		itemsPerLoad: 4
-	};
-
 	var portfolioPagination = {
+		itemsPerPage: 8,
+		itemsPerLoad: 4,
 		shownCount: 0,
-		currentFilter: "*",
 
-		showItems: function(count) {
-			this.shownCount += count;
-			this.updateVisibility();
-			this.updateLoadMoreButton();
+		init: function() {
+			this.shownCount = this.itemsPerPage;
+			this.applyPagination();
+			this.updateButton();
 		},
 
-		resetFilter: function(newFilter) {
-			this.currentFilter = newFilter;
-			this.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
-			this.updateVisibility();
-			this.updateLoadMoreButton();
+		loadMore: function() {
+			this.shownCount += this.itemsPerLoad;
+			this.applyPagination();
+			this.updateButton();
 		},
 
-		updateVisibility: function() {
-			var filter = this.currentFilter;
-			var shown = 0;
+		resetForFilter: function() {
+			this.shownCount = this.itemsPerPage;
+			this.applyPagination();
+			this.updateButton();
+		},
+
+		applyPagination: function() {
+			var self = this;
+			var visibleCount = 0;
 
 			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
-				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
+				var $item = jQuery(this);
+				var pos = $item.css("position");
+				var isFilteredByIsotope = (pos === "absolute" && $item.css("pointer-events") === "none");
 
-				if (matches) {
-					if (shown < portfolioPagination.shownCount) {
-						jQuery(this).show();
-						shown++;
-					} else {
-						jQuery(this).hide();
-					}
+				if (isFilteredByIsotope) return;
+
+				if (visibleCount < self.shownCount) {
+					$item.removeClass("pagination-hidden");
+					visibleCount++;
 				} else {
-					jQuery(this).hide();
+					$item.addClass("pagination-hidden");
 				}
 			});
 		},
 
-		updateLoadMoreButton: function() {
-			var filter = this.currentFilter;
-			var totalMatching = 0;
-			var shownMatching = 0;
+		updateButton: function() {
+			var $grid = jQuery(".cherga_isotope_trigger");
+			var totalVisible = 0;
+			var shownByPagination = 0;
 
-			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
-				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
-				if (matches) {
-					totalMatching++;
-					if (jQuery(this).is(":visible")) {
-						shownMatching++;
+			$grid.find(".cherga_albums_grid_item").each(function() {
+				var $item = jQuery(this);
+				var pos = $item.css("position");
+				var isFilteredByIsotope = (pos === "absolute" && $item.css("pointer-events") === "none");
+
+				if (!isFilteredByIsotope) {
+					totalVisible++;
+					if (!$item.hasClass("pagination-hidden")) {
+						shownByPagination++;
 					}
 				}
 			});
 
-			if (shownMatching >= totalMatching) {
+			if (shownByPagination >= totalVisible) {
 				jQuery(".cherga_load_more_button_wrapper").addClass("all_posts_loaded");
 			} else {
 				jQuery(".cherga_load_more_button_wrapper").removeClass("all_posts_loaded");
@@ -611,40 +511,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	function cherga_isotop_el_loading() {
 		if (jQuery(".cherga_isotop_el_loading:first").length > 0) {
 			jQuery(".cherga_isotop_el_loading:first").removeClass("cherga_isotop_el_loading");
-			setTimeout("cherga_isotop_el_loading()",200);
+			setTimeout("cherga_isotop_el_loading()", 200);
 		}
 	}
 
 	jQuery(document).ready(function() {
 		cherga_isotop_el_loading();
+		portfolioPagination.init();
 
-		portfolioPagination.shownCount = PORTFOLIO_CONFIG.itemsPerPage;
-		portfolioPagination.updateVisibility();
-		portfolioPagination.updateLoadMoreButton();
-
-		jQuery(".cherga_grid_filter").on("click", "a", function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-
-			// Update active filter button
-			jQuery(".cherga_grid_filter .is-checked").removeClass("is-checked");
-			jQuery(this).parent().addClass("is-checked");
-			jQuery(this).addClass("is-checked");
-
-			// Reset pagination with new filter
-			var newFilter = jQuery(this).attr("data-category");
-			portfolioPagination.resetFilter(newFilter);
-
-			// Trigger Isotope layout only (not filter)
+		jQuery(document).on("click", ".cherga_grid_filter a", function(e) {
 			setTimeout(function() {
-				jQuery(".cherga_isotope_trigger").isotope("layout");
-			}, 50);
+				portfolioPagination.resetForFilter();
+				setTimeout(function() {
+					jQuery(".cherga_isotope_trigger").isotope("layout");
+				}, 100);
+			}, 150);
 		});
 
 		jQuery(".grid_albums_trigger").on("click", function(e) {
 			e.preventDefault();
-			portfolioPagination.showItems(PORTFOLIO_CONFIG.itemsPerLoad);
-
+			portfolioPagination.loadMore();
 			setTimeout(function() {
 				jQuery(".cherga_isotope_trigger").isotope("reLayout");
 			}, 50);
