@@ -508,6 +508,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 						} else {
 							jQuery(this).addClass('cherga_hidden_item');
 						}
+					} else {
+						// Items that don't match filter should not have pagination class
+						jQuery(this).removeClass('cherga_hidden_item');
 					}
 				});
 
