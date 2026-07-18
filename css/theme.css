@@ -561,6 +561,7 @@ div.wpcf7 .ajax-loader {
 	line-height: 26px;
 	font-weight: 400;
 	color: #a0a7ae;
+	text-align: justify;
 }
 
 .cherga_tiny .cherga_select_wrapper ul.select-options {
@@ -5139,7 +5140,8 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 	font-size: 0;
 	line-height: 0;
 	display: inline-block;
-	width: 100%;
+	width: calc(100% + 8px);
+	margin-left: -8px;
 }
 
 .cherga_gallery_item {
