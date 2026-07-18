@@ -446,22 +446,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		}
 	}
 
-	function resetPagination() {
-		// Show items 1-8, hide items 9+
-		jQuery('.cherga_albums_grid_item').each(function(index) {
-			if (index >= 8) {
-				jQuery(this).css('display', 'none').addClass('cherga_hidden_item');
-			} else {
-				jQuery(this).css('display', '').removeClass('cherga_hidden_item');
-			}
-		});
-		// Re-enable Load More button
-		jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
+	function countMatchingItems(filterSelector) {
+		if (filterSelector === '*') {
+			return jQuery('.cherga_albums_grid_item').length;
+		}
+		// Remove the dot prefix from selector and use it as a class name
+		var className = filterSelector.substring(1);
+		return jQuery('.cherga_albums_grid_item.' + className).length;
+	}
 
+	function resetPagination() {
 		// Re-apply current filter to the shown items
 		var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
 		if (currentFilter) {
 			jQuery('.cherga_isotope_trigger').isotope({ filter: currentFilter });
+		}
+
+		// Count total items matching current filter
+		var totalMatching = countMatchingItems(currentFilter);
+
+		// Show items 1-8, hide items 9+
+		var visibleCount = 0;
+		jQuery('.cherga_albums_grid_item').each(function(index) {
+			// Check if this item matches the current filter
+			var itemClasses = jQuery(this).attr('class');
+			var matches = false;
+
+			if (currentFilter === '*') {
+				matches = true;
+			} else {
+				var className = currentFilter.substring(1);
+				matches = jQuery(this).hasClass(className);
+			}
+
+			if (matches) {
+				if (visibleCount < 8) {
+					jQuery(this).css('display', '').removeClass('cherga_hidden_item');
+					visibleCount++;
+				} else {
+					jQuery(this).css('display', 'none').addClass('cherga_hidden_item');
+				}
+			}
+		});
+
+		// Show/hide Load More button based on whether there are items beyond the first 8
+		if (totalMatching > 8) {
+			jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
+		} else {
+			jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
 		}
 	}
 
@@ -484,6 +516,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		jQuery('.grid_albums_trigger').on('click', function(e) {
 			e.preventDefault();
 
+			var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
 			var hiddenItems = jQuery('.cherga_hidden_item');
 			var itemsPerLoad = 4;
 			var itemsToShow = hiddenItems.slice(0, itemsPerLoad);
@@ -501,8 +534,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 				jQuery('.cherga_isotope_trigger').isotope('layout');
 			}, 300);
 
-			// Hide button if all items are now visible
-			if (jQuery('.cherga_hidden_item').length === 0) {
+			// Hide button if all matching items are now visible
+			var totalMatching = countMatchingItems(currentFilter);
+			var visibleMatching = 0;
+			jQuery('.cherga_albums_grid_item').each(function() {
+				var matches = false;
+				if (currentFilter === '*') {
+					matches = true;
+				} else {
+					var className = currentFilter.substring(1);
+					matches = jQuery(this).hasClass(className);
+				}
+				if (matches && jQuery(this).css('display') !== 'none') {
+					visibleMatching++;
+				}
+			});
+
+			if (visibleMatching >= totalMatching) {
 				jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
 			}
 		});
