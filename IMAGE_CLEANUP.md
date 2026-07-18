@@ -34,6 +34,26 @@ Deleted 34 fully-unused Aurel demo folders + 2 unused logos (`logo.nightowl.png`
 - Rebuilt `nightscapes.html` Ken Burns `data-slides` → contiguous img-1..45.
 - No other file needed changes: outside `nightscapes.html`, only `img-1`/`img-5` are referenced (both in the ungapped 1–8 range, so unchanged). All refs resolve; 52 tests pass.
 
+## ⏳ OPEN FOLLOW-UP — Featured-posts / cover-image fixes (resume here next session)
+
+**Context:** user noticed **"First Post"** and **"Golden Hour Sunsets"** show the *same* image, and the About-footer featured post shows a wrong image.
+
+**Investigation findings (verified):**
+- `_posts/index.json` covers: First Post → `img/photos/Sunsets/img-1.jpg`; Welcome Message → `img/photos/Sunrises/img-1.jpg`; Golden Hour Sunsets → `img/photos/Sunsets/img-1.jpg`.
+- **Git history:** First Post has used `Sunsets/img-1.jpg` since its earliest commit — there is **no earlier distinct image to restore**; the duplicate is long-standing, NOT caused by the image cleanup.
+- First Post is a generic stub (no gallery_images, empty categories/tags, excerpt "Welcome to my photography blog…"). Golden Hour Sunsets is a real Sunsets gallery post → legitimately keeps `Sunsets/img-1`.
+- Featured-posts sections: **blog.html** (sidebar `#featured-posts-list`, footer `#footer-featured-posts-list`) and **blog_post.html** sidebar are **dynamic** (read `cover_image`) → they auto-correct once a cover changes.
+- **about.html footer featured widget is HARDCODED and wrong** (~line 571-585): title "Welcome Message" but image `Nightscapes/img-1.jpg` (should be `Sunrises/img-1.jpg`) and `href="/"` broken (should link `blog_post.html?post=2022-01-22-welcome-post`).
+- `portfolio/world-travels/namibia-2021.html` also has a hardcoded footer featured widget ("Mother Nature"→Nightscapes/img-1, "Road Trip"→Sunsets/img-1, links to blog.html) — generic placeholders; review/lower priority.
+
+**Plan for next session:**
+1. **First Post cover** → give it a DISTINCT image (recommend `img/photos/Nightscapes/img-1.jpg` — signature genre, distinct from Sunsets/Sunrises). Update BOTH `_posts/index.json` AND `_posts/2022-01-22-first-post.md` frontmatter. (Golden Hour Sunsets stays Sunsets; Welcome Message stays Sunrises.) → auto-fixes the dynamic featured-posts + blog listing. **⚠ Confirm the chosen image with user (they said they don't recall the original).**
+2. **about.html footer featured** → image `Nightscapes/img-1.jpg` → `Sunrises/img-1.jpg`; fix both `href="/"` → `blog_post.html?post=2022-01-22-welcome-post`.
+3. (optional) normalize the `namibia-2021.html` footer featured placeholders.
+4. Verify blog listing + both sidebars + about footer show correct, non-duplicate images.
+
+**Also still pending:** final user review of the whole `image-cleanup` branch (About square carousel + Nightscapes renumber), then **merge `image-cleanup` → `main`** (currently `main`=80cbd57, unmerged).
+
 ## Notes for the future
 - New photos go under `img/photos/<Album>/img-N.jpg`. Decap CMS media folder is now `img/photos`.
 - Nightscapes is now contiguously numbered (img-1..45). Other albums may still have gaps — the gallery slide lists are generated from actual files, so gaps are harmless; ask if you want another album renumbered.
