@@ -12,8 +12,8 @@ auth_scope: open_repo
 # Email login (Decap generates a static file for verification)
 provider: email
 
-media_folder: "img/clipart/facebook"
-public_folder: "/img/clipart/facebook"
+media_folder: "img/photos"
+public_folder: "/img/photos"
 
 editor_formats: [default]
 
@@ -29,12 +29,12 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false}
       - { 
-          label: "Cover Image path (relative to img/clipart/facebook)", 
+          label: "Cover Image path (relative to img/photos)", 
           name: "cover_image", 
           widget: "image", 
           required: false,
-          media_folder: "img/clipart/facebook",
-          public_folder: "/img/clipart/facebook"
+          media_folder: "img/photos",
+          public_folder: "/img/photos"
         }
       - {
           label: "Categories", 

@@ -9,14 +9,14 @@ describe('Related Posts Section', () => {
       filename: '2022-01-22-first-post.md',
       title: 'First Post',
       date: '2022-01-22',
-      cover_image: 'img/clipart/facebook/Sunsets/img-1.jpg',
+      cover_image: 'img/photos/Sunsets/img-1.jpg',
       excerpt: 'Welcome to my photography blog.'
     },
     {
       filename: '2022-01-22-welcome-post.md',
       title: 'Welcome Message',
       date: '2022-01-22',
-      cover_image: 'img/clipart/facebook/Sunrises/img-1.jpg',
+      cover_image: 'img/photos/Sunrises/img-1.jpg',
       excerpt: 'Welcome to my web corner.'
     }
   ];

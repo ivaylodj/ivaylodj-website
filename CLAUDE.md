@@ -68,7 +68,7 @@ These files need extra attention - they're prone to problems:
 
 ## Reference Information
 - **Aurel template reference:** `/Users/ivaylodj/html-themes/other\ themes/html/aurel/`
-- **Image directories exist:** `img/clipart/facebook/` with proper subdirectories
+- **Image directories exist:** `img/photos/` with proper subdirectories
 - **Gallery types:** packery, masonry, grid, fitRows
 - **Main pages:** index.html, blog.html, about.html, contacts.html, blog_post.html
 - **Portfolio structure:** portfolio pages under `portfolio/` across 4 subdirectories (varna, seasons, world-travels, europe-travels)

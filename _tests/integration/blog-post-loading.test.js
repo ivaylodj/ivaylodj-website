@@ -11,7 +11,7 @@ describe('Blog Post Loading', () => {
       title: 'First Post',
       date: '2022-01-22',
       template: 'blog_image',
-      cover_image: 'img/clipart/facebook/Sunsets/img-1.jpg',
+      cover_image: 'img/photos/Sunsets/img-1.jpg',
       categories: [],
       tags: ['General'],
       excerpt: 'Welcome to my photography blog. More posts coming soon.'
@@ -21,7 +21,7 @@ describe('Blog Post Loading', () => {
       title: 'Welcome Message',
       date: '2022-01-22',
       template: 'blog_standard',
-      cover_image: 'img/clipart/facebook/Sunrises/img-1.jpg',
+      cover_image: 'img/photos/Sunrises/img-1.jpg',
       categories: ['General'],
       tags: ['General', 'Photography'],
       excerpt: 'Welcome to my web corner.'
@@ -105,7 +105,7 @@ describe('Blog Post Loading', () => {
       title: 'First Post',
       date: '2022-01-22',
       template: 'blog_image',
-      cover_image: 'img/clipart/facebook/Sunsets/img-1.jpg',
+      cover_image: 'img/photos/Sunsets/img-1.jpg',
       categories: [],
       tags: ['General'],
       excerpt: expect.any(String)

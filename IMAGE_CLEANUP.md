@@ -1,34 +1,34 @@
-# Image Cleanup — Plan & Progress
+# Image Cleanup — Record
 
-**Branch:** `image-cleanup`. **Started:** 2026-07-19.
-Analysis verified against disk (usage cross-referenced across all live code; duplicates by content hash).
+**STATUS: ✅ COMPLETE (2026-07-19).** Branch: `image-cleanup`. Analysis verified against disk (usage cross-referenced across all live code; duplicates by content hash). 52 tests pass at every phase.
+
+## Result
+- **`img/` 400 MB → 163 MB** (~237 MB / 62% freed).
+- Real photography moved out of the Aurel `clipart/` folder to a clean **`img/photos/`** (17 albums).
+- `img/clipart/` now holds only 9 still-used loose files (about0*, about_me, about_title_bg, back_1 [og:image], banner, contacts). `img/logo.png` kept.
 
 ## Decisions (locked with user)
-1. **Rename target:** `img/clipart/facebook/` → **`img/photos/`** (move OUT of the Aurel `clipart/` folder; `photos` is clear/future-proof).
-2. **5 orphan Nightscapes photos** (`img-46,48,49,50,51`): **ADD to the Nightscapes gallery.**
-3. **About-page carousel** (currently Aurel demo `albums_carousel/`): **replace with real photos** (a "collections showcase" — one image per album) and **delete the demo folder**.
-4. **Homepage hero** (`kenburns_album/`, a duplicate of the Sunsets album): **repoint to real Sunsets folder, then delete the duplicate.**
-
-## Starting state
-`img/` = 400 MB, 945 images. ~228 MB unused (mostly Aurel demo sets); 87 duplicate content-sets (demo folders were byte-identical copies of the real Sunsets album).
+1. **Rename:** `img/clipart/facebook/` → **`img/photos/`** (moved out of `clipart/`).
+2. **5 orphan Nightscapes photos** (`img-46,48,49,50,51`): **added** to the gallery.
+3. **About-page carousel** (was Aurel demo `albums_carousel/`): **replaced** with a real-photo "collections showcase"; demo folder deleted.
+4. **Homepage hero** (was `kenburns_album/`, a Sunsets duplicate): **repointed** to the real Sunsets album; duplicate deleted.
 
 ---
 
-## Phase A — safe deletions (no live refs) — ✅ DONE
-Deleted 34 fully-unused Aurel demo folders + 2 unused logos (`logo.nightowl.png`, `logo.samurai.png`) + 26 loose Aurel files (`ava-*`, `ba1/2`, `back_2..14`, `about05`, `bg_notebook`, `contacts03`, `footer_widget_thumb_01/02`, `price-img-1/2/3`) + stray `.DS_Store` + empty dirs.
-- Verified **zero live references** to every target before deleting; **52 tests pass**.
-- Result: **400 MB → 184 MB**, 945 → 295 files. Remaining under `clipart/`: `facebook`, `kenburns_album`, `albums_carousel`.
-- Kept (still used): `logo.png`, `back_1.jpg` (og:image), all of `facebook/`.
+## Phase A — safe deletions — ✅ DONE
+Deleted 34 fully-unused Aurel demo folders + 2 unused logos (`logo.nightowl.png`, `logo.samurai.png`) + 26 loose Aurel files (`ava-*`, `ba1/2`, `back_2..14`, `about05`, `bg_notebook`, `contacts03`, `footer_widget_thumb_01/02`, `price-img-1/2/3`) + stray `.DS_Store`/empty dirs. Verified **zero live references** to every target first. (400 MB → 184 MB.)
 
-## Phase B — repoint used-demo + add orphans — ⏳ TODO (needs browser verify)
-- Homepage `index.html` hero: repoint `kenburns_album/` slides → real Sunsets folder; delete `kenburns_album/` (16 MB).
-- About `about.html` carousel: replace `albums_carousel/` demo images with a real-photo "collections showcase" (one per album); delete `albums_carousel/` (5.6 MB).
-- Add `facebook/Nightscapes/img-46,48,49,50,51.jpg` to the Nightscapes gallery page (+ PhotoSwipe slides).
+## Phase B — repoint used-demo + add orphans — ✅ DONE
+- Homepage hero (`index.html`): Ken Burns slides repointed `kenburns_album/` → `img/photos/Sunsets/` (img-1..30).
+- Nightscapes (`portfolio/nightscapes.html`): Ken Burns `data-slides` **regenerated from the actual files** — removed 5 broken refs (`img-9,12,13,16,19` never existed on disk) and added the 5 orphans (`img-46,48,49,50,51`); now 45 slides = 45 real files.
+- About (`about.html`): carousel replaced with 11 real-album showcase items (one per portfolio album, linking to each gallery); div-balanced.
+- Deleted `kenburns_album/` + `albums_carousel/` after repointing (verified unreferenced). (184 MB → 163 MB.)
 
-## Phase C — rename `facebook/` → `photos/` (out of clipart) — ⏳ TODO (needs browser verify)
-- `git mv img/clipart/facebook img/photos`.
-- Global ref update `img/clipart/facebook/` → `img/photos/` (handle `%20`): ~474 refs across ~33 portfolio/blog pages, `static/admin/config.yml` (Decap `media_folder`/`public_folder`), 2 test files, `AGENTS.md`/`CLAUDE.md`.
-- Browser-verify galleries + lightbox + blog covers; update docs.
+## Phase C — rename `facebook/` → `img/photos/` — ✅ DONE
+- `git mv img/clipart/facebook img/photos` (235 image files).
+- Swept `img/clipart/facebook` → `img/photos` across 38 files: all portfolio/blog pages, `about.html`, `contacts.html`, `index.html`, `_posts/index.json` + 3 `.md`, `static/admin/config.yml` (Decap `media_folder`/`public_folder`/label), 2 test files, `_templates/*`, and docs (`AGENTS.md`, `CLAUDE.md`).
+- Verified: 0 residual `img/clipart/facebook` refs; sampled paths resolve on disk; 52 tests pass.
 
-## How to resume
-Read this file. Phase A is committed on `image-cleanup`. Next: Phase B (repoint homepage/about + add orphans), then Phase C (rename). Review + merge each phase like the remediation workflow.
+## Notes for the future
+- New photos go under `img/photos/<Album>/img-N.jpg`. Decap CMS media folder is now `img/photos`.
+- Nightscapes folder numbering has natural gaps (some early numbers absent); the gallery slide list is generated from the actual files, so gaps are fine.

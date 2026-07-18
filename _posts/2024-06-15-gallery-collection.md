@@ -2,7 +2,7 @@
 title: "Golden Hour Sunsets"
 date: 2024-06-15
 template: "blog_gallery"
-cover_image: "img/clipart/facebook/Sunsets/img-1.jpg"
+cover_image: "img/photos/Sunsets/img-1.jpg"
 categories: ["Sunsets", "Photography"]
 tags: ["photography", "sunsets", "golden hour", "landscape"]
 excerpt: "A stunning collection of sunset photography exploring the interplay of light, color, and atmosphere during golden hour."
@@ -12,12 +12,12 @@ gallery:
     rows: 2
     aspect_ratio: "5/4"
     images:
-      - "img/clipart/facebook/Sunsets/img-1.jpg"
-      - "img/clipart/facebook/Sunsets/img-2.jpg"
-      - "img/clipart/facebook/Sunsets/img-3.jpg"
-      - "img/clipart/facebook/Sunsets/img-4.jpg"
-      - "img/clipart/facebook/Sunsets/img-5.jpg"
-      - "img/clipart/facebook/Sunsets/img-6.jpg"
+      - "img/photos/Sunsets/img-1.jpg"
+      - "img/photos/Sunsets/img-2.jpg"
+      - "img/photos/Sunsets/img-3.jpg"
+      - "img/photos/Sunsets/img-4.jpg"
+      - "img/photos/Sunsets/img-5.jpg"
+      - "img/photos/Sunsets/img-6.jpg"
 ---
 
 Sunsets represent some of the most dynamic and emotional moments in landscape photography. The golden hour—that fleeting window of time just before sunset—bathes the landscape in warm, directional light that transforms ordinary scenes into something extraordinary. This collection showcases the endless variety of sunset compositions available to patient photographers.
@@ -39,10 +39,10 @@ columns: 4
 rows: 1
 aspect_ratio: "1/1"
 images:
-  - "img/clipart/facebook/Sunsets/img-7.jpg"
-  - "img/clipart/facebook/Sunsets/img-8.jpg"
-  - "img/clipart/facebook/Sunsets/img-9.jpg"
-  - "img/clipart/facebook/Sunsets/img-10.jpg"
+  - "img/photos/Sunsets/img-7.jpg"
+  - "img/photos/Sunsets/img-8.jpg"
+  - "img/photos/Sunsets/img-9.jpg"
+  - "img/photos/Sunsets/img-10.jpg"
 END_GALLERY_INLINE -->
 
 ## Technical Considerations

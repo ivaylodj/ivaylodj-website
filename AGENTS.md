@@ -340,7 +340,7 @@ grep -r "test description" _tests/   # Find specific test
 ## Gallery Pages Guide
 
 - **Templates:** Copy from existing (e.g. `portfolio/nightscapes.html`), don't start from scratch
-- **Images:** Live at `img/clipart/facebook/<Album Name>/`, use `../img/...` paths from `portfolio/`
+- **Images:** Live at `img/photos/<Album Name>/`, use `../img/...` paths from `portfolio/`
 - **Nested galleries:** Use `../../img/...` from subfolders like `portfolio/world-travels/index.html`
 - **After adding:** Update `sitemap.xml`, add to header/mobile menu, update `portfolio/index.html` grid
 
