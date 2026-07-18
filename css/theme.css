@@ -7323,6 +7323,9 @@ body .gm-style .gm-style-mtc div {
 	.liza_back_to_top {
 		display:none;
 	}
+}
+
+@media only screen and (max-width: 768px) {
 	header.cherga_main_header .cherga_header_socials a.cherga_toogle_fullview {
 		display:none;
 	}
