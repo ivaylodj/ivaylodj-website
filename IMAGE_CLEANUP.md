@@ -29,6 +29,11 @@ Deleted 34 fully-unused Aurel demo folders + 2 unused logos (`logo.nightowl.png`
 - Swept `img/clipart/facebook` → `img/photos` across 38 files: all portfolio/blog pages, `about.html`, `contacts.html`, `index.html`, `_posts/index.json` + 3 `.md`, `static/admin/config.yml` (Decap `media_folder`/`public_folder`/label), 2 test files, `_templates/*`, and docs (`AGENTS.md`, `CLAUDE.md`).
 - Verified: 0 residual `img/clipart/facebook` refs; sampled paths resolve on disk; 52 tests pass.
 
+## Phase D — Nightscapes contiguous renumber — ✅ DONE
+- Renumbered `img/photos/Nightscapes/` from gappy (…8,10,11,14,15,17,18,20…46,48…51) to contiguous **img-1..img-45** (two-phase move, collision-safe).
+- Rebuilt `nightscapes.html` Ken Burns `data-slides` → contiguous img-1..45.
+- No other file needed changes: outside `nightscapes.html`, only `img-1`/`img-5` are referenced (both in the ungapped 1–8 range, so unchanged). All refs resolve; 52 tests pass.
+
 ## Notes for the future
 - New photos go under `img/photos/<Album>/img-N.jpg`. Decap CMS media folder is now `img/photos`.
-- Nightscapes folder numbering has natural gaps (some early numbers absent); the gallery slide list is generated from the actual files, so gaps are fine.
+- Nightscapes is now contiguously numbered (img-1..45). Other albums may still have gaps — the gallery slide lists are generated from actual files, so gaps are harmless; ask if you want another album renumbered.
