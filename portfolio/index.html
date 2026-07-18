@@ -439,31 +439,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 	<script>
+	function cherga_isotop_el_loading() {
+		if (jQuery('.cherga_isotop_el_loading:first').length > 0) {
+			jQuery('.cherga_isotop_el_loading:first').removeClass('cherga_isotop_el_loading');
+			setTimeout("cherga_isotop_el_loading()",200);
+		}
+	}
+
 	jQuery(document).ready(function() {
+		// Show items by removing loading class (makes them visible)
+		cherga_isotop_el_loading();
+
 		// Hide items 9 and beyond initially
 		jQuery('.cherga_albums_grid_item').each(function(index) {
 			if (index >= 8) {
 				jQuery(this).hide().addClass('cherga_hidden_item');
 			}
 		});
-		
+
 		// Load more functionality
 		jQuery('.grid_albums_trigger').on('click', function(e) {
 			e.preventDefault();
-			
+
 			var hiddenItems = jQuery('.cherga_hidden_item:hidden');
 			var itemsPerLoad = 4;
 			var itemsToShow = hiddenItems.slice(0, itemsPerLoad);
-			
+
 			itemsToShow.each(function() {
 				jQuery(this).show();
 			});
-			
+
 			// Trigger Isotope reLayout
 			setTimeout(function() {
 				jQuery('.cherga_isotope_trigger').isotope('reLayout');
 			}, 50);
-			
+
 			// Hide button if all items are now visible
 			if (jQuery('.cherga_hidden_item:hidden').length === 0) {
 				jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
