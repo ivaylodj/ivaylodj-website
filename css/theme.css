@@ -5215,7 +5215,6 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 	display: inline-block;
 	vertical-align: top;
 	padding: 0 0 30px 30px;
-	transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .cherga_grid_inner .grid-item-inner {
 	position: relative;
@@ -5643,7 +5642,7 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 	line-height:0;
 }
 .cherga_packery_inner .packery-item {
-	transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
 }
 .packery-item-inner {
 	background:no-repeat center;
