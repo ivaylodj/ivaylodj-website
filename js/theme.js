@@ -94,13 +94,16 @@ if (jQuery('.cherga_photoswipe_wrapper').length > 0) {
 				}
 				$pswp_gallery_array['cherga_gallery_' + this_id].slides.push(this_item);
 			} else {
+				// Default to unknown size (0x0); real dimensions are resolved on
+				// open via the gettingData listener below, so every image keeps its
+				// true aspect ratio without needing a data-size attribute.
 				var size_attr = jQuery(this).data('size'),
-					item_width = 1600,
-					item_height = 1200;
+					item_width = 0,
+					item_height = 0;
 				if (size_attr) {
 					var item_size = size_attr.split('x');
-					item_width = item_size[0] || 1600;
-					item_height = item_size[1] || 1200;
+					item_width = parseInt(item_size[0], 10) || 0;
+					item_height = parseInt(item_size[1], 10) || 0;
 				}
 				var this_item = {
 					src : jQuery(this).attr('href'),
@@ -126,6 +129,20 @@ if (jQuery('.cherga_photoswipe_wrapper').length > 0) {
 		// Initialize PhotoSwipe
 		var cherga_lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, $pswp_gallery_array['cherga_gallery_' + this_id].slides, options);
 		cherga_lightBox.init();
+		// Resolve real image dimensions on the fly so aspect ratios are always
+		// correct (avoids the old 1600x1200 fallback that squashed non-4:3 images).
+		cherga_lightBox.listen('gettingData', function(index, item) {
+			if (item.html) { return; } // video slide — sized separately below
+			if (item.w < 1 || item.h < 1) {
+				var cherga_pswp_img = new Image();
+				cherga_pswp_img.onload = function () {
+					item.w = this.width;
+					item.h = this.height;
+					cherga_lightBox.updateSize(true);
+				};
+				cherga_pswp_img.src = item.src;
+			}
+		});
 		cherga_lightBox.listen('gettingData', function(index, item) {
 			if (jQuery('.cherga_pswp_video_wrapper').length > 0) {
 				var cherga_window_height = cherga_window.height();
@@ -693,93 +710,10 @@ jQuery(document).ready(function () {
 	    }
     });
     
-    // Load More Items
-	// Grid Albums
-	jQuery('.cherga_albums_grid_page').each(function () {
-		cherga_isotop_el_loading();
-		
-		var items_set = [
-			{category_class: 'food-drink', src: 'img/clipart/albums_grid/img_13.jpg', album_href: 'album_slider.html', category_name: 'food+drink', title: 'Autumn Evening'},
-			{category_class: 'portraits', src: 'img/clipart/albums_grid/img_14.jpg', album_href: 'album_split.html', category_name: 'portraits', title: 'Business Style'},
-			{category_class: 'stuff', src: 'img/clipart/albums_grid/img_15.jpg', album_href: 'album_grid.html', category_name: 'stuff', title: 'Autumn Stuff'},
-			{category_class: 'stuff', src: 'img/clipart/albums_grid/img_16.jpg', album_href: 'album_masonry.html', category_name: 'stuff', title: 'Rope Bundle'},
-			{category_class: 'nature', src: 'img/clipart/albums_grid/img_17.jpg', album_href: 'album_kenburns.html', category_name: 'nature', title: 'Waterfall'},
-			{category_class: 'fashion', src: 'img/clipart/albums_grid/img_18.jpg', album_href: 'album_packery.html', category_name: 'fashion', title: 'Fashion Jeans'},
-			{category_class: 'fashion', src: 'img/clipart/albums_grid/img_19.jpg', album_href: 'album_ribbon.html', category_name: 'fashion', title: 'Street Style'},
-			{category_class: 'food-drink', src: 'img/clipart/albums_grid/img_20.jpg', album_href: 'album_slider.html', category_name: 'food-drink', title: 'Breakfast'}
-		];
-		
-		jQuery('#list').albums_listing_addon({
-			load_count: 4,
-			items: items_set
-		});
-	});
-	
-	// Masonry Albums
-	jQuery('.cherga_albums_masonry_page').each(function () {
-		cherga_isotop_el_loading();
-		
-		var items_set = [
-			{category_class: 'food-drink', src: 'img/clipart/albums_masonry/img_13.jpg', album_href: 'album_slider.html', category_name: 'food+drink', title: 'Autumn Evening'},
-			{category_class: 'portraits', src: 'img/clipart/albums_masonry/img_14.jpg', album_href: 'album_split.html', category_name: 'portraits', title: 'Business Style'},
-			{category_class: 'stuff', src: 'img/clipart/albums_masonry/img_15.jpg', album_href: 'album_grid.html', category_name: 'stuff', title: 'Autumn Stuff'},
-			{category_class: 'stuff', src: 'img/clipart/albums_masonry/img_16.jpg', album_href: 'album_masonry.html', category_name: 'stuff', title: 'Rope Bundle'},
-			{category_class: 'nature', src: 'img/clipart/albums_masonry/img_17.jpg', album_href: 'album_kenburns.html', category_name: 'nature', title: 'Waterfall'},
-			{category_class: 'fashion', src: 'img/clipart/albums_masonry/img_18.jpg', album_href: 'album_packery.html', category_name: 'fashion', title: 'Fashion Jeans'},
-			{category_class: 'fashion', src: 'img/clipart/albums_masonry/img_19.jpg', album_href: 'album_ribbon.html', category_name: 'fashion', title: 'Street Style'},
-			{category_class: 'food-drink', src: 'img/clipart/albums_masonry/img_20.jpg', album_href: 'album_slider.html', category_name: 'food-drink', title: 'Breakfast'}
-		];
-		
-		jQuery('#list').albums_listing_addon({
-			load_count: 4,
-			items: items_set
-		});
-	});
-	
-	// Packery Albums
-	jQuery('.cherga_albums_packery_page').each(function () {
-		cherga_isotop_el_loading();
-		
-		var items_set = [
-			{count: '1', category_class: 'portraits', img_src: 'img/clipart/albums_packery/thumb-9.jpg', album_href: 'album_masonry.html', category_name: 'Portraits', title: 'Beautiful Ringlets'},
-			{count: '2', category_class: 'nature', img_src: 'img/clipart/albums_packery/thumb-10.jpg', album_href: 'album_packery.html', category_name: 'Nature', title: 'In the Forest'},
-			{count: '3', category_class: 'food-drink', img_src: 'img/clipart/albums_packery/thumb-11.jpg', album_href: 'album_kenburns.html', category_name: 'Food+Drink', title: 'Still Life'},
-			{count: '4', category_class: 'stuff', img_src: 'img/clipart/albums_packery/thumb-12.jpg', album_href: 'album_ribbon.html', category_name: 'Stuff', title: 'Light My Fire'},
-			{count: '5', category_class: 'food-drink', img_src: 'img/clipart/albums_packery/thumb-13.jpg', album_href: 'album_slider.html', category_name: 'Food+Drink', title: 'Autumn Evening'},
-			{count: '6', category_class: 'portraits', img_src: 'img/clipart/albums_packery/thumb-14.jpg', album_href: 'album_split.html', category_name: 'Portraits', title: 'Business Style'},
-			{count: '7', category_class: 'stuff', img_src: 'img/clipart/albums_packery/thumb-15.jpg', album_href: 'album_grid.html', category_name: 'Stuff', title: 'Autumn Stuff'},
-			{count: '8', category_class: 'stuff', img_src: 'img/clipart/albums_packery/thumb-16.jpg', album_href: 'album_masonry.html', category_name: 'Stuff', title: 'Rope Bundle'},
-			{count: '1', category_class: 'nature', img_src: 'img/clipart/albums_packery/thumb-17.jpg', album_href: 'album_packery.html', category_name: 'Nature', title: 'Waterfall'},
-			{count: '2', category_class: 'fashion', img_src: 'img/clipart/albums_packery/thumb-18.jpg', album_href: 'album_kenburns.html', category_name: 'Fashion', title: 'Fashion Jeans'},
-			{count: '3', category_class: 'fashion', img_src: 'img/clipart/albums_packery/thumb-19.jpg', album_href: 'album_ribbon.html', category_name: 'Fashion', title: 'Street Style'},
-			{count: '4', category_class: 'food-drink', img_src: 'img/clipart/albums_packery/thumb-20.jpg', album_href: 'album_slider.html', category_name: 'Food+Drink', title: 'Breakfast'}
-		];
-		
-		jQuery('#list').packery_albums_listing_addon({
-			load_count: 4,
-			items: items_set
-		});
-	});
-	
-    // Grid Blog
-	jQuery('.cherga_grid_blog_page').each(function () {
-		cherga_grid_blog_loading();
-		
-		var items_set = [
-			{post_link: 'blog_audio.html', img_url: 'img/clipart/blog_grid/blog-grid-10.jpg', post_date: 'November 14, 2017', post_category: 'Fashion', post_title: 'Fashion Shoes', post_excerpt: 'Ihendrerit felis. Quisque ut sapien fermentum sapien iaculis condimentum. Ut eget ipsum eget justo congue dapibus vitae ac tortor. Sed gravida, arcu eget pulvinar imperdiet, neque ipsum luctus velit, in luctus elit...'},
-			{post_link: 'blog_standard.html', img_url: 'img/clipart/blog_grid/blog-grid-11.jpg', post_date: 'November 14, 2017', post_category: 'Music', post_title: 'Meant to Be', post_excerpt: 'Fringilla ac est. Vestibulum arcu nibh, varius sed orci eget, convallis pretium eros. Integer dignissim sapien dolor, sit amet posuere mauris imperdiet id. Aliquam at tellus vitae nunc consectetur malesuada ut...'},
-			{post_link: 'blog_image.html', img_url: 'img/clipart/blog_grid/blog-grid-12.jpg', post_date: 'November 14, 2017', post_category: 'Fashion', post_title: 'Stylish Look', post_excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis mollis tellus in dictum. Sed ultrices pharetra cursus. Integer porttitor ut arcu at semper. Aenean accumsan purus sit amet semper vulputate...'},
-			{post_link: 'blog_gallery.html', img_url: 'img/clipart/blog_grid/blog-grid-13.jpg', post_date: 'November 14, 2017', post_category: 'Traveling', post_title: 'Mountain Ways', post_excerpt: 'Fringilla ac est. Vestibulum arcu nibh, varius sed orci eget, convallis pretium eros. Integer dignissim sapien dolor, sit amet posuere mauris imperdiet id. Aliquam at tellus vitae nunc consectetur malesuada ut...'},
-			{post_link: 'blog_video.html', img_url: 'img/clipart/blog_grid/blog-grid-14.jpg', post_date: 'November 14, 2017', post_category: 'Nature', post_title: 'Bird’s Eye View', post_excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis mollis tellus in dictum. Sed ultrices pharetra cursus. Integer porttitor ut arcu at semper. Aenean accumsan purus sit amet semper vulputate...'},
-			{post_link: 'blog_audio.html', img_url: 'img/clipart/blog_grid/blog-grid-15.jpg', post_date: 'November 14, 2017', post_category: 'Music', post_title: 'Corra Music', post_excerpt: 'Ihendrerit felis. Quisque ut sapien fermentum sapien iaculis condimentum. Ut eget ipsum eget justo congue dapibus vitae ac tortor. Sed gravida, arcu eget pulvinar imperdiet, neque ipsum luctus velit, in luctus elit...'}
-		];
-		
-		jQuery('#list').blog_listing_addon({
-			load_count: 3,
-			items: items_set
-		});
-	});
-	
+    // Load More Items — demo album/blog injection removed (no live page uses
+    // cherga_albums_grid_page / _masonry_page / _packery_page / cherga_grid_blog_page).
+    // Portfolio grid pagination is handled per-page (portfolio/index.html).
+
 	// Landing Page
 	jQuery('.cherga_landing_page').each(function () {
 		cherga_isotop_el_loading();

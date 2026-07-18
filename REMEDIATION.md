@@ -31,13 +31,13 @@
 - [x] `static/admin/config.yml` — `galleries` collection `folder` → `portfolio`
 - [x] **BONUS (found during Phase 1):** `world-travels/namibia-2021.html` featured-post images used `../img/` (1 level) but page is 2 levels deep → fixed to `../../img/`. Asset audit had missed these (inside the malformed anchors).
 
-## Phase 2 — Portfolio gallery correctness (medium risk)
-- [ ] Add `isotope.pkgd.min.js` + `imagesloaded.pkgd.min.js` to masonry pages: `portfolio/varna/day-of-varna-2019.html`, `day-of-varna-2020.html`, `funfair-winter.html` (match `sunsets.html` script set)
-- [ ] Remove `cherga_albums_grid_page` body class from nested indexes: `portfolio/varna/index.html`, `seasons/index.html`, `world-travels/index.html`, `europe-travels/index.html`
-- [ ] Neutralize/remove demo `items_set` + `albums_listing_addon` blocks in `js/theme.js` (~698–781)
-- [ ] Remove duplicate hardcoded `.pswp` roots (theme.js injects one): `portfolio/unsorted.html`, `varna/day-of-varna-2019.html`, `day-of-varna-2020.html`, `funfair-winter.html`, `world-travels/namibia-2021.html`
-- [ ] Fix PhotoSwipe to use live per-slide `data-size` (build slide array in click handler) — `js/theme.js:70–128`; optionally add `data-size` per image
-- [ ] Move `<footer>` inside `cherga_site_wrapper` + add `cherga_back_to_top` on: `portfolio/nightscapes.html`, `neowise.html`, `sunrises.html`, `vera-su.html`, `sunsets.html`, `unsorted.html`, `seasons/spring.html`
+## Phase 2 — Portfolio gallery correctness (medium risk) — **DONE (needs browser eyeball for lightbox/masonry)**
+- [x] Added `imagesloaded`+`isotope` (+swipebox/fullscreen/owl) to masonry pages: `varna/day-of-varna-2019.html`, `day-of-varna-2020.html`, `funfair-winter.html` — masonry now initializes.
+- [x] Removed `cherga_albums_grid_page` body class from 4 nested indexes; **re-scoped inline card CSS** from `.cherga_albums_grid_page` → `.cherga_albums_grid` (the class still removed would have broken card heights).
+- [x] Removed the 4 dead demo `items_set` injection blocks in `js/theme.js` (grid/masonry/packery/grid-blog). Syntax OK, 52 tests pass. (Inert `jQuery.fn.*_listing_addon` plugin defs left for Phase 6 hygiene.)
+- [x] ~~Remove duplicate `.pswp` roots~~ **FALSE POSITIVE** — the `pswp__bg` matches are inline CSS rules, not hardcoded `.pswp` HTML roots (`class="pswp"` count = 0 on all 5). No action needed.
+- [x] PhotoSwipe: default slide dims to 0×0 and resolve real dimensions on open via `gettingData` image-onload (official PhotoSwipe recipe) — every image keeps true aspect ratio; no `data-size` needed. **⚠ Needs browser verification.**
+- [x] Moved `<footer>` inside `cherga_site_wrapper` + added `cherga_back_to_top` on all 7 pages (`nightscapes`, `neowise`, `sunrises`, `vera-su`, `sunsets`, `unsorted`, `seasons/spring`). Div balance verified on all 7.
 
 ## Phase 3 — Blog single-post page (HIGH risk — run `npm test` + browser)
 - [ ] `blog_post.html:122–172` — remove duplicated static blocks (tags/share/nav/comments); JS injects them
@@ -70,4 +70,5 @@
 
 ## Change log
 _(append commit hashes as phases land)_
-- Phase 0+1 — broken links, sitemap, CMS config, namibia widget + image-depth fix (branch `remediation`)
+- Phase 0+1 — broken links, sitemap, CMS config, namibia widget + image-depth fix (merged to `main` @ 772ebea)
+- Phase 2 — masonry scripts, nested-index body class + CSS re-scope, theme.js demo removal, PhotoSwipe on-the-fly sizing, footer relocation ×7 (branch `remediation`; needs browser eyeball before merge)
