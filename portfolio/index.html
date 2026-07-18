@@ -453,7 +453,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		// Hide items 9 and beyond initially
 		jQuery('.cherga_albums_grid_item').each(function(index) {
 			if (index >= 8) {
-				jQuery(this).hide().addClass('cherga_hidden_item');
+				jQuery(this).css('display', 'none').addClass('cherga_hidden_item');
 			}
 		});
 
@@ -461,21 +461,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		jQuery('.grid_albums_trigger').on('click', function(e) {
 			e.preventDefault();
 
-			var hiddenItems = jQuery('.cherga_hidden_item:hidden');
+			var hiddenItems = jQuery('.cherga_hidden_item');
 			var itemsPerLoad = 4;
 			var itemsToShow = hiddenItems.slice(0, itemsPerLoad);
 
 			itemsToShow.each(function() {
-				jQuery(this).show();
+				jQuery(this).css('display', '').removeClass('cherga_hidden_item');
 			});
 
-			// Trigger Isotope reLayout
+			// Trigger Isotope reLayout multiple times like theme.js does
+			jQuery('.cherga_isotope_trigger').isotope();
 			setTimeout(function() {
 				jQuery('.cherga_isotope_trigger').isotope('reLayout');
-			}, 50);
+			}, 100);
+			setTimeout(function() {
+				jQuery('.cherga_isotope_trigger').isotope('layout');
+			}, 300);
 
 			// Hide button if all items are now visible
-			if (jQuery('.cherga_hidden_item:hidden').length === 0) {
+			if (jQuery('.cherga_hidden_item').length === 0) {
 				jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
 			}
 		});
