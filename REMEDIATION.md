@@ -36,7 +36,7 @@
 - [x] Removed `cherga_albums_grid_page` body class from 4 nested indexes; **re-scoped inline card CSS** from `.cherga_albums_grid_page` → `.cherga_albums_grid` (the class still removed would have broken card heights).
 - [x] Removed the 4 dead demo `items_set` injection blocks in `js/theme.js` (grid/masonry/packery/grid-blog). Syntax OK, 52 tests pass. (Inert `jQuery.fn.*_listing_addon` plugin defs left for Phase 6 hygiene.)
 - [x] ~~Remove duplicate `.pswp` roots~~ **FALSE POSITIVE** — the `pswp__bg` matches are inline CSS rules, not hardcoded `.pswp` HTML roots (`class="pswp"` count = 0 on all 5). No action needed.
-- [x] PhotoSwipe: default slide dims to 0×0 and resolve real dimensions on open via `gettingData` image-onload (official PhotoSwipe recipe) — every image keeps true aspect ratio; no `data-size` needed. **⚠ Needs browser verification.**
+- [x] PhotoSwipe: **REAL root cause found during browser testing** — 8 gallery pages carried inline `<style>` blocks with `!important` overrides on `.pswp__img`/`.pswp__zoom-wrap` (incl. `transform: translate(0,0) !important`) that defeated PhotoSwipe's own JS-driven positioning → transparent backdrop, images uncentered/overflowing. All pages already link `photoswipe.css`+`default-skin.css`, so these inline blocks were redundant *and* breaking. Removed every inline `.pswp` style block from all 8 pages (`sunsets, birds, namibia, unsorted, varna/day-of-varna-2019, day-of-varna-2020, funfair-winter, world-travels/namibia-2021`). Complementary JS fix in `theme.js`: read real dims from the already-loaded thumbnails at click time (thumb = same file as full image) + 0×0 fallback resolved via `gettingData`. **⚠ Needs browser re-verification.**
 - [x] Moved `<footer>` inside `cherga_site_wrapper` + added `cherga_back_to_top` on all 7 pages (`nightscapes`, `neowise`, `sunrises`, `vera-su`, `sunsets`, `unsorted`, `seasons/spring`). Div balance verified on all 7.
 
 ## Phase 3 — Blog single-post page (HIGH risk — run `npm test` + browser)
@@ -67,6 +67,9 @@
 - [ ] Docs: `AGENTS.md`, `MEMORY.md`, `CLAUDE.md` — `galleries/`→`portfolio/`, "Photos"→"Portfolio", fix counts (29 pages, 4 subdirs, real test count), stale commit IDs
 
 ---
+
+## Newly discovered during remediation (not yet scheduled)
+- [ ] URL-encoded titles/meta on Varna pages: `varna/day-of-varna-2019.html`, `day-of-varna-2020.html`, `varna/index.html` show `Day%20of%20Varna%20...` in `<title>`, `og:title`, `twitter:title`, JSON-LD (the visible `<h1>` is correct). Decode `%20`→space. (Cosmetic/SEO — slot into Phase 4.)
 
 ## Change log
 _(append commit hashes as phases land)_

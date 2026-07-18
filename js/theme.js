@@ -126,8 +126,24 @@ if (jQuery('.cherga_photoswipe_wrapper').length > 0) {
 			showHideOpacity: true
 		};
 
+		// Each thumbnail is the same file as the full image, so it is already
+		// loaded in the DOM — read its natural dimensions synchronously and give
+		// PhotoSwipe correct aspect ratios up front (before it opens).
+		var cherga_slides = $pswp_gallery_array['cherga_gallery_' + this_id].slides;
+		jQuery(this).parents('.cherga_photoswipe_wrapper').find('.cherga_pswp_slide').each(function () {
+			var slide_index = parseInt(jQuery(this).attr('data-count'), 10),
+				slide = cherga_slides[slide_index];
+			if (slide && !slide.html) {
+				var thumb = jQuery(this).find('img')[0];
+				if (thumb && thumb.naturalWidth > 0) {
+					slide.w = thumb.naturalWidth;
+					slide.h = thumb.naturalHeight;
+				}
+			}
+		});
+
 		// Initialize PhotoSwipe
-		var cherga_lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, $pswp_gallery_array['cherga_gallery_' + this_id].slides, options);
+		var cherga_lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, cherga_slides, options);
 		cherga_lightBox.init();
 		// Resolve real image dimensions on the fly so aspect ratios are always
 		// correct (avoids the old 1600x1200 fallback that squashed non-4:3 images).
@@ -138,7 +154,8 @@ if (jQuery('.cherga_photoswipe_wrapper').length > 0) {
 				cherga_pswp_img.onload = function () {
 					item.w = this.width;
 					item.h = this.height;
-					cherga_lightBox.updateSize(true);
+					cherga_lightBox.invalidateCurrItems(); // recalc current item bounds
+					cherga_lightBox.updateSize(true);      // re-center / re-fit
 				};
 				cherga_pswp_img.src = item.src;
 			}
