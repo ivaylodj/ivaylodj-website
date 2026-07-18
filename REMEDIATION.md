@@ -17,18 +17,19 @@
 ---
 
 ## Phase 0 — Ground truth (prep)
-- [ ] Branch/prep + run `npm test`, record real test count (docs disagree: 52 vs 47)
+- [x] Branch `remediation` created + `npm test` → **52 tests / 8 suites pass**. `_tests/STATUS.md` (47) is the stale doc (fix in Phase 6).
 
-## Phase 1 — Broken links & SEO-critical (low risk) — **STARTED**
-- [ ] `sitemap.xml` — replace all `/galleries/` → `/portfolio/` (23 `<loc>`); drop stale `namibia.html` entry (orphan; real page is `world-travels/namibia-2021.html`)
-- [ ] `about.html:707` — `contacts_1.html` → `contacts.html`
-- [ ] `portfolio/namibia.html:636` — `contacts_1.html` → `../contacts.html`
-- [ ] `portfolio/world-travels/namibia-2021.html:677` — `contacts_1.html` → `../../contacts.html`
-- [ ] `blog_post.html:146` — next-post `blog_image.html` (repoint/remove)
-- [ ] `blog_standard.html:239` — next-post `blog_image.html` (repoint/remove)
-- [ ] `portfolio/namibia.html:634` + `portfolio/world-travels/namibia-2021.html:675` — remove `demo-storage.com` "Video Slider" links
-- [ ] `portfolio/namibia.html:600,605,613,618` + `world-travels/namibia-2021.html:641,646,654,659` — fix malformed `href="/>` featured-post anchors (8)
-- [ ] `static/admin/config.yml` — `galleries` collection `folder` → `portfolio` (or remove)
+## Phase 1 — Broken links & SEO-critical (low risk) — **DONE** (commit see change log)
+- [x] `sitemap.xml` — all `/galleries/` → `/portfolio/`; stale `namibia.html` entry dropped. Valid XML, 26 URLs.
+- [x] `about.html:707` — `contacts_1.html` → `contacts.html`
+- [x] `portfolio/namibia.html` — `contacts_1.html` → `../contacts.html`
+- [x] `portfolio/world-travels/namibia-2021.html` — `contacts_1.html` → `../../contacts.html`
+- [x] `blog_post.html` — next-post `blog_image.html` → `blog.html` (block itself removed in Phase 3)
+- [x] `blog_standard.html` — next-post `blog_image.html` → `blog.html`
+- [x] Removed `demo-storage.com` "Video Slider" links (both namibia pages)
+- [x] Fixed malformed `href="/>` featured-post anchors → `blog.html` (8 across both namibia pages)
+- [x] `static/admin/config.yml` — `galleries` collection `folder` → `portfolio`
+- [x] **BONUS (found during Phase 1):** `world-travels/namibia-2021.html` featured-post images used `../img/` (1 level) but page is 2 levels deep → fixed to `../../img/`. Asset audit had missed these (inside the malformed anchors).
 
 ## Phase 2 — Portfolio gallery correctness (medium risk)
 - [ ] Add `isotope.pkgd.min.js` + `imagesloaded.pkgd.min.js` to masonry pages: `portfolio/varna/day-of-varna-2019.html`, `day-of-varna-2020.html`, `funfair-winter.html` (match `sunsets.html` script set)
@@ -69,4 +70,4 @@
 
 ## Change log
 _(append commit hashes as phases land)_
-- _pending_
+- Phase 0+1 — broken links, sitemap, CMS config, namibia widget + image-depth fix (branch `remediation`)

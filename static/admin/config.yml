@@ -63,7 +63,7 @@ collections:
 
   - name: "galleries"
     label: "Gallery Pages"
-    folder: "galleries"
+    folder: "portfolio"
     create: false
     identifier_fields: filename
     fields:
