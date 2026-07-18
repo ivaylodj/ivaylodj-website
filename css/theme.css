@@ -564,6 +564,26 @@ div.wpcf7 .ajax-loader {
 	text-align: justify;
 }
 
+/* Drop cap styling */
+.cherga_drop_cap {
+	font-family: "Roboto", sans-serif;
+	font-size: 30px;
+	line-height: 32px;
+	font-weight: 500;
+	color: #ffffff;
+	margin: 5px 20px 0 0;
+	float: left;
+}
+
+.cherga_drop_cap_letter {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	padding: 5px 5px 6px;
+	text-align: center;
+	background: #82a853;
+}
+
 .cherga_tiny .cherga_select_wrapper ul.select-options {
 	display: none;
 	border: solid 2px #2e3032;

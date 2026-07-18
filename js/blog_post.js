@@ -109,9 +109,16 @@
 
     // Close any remaining blocks at EOF
     if (listTag === 'bq') { result.push('</blockquote>'); }
-    else if (inList && listTag !== 'bq') { result.push('</' + listTag + '>'); }   
+    else if (inList && listTag !== 'bq') { result.push('</' + listTag + '>'); }
 
-    return result.join('\n');
+    var html = result.join('\n');
+
+    // Process drop cap markers: ~~L~~ becomes drop cap
+    html = html.replace(/~~([a-zA-Z])~~/g, function(match, letter) {
+      return '<span class="cherga_drop_cap"><span class="cherga_drop_cap_letter">' + letter + '</span></span>';
+    });
+
+    return html;
   }
 
   // Apply markdown inline syntax while preserving embedded HTML tags.
