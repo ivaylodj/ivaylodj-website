@@ -1,6 +1,6 @@
 # MEMORY.md — Critical Context for All Agents/LLMs
 
-**Last updated:** 2026-07-12
+**Last updated:** 2026-07-19
 
 ---
 
@@ -46,16 +46,12 @@
 
 ---
 
-## Recent Fixes (Commit: ec36318)
+## Current work: site-wide audit remediation
 
-**Fixed corrupted menu blocks in 3 files:**
-- `about.html`, `contacts.html`, `index.html`
-- Removed malformed Albums blocks (unclosed tags)
-- Removed duplicate corrupted Photos blocks
-- Added missing `menu-item-has-children` classes
-- Changed About Me from `current-menu-ancestor` to `current-menu-item`
-
-All desktop menus now have clean, valid HTML structure matching Aurel templates.
+A full audit + phased remediation is tracked in **`REMEDIATION.md`** (repo root).
+Phases 1–4 and 6 are complete (broken links, sitemap, gallery/PhotoSwipe fixes,
+blog single-post repair, consistency polish, hygiene). Phase 5 (sticky-header
+collapse) remains. Galleries live under `portfolio/`; the nav label is "Portfolio".
 
 ---
 

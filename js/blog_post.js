@@ -278,35 +278,6 @@
           }
         }
 
-        // Extract gallery configuration from GALLERY_CONFIG comment (legacy)
-        var galleryConfigFromMd = {};
-        var configRegex = /<!-- GALLERY_CONFIG\n([\s\S]*?)\nEND_GALLERY_CONFIG -->/;
-        var configMatch = mdContent.match(configRegex);
-        if (configMatch) {
-          var configText = configMatch[1];
-          var lines = configText.split('\n');
-          var currentSection = null;
-          for (var i = 0; i < lines.length; i++) {
-            var line = lines[i];
-            if (!line.trim()) continue;
-
-            // Section header: no leading spaces, ends with colon, no value
-            if (line[0] !== ' ' && line.trim().endsWith(':')) {
-              currentSection = line.trim().replace(':', '');
-              galleryConfigFromMd[currentSection] = {};
-            }
-            // Property: starts with spaces, has key: value
-            else if (line[0] === ' ' && line.includes(':')) {
-              var parts = line.split(':');
-              var key = parts[0].trim();
-              var value = parts[1].trim();
-              if (currentSection && key && value) {
-                galleryConfigFromMd[currentSection][key] = value;
-              }
-            }
-          }
-        }
-
         var title   = post.title || '';
         var template = post.template || 'blog_standard';
         var dateStr = new Date(post.date).toLocaleDateString('en-GB', {

@@ -263,21 +263,10 @@
   }
 
   function renderPagination(postCount) {
+    // All posts render on a single page (there is no real server-side / sliced
+    // pagination), so we don't display misleading "Page 1 of N" numbers.
     var paginationContainer = document.getElementById('blog-pagination');
-    if (!paginationContainer) return;
-
-    paginationContainer.innerHTML = '';
-
-    if (postCount <= 0) return;
-
-    var html = '<span class="current">Page 1</span>';
-
-    if (postCount > 1) {
-      html += ' <span style="color:#5a5f67;">of</span> ';
-      html += '<span class="current">' + Math.ceil(postCount / 10) + '</span>';
-    }
-
-    paginationContainer.innerHTML = html;
+    if (paginationContainer) paginationContainer.innerHTML = '';
   }
 
   function filterByTag(tag) {

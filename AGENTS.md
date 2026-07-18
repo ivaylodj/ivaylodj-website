@@ -1,6 +1,8 @@
 # AGENTS.md — Project Context & Guidance
 
-**Last updated:** 2026-07-11 | **Working on:** Blog pages layout and rendering
+**Last updated:** 2026-07-19 | **Working on:** Site-wide audit remediation — see `REMEDIATION.md` for phase-by-phase status.
+
+> Note: galleries live under `portfolio/` (not `galleries/`). Nav label is "Portfolio". The live blog renders via `js/blog_post.js`; `_templates/` holds reference templates (disallowed in robots.txt).
 
 ---
 
@@ -42,10 +44,10 @@ The Aurel theme codebase is the single source of truth for correct HTML structur
    - Run: `npm test` (runs on every push, blocks bad deployments)
 
 2. **Navigation Fixed**
-   - All 25 HTML files updated with consistent menu structure
+   - All served HTML pages updated with consistent menu structure
    - MY BLOG links to blog.html (not dropdown)
-   - Galleries renamed to Photos throughout (58 instances)
-   - Relative paths fixed (root: `blog.html`, galleries/: `../blog.html`, galleries/sub/: `../../blog.html`)
+   - Galleries live under `portfolio/`; nav label is "Portfolio" throughout
+   - Relative paths fixed (root: `blog.html`, portfolio/: `../blog.html`, portfolio/sub/: `../../blog.html`)
    - Both desktop and mobile menus consistent
 
 3. **Blog Post System Working**
@@ -92,7 +94,7 @@ The Aurel theme codebase is the single source of truth for correct HTML structur
 /
 ├── index.html, about.html, contacts.html, blog.html, blog_post.html
 ├── blog_standard.html (template page)
-├── galleries/
+├── portfolio/
 │   ├── index.html, nightscapes.html, sunsets.html, birds.html, etc.
 │   └── [subfolder galleries with index.html]
 ├── css/
@@ -159,7 +161,7 @@ The Aurel theme codebase is the single source of truth for correct HTML structur
 6. **Test before claiming** — run `npm test` and show output
 7. **Check live** — after deployment, actually test the feature in browser (not just "tests pass")
 8. **Be precise** — exact file paths (no `./` prefix), exact line numbers, exact strings for find/replace
-9. **Gallery paths** — galleries/ uses `../` for root-level files; galleries/subfolder/ uses `../../`
+9. **Gallery paths** — portfolio/ uses `../` for root-level files; portfolio/subfolder/ uses `../../`
 10. **No AI attribution** — never add "Co-Authored-By: Claude..." unless explicitly asked
 11. **One task at a time** — commit per logical change, don't batch unrelated fixes
 12. **Always push** — verify git push output shows changes reached GitHub before saying "deployed"
@@ -255,8 +257,8 @@ npm run test:watch          # Watch mode (re-run on changes)
 
 ### Relative Paths
 - **From root (index.html, blog.html, blog_post.html):** `href="blog.html"`, `src="css/theme.css"`
-- **From galleries/ (galleries/nightscapes.html):** `href="../blog.html"`, `src="../css/theme.css"`
-- **From galleries/subfolder/ (galleries/world-travels/index.html):** `href="../../blog.html"`, `src="../../css/theme.css"`
+- **From portfolio/ (portfolio/nightscapes.html):** `href="../blog.html"`, `src="../css/theme.css"`
+- **From portfolio/subfolder/ (portfolio/world-travels/index.html):** `href="../../blog.html"`, `src="../../css/theme.css"`
 
 ### Template Switching (blog_post.js)
 ```javascript
@@ -357,10 +359,10 @@ grep -r "test description" _tests/   # Find specific test
 
 ## Gallery Pages Guide
 
-- **Templates:** Copy from existing (e.g. `galleries/nightscapes.html`), don't start from scratch
-- **Images:** Live at `img/clipart/facebook/<Album Name>/`, use `../img/...` paths from `galleries/`
-- **Nested galleries:** Use `../../img/...` from subfolders like `galleries/world-travels/index.html`
-- **After adding:** Update `sitemap.xml`, add to header/mobile menu, update `galleries/index.html` grid
+- **Templates:** Copy from existing (e.g. `portfolio/nightscapes.html`), don't start from scratch
+- **Images:** Live at `img/clipart/facebook/<Album Name>/`, use `../img/...` paths from `portfolio/`
+- **Nested galleries:** Use `../../img/...` from subfolders like `portfolio/world-travels/index.html`
+- **After adding:** Update `sitemap.xml`, add to header/mobile menu, update `portfolio/index.html` grid
 
 ---
 

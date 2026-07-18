@@ -62,13 +62,14 @@
 - [ ] Align JS threshold (`theme.js:851,860,1012` `>1024`) to `1200` OR move logo-shrink rules (`theme.css:1215–1234`) into `@media(min-width:1200px)`
 - [ ] Consolidate to one scroll handler; create `cherga_header_holder` placeholder in `ready` not `load`
 
-## Phase 6 — Hygiene & docs (no user-facing risk)
-- [ ] Remove/relink orphan `portfolio/namibia.html`; move root `blog_standard.html` → `_templates/` (repoint `blog_post.html` placeholders)
-- [ ] `git rm` `blog_post.html.bak`, `img/clipart/back_1.old.jpg`, `img/clipart/blog_single/img-7.old.jpg`; add `*.bak`/`*.old.*` to `.gitignore`
-- [ ] `js/theme.js` — convert `setTimeout` string-eval (×27) to fn refs; add `event` param (`:204`); remove stray `0` (`:90`); remove dead `nested-toggle` handler
-- [ ] `js/blog_post.js` — remove dead `galleryConfigFromMd` (281–308)
-- [ ] `js/blog.js` — remove/curtail fake "Page 1 of N" pagination (256–272)
-- [ ] Docs: `AGENTS.md`, `MEMORY.md`, `CLAUDE.md` — `galleries/`→`portfolio/`, "Photos"→"Portfolio", fix counts (29 pages, 4 subdirs, real test count), stale commit IDs
+## Phase 6 — Hygiene & docs (no user-facing risk) — **DONE on branch**
+- [x] Deleted orphan `portfolio/namibia.html` (unreferenced dup of `world-travels/namibia-2021.html`; sitemap entry already removed in Phase 1) and orphan root `blog_standard.html` (canonical copy lives in `_templates/blog_standard.html`; nothing links to root after Phase 3). No lingering refs in live HTML.
+- [x] `git rm` `blog_post.html.bak`, `img/clipart/back_1.old.jpg`, `img/clipart/blog_single/img-7.old.jpg`; added `*.bak` + `*.old.*` to `.gitignore`.
+- [x] `js/blog_post.js` — removed dead `galleryConfigFromMd` block.
+- [x] `js/blog.js` — replaced fake "Page 1 of N" pagination with an honest no-op (all posts render on one page).
+- [x] `js/theme.js` — fixed handler missing `event` param (`.cherga_photo_proofing_notified`); removed stray `;0` token.
+- [~] **Deferred (low value / higher risk on shared theme.js):** the 27× `setTimeout` string-eval → function-ref sweep and the dead `nested-toggle` handler removal. No CSP is in use; these work fine. Noted for a future dedicated pass.
+- [x] Docs reconciled: `AGENTS.md` (`galleries/`→`portfolio/`, Photos→Portfolio, remediation note), root `MEMORY.md` (stale commit/Photos wording → remediation pointer), `CLAUDE.md` (5→4 subdirs). Test count 52 confirmed accurate.
 
 ---
 
@@ -77,4 +78,5 @@ _(append commit hashes as phases land)_
 - Phase 0+1 — broken links, sitemap, CMS config, namibia widget + image-depth fix (merged to `main` @ 772ebea)
 - Phase 2 — masonry scripts, nested-index body class + CSS re-scope, theme.js demo removal, PhotoSwipe fix (removed breaking inline overrides), footer relocation ×7 (merged to `main` @ 5d3c647)
 - Phase 3 — blog_post.html de-duplication, dynamic sidebar wiring, setActiveTag→blog.html?tag=, GTM fix, SEO heads ×3, unified sort, section reorder, functional sidebar cat/tag links (merged to `main` @ 7a507f4)
-- Phase 4 — current-menu-item alignment ×5, blog.html copyright span, Vera Su label, dead comment removal, Day-of-Varna title decode (branch `remediation`)
+- Phase 4 — current-menu-item alignment ×5, blog.html copyright span, Vera Su label, dead comment removal, Day-of-Varna title decode (merged to `main` @ 2914b0e)
+- Phase 6 — deleted 2 orphan pages + 3 junk files, .gitignore, dead-code removal (blog_post.js/blog.js), theme.js micro-fixes, docs reconciliation (branch `remediation`)

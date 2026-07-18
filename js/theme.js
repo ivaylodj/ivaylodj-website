@@ -87,7 +87,7 @@ if (jQuery('.cherga_photoswipe_wrapper').length > 0) {
 					//Vimeo Video
 					var videoid_split = cherga_thishref.split('m/'),
 						videoid = videoid_split[1],
-						cherga_pswp_html = '<div class="cherga_pswp_video_wrapper"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/' + videoid + '?api=1&amp;title=0&amp;byline=0&amp;portrait=0&autoplay=0&loop=0&controls=1" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe></div>';0
+						cherga_pswp_html = '<div class="cherga_pswp_video_wrapper"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/' + videoid + '?api=1&amp;title=0&amp;byline=0&amp;portrait=0&autoplay=0&loop=0&controls=1" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe></div>';
 				}
 				var this_item = {
 					html : cherga_pswp_html
@@ -235,7 +235,7 @@ jQuery(document).on('click', '.grid-item-button-unapprove', function (event) {
 	}
 });
 
-jQuery(document).on('click', '.cherga_photo_proofing_notified', function () {
+jQuery(document).on('click', '.cherga_photo_proofing_notified', function (event) {
 	event.preventDefault();
 	var this_button = jQuery(this),
 		this_wrapper = this_button.parent('.cherga_photo_proofing_notified_wrapper'),
