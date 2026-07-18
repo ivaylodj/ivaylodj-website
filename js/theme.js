@@ -870,7 +870,7 @@ jQuery(window).on('load', function () {
 	}
 
 	// Isotope Activation
-	if (jQuery('.cherga_isotope_trigger').length > 0 && jQuery('.elementor-editor-active').length < 1) {
+	if (jQuery('.cherga_isotope_trigger').length > 0 && jQuery('.elementor-editor-active').length < 1 && typeof jQuery.fn.isotope === 'function') {
 		if (jQuery('.cherga_isotope_trigger').hasClass('is_masonry')) {
 			jQuery('.cherga_isotope_trigger').isotope({
 				layoutMode: 'masonry'
