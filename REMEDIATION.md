@@ -58,9 +58,20 @@
 - [x] Fixed `Day%20of%20Varna` URL-encoding in visible title/meta/JSON-LD on `day-of-varna-2019.html` + `day-of-varna-2020.html` (image-path `%20` correctly preserved). `varna/index.html` had none in text.
 - [ ] (optional, skipped) Normalize subdir canonicals to trailing-slash form — cosmetic only.
 
-## Phase 5 — Sticky header (isolated; known rabbit hole — browser-test vs Aurel)
-- [ ] Align JS threshold (`theme.js:851,860,1012` `>1024`) to `1200` OR move logo-shrink rules (`theme.css:1215–1234`) into `@media(min-width:1200px)`
-- [ ] Consolidate to one scroll handler; create `cherga_header_holder` placeholder in `ready` not `load`
+## Phase 5 — Sticky header — **INVESTIGATED: already matches Aurel (no code change)**
+Verified line-by-line against the Aurel reference (2026-07-19). Our sticky header
+is a faithful port — identical in every respect:
+- `stick_me` toggle at `width > 1024` (Aurel `js/theme.js` 884/890/994 = ours ~802/811/963)
+- `position:fixed` gated to `@media(min-width:1200px)` (both)
+- logo-shrink rules global in BOTH themes (Aurel css 1178/1191 = ours ~1215/1231)
+- solid-header placeholder created, height reserved, hidden `<1200px` via `@media(max-width:1200px){display:none}` (both)
+
+The earlier "broken/ugly" project memory **predates the rewrite** (recent commits
+"Add header placeholder…" / "…match Aurel exactly" already fixed it). The one
+residual oddity — logo shrinks at 1025–1199px before the header is fixed — is
+**inherent Aurel behavior**; changing it would DIVERGE from the reference, so it
+is intentionally left as-is. Memory corrected. **No code change made.**
+- [ ] (only on explicit user approval to deviate from Aurel) align JS threshold to 1200, or move logo-shrink rules into `@media(min-width:1200px)`.
 
 ## Phase 6 — Hygiene & docs (no user-facing risk) — **DONE on branch**
 - [x] Deleted orphan `portfolio/namibia.html` (unreferenced dup of `world-travels/namibia-2021.html`; sitemap entry already removed in Phase 1) and orphan root `blog_standard.html` (canonical copy lives in `_templates/blog_standard.html`; nothing links to root after Phase 3). No lingering refs in live HTML.
@@ -79,4 +90,5 @@ _(append commit hashes as phases land)_
 - Phase 2 — masonry scripts, nested-index body class + CSS re-scope, theme.js demo removal, PhotoSwipe fix (removed breaking inline overrides), footer relocation ×7 (merged to `main` @ 5d3c647)
 - Phase 3 — blog_post.html de-duplication, dynamic sidebar wiring, setActiveTag→blog.html?tag=, GTM fix, SEO heads ×3, unified sort, section reorder, functional sidebar cat/tag links (merged to `main` @ 7a507f4)
 - Phase 4 — current-menu-item alignment ×5, blog.html copyright span, Vera Su label, dead comment removal, Day-of-Varna title decode (merged to `main` @ 2914b0e)
-- Phase 6 — deleted 2 orphan pages + 3 junk files, .gitignore, dead-code removal (blog_post.js/blog.js), theme.js micro-fixes, docs reconciliation (branch `remediation`)
+- Phase 6 — deleted 2 orphan pages + 3 junk files, .gitignore, dead-code removal (blog_post.js/blog.js), theme.js micro-fixes, docs reconciliation (merged to `main` @ 93952be)
+- Phase 5 — investigated sticky header: verified faithful to Aurel, no code change needed; stale "broken" memory corrected (branch `remediation`, docs only)
