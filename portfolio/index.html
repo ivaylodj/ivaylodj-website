@@ -98,10 +98,6 @@
 .cherga_load_more_button_wrapper.all_posts_loaded {
 	display: none !important;
 }
-
-.pagination-hidden {
-	display: none !important;
-}
 </style>
 </head>
 
@@ -236,7 +232,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 									</div>
 
 									<div class="cherga_albums_listing_cont cherga_albums_grid cherga_albums_grid4 view_type_grid albums_titles_show cherga_isotope_trigger">
-													<! Nightscapes -->
+													<!-- Nightscapes -->
 										<div class="cherga_albums_grid_item columns_4 nightscape astrophotography cherga_isotop_el_loading">
 														<div class="cherga_inner_cont">
 															<a href="nightscapes.html" class="cherga_dp cherga_no_select">
@@ -439,104 +435,114 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	<script src="../js/theme.js"></script>
 	<script>
-	var portfolioPagination = {
-		itemsPerPage: 8,
-		itemsPerLoad: 4,
-		shownCount: 0,
+	/*
+	 * Portfolio filtering + pagination — single source of truth.
+	 *
+	 * We do NOT let the two competing systems (theme.js's filter handler and a
+	 * separate pagination layer) both drive Isotope. Instead:
+	 *   - We unbind theme.js's own filter click handler on this page.
+	 *   - We keep ONE class, `is-shown`, on exactly the items that should be
+	 *     visible right now (category match AND within the pagination window).
+	 *   - Isotope is told to filter on `.is-shown` and nothing else.
+	 * That makes Isotope the only thing hiding/showing items, and our code the
+	 * only thing deciding which items carry `is-shown`. No conflict possible.
+	 */
+	(function () {
+		var ITEMS_PER_PAGE = 8;   // shown on first view of any filter
+		var ITEMS_PER_LOAD = 4;   // added per "Load More" click
 
-		init: function() {
-			this.shownCount = this.itemsPerPage;
-			this.applyPagination();
-			this.updateButton();
-		},
+		var GRID_SEL   = ".cherga_isotope_trigger";
+		var ITEM_SEL   = ".cherga_albums_grid_item";
+		var FILTER_SEL = ".cherga_grid_filter";
 
-		loadMore: function() {
-			this.shownCount += this.itemsPerLoad;
-			this.applyPagination();
-			this.updateButton();
-		},
+		var state = {
+			category: "*",          // e.g. "*" or ".nightscape"
+			shown: ITEMS_PER_PAGE   // how many matching items are currently revealed
+		};
 
-		resetForFilter: function() {
-			this.shownCount = this.itemsPerPage;
-			this.applyPagination();
-			this.updateButton();
-		},
+		function itemMatchesCategory($item) {
+			return state.category === "*" || $item.is(state.category);
+		}
 
-		applyPagination: function() {
-			var self = this;
-			var visibleCount = 0;
+		function countMatching() {
+			var total = 0;
+			jQuery(GRID_SEL).find(ITEM_SEL).each(function () {
+				if (itemMatchesCategory(jQuery(this))) { total++; }
+			});
+			return total;
+		}
 
-			jQuery(".cherga_isotope_trigger").find(".cherga_albums_grid_item").each(function() {
+		// Re-apply the current (category, shown) state to the DOM + Isotope + button.
+		function render() {
+			var revealed = 0;
+
+			jQuery(GRID_SEL).find(ITEM_SEL).each(function () {
 				var $item = jQuery(this);
-				var pos = $item.css("position");
-				var isFilteredByIsotope = (pos === "absolute" && $item.css("pointer-events") === "none");
-
-				if (isFilteredByIsotope) return;
-
-				if (visibleCount < self.shownCount) {
-					$item.removeClass("pagination-hidden");
-					visibleCount++;
+				if (itemMatchesCategory($item) && revealed < state.shown) {
+					$item.addClass("is-shown");
+					revealed++;
 				} else {
-					$item.addClass("pagination-hidden");
-				}
-			});
-		},
-
-		updateButton: function() {
-			var $grid = jQuery(".cherga_isotope_trigger");
-			var totalVisible = 0;
-			var shownByPagination = 0;
-
-			$grid.find(".cherga_albums_grid_item").each(function() {
-				var $item = jQuery(this);
-				var pos = $item.css("position");
-				var isFilteredByIsotope = (pos === "absolute" && $item.css("pointer-events") === "none");
-
-				if (!isFilteredByIsotope) {
-					totalVisible++;
-					if (!$item.hasClass("pagination-hidden")) {
-						shownByPagination++;
-					}
+					$item.removeClass("is-shown");
 				}
 			});
 
-			if (shownByPagination >= totalVisible) {
+			jQuery(GRID_SEL).isotope({ filter: ".is-shown" });
+
+			// Load More is visible only while more matching items remain hidden.
+			var total = countMatching();
+			if (state.shown >= total) {
 				jQuery(".cherga_load_more_button_wrapper").addClass("all_posts_loaded");
 			} else {
 				jQuery(".cherga_load_more_button_wrapper").removeClass("all_posts_loaded");
 			}
 		}
-	};
 
-	function cherga_isotop_el_loading() {
-		if (jQuery(".cherga_isotop_el_loading:first").length > 0) {
-			jQuery(".cherga_isotop_el_loading:first").removeClass("cherga_isotop_el_loading");
-			setTimeout("cherga_isotop_el_loading()", 200);
-		}
-	}
+		jQuery(document).ready(function () {
+			// theme.js runs its ready first (it's included before this script), so
+			// its filter handler + Isotope init are already in place. Reclaim both.
 
-	jQuery(document).ready(function() {
-		cherga_isotop_el_loading();
-		portfolioPagination.init();
+			// 1. Reveal items (they start at opacity:0 via cherga_isotop_el_loading).
+			jQuery("." + "cherga_isotop_el_loading").removeClass("cherga_isotop_el_loading");
 
-		jQuery(document).on("click", ".cherga_grid_filter a", function(e) {
-			setTimeout(function() {
-				portfolioPagination.resetForFilter();
-				setTimeout(function() {
-					jQuery(".cherga_isotope_trigger").isotope("layout");
-				}, 100);
-			}, 150);
+			// 2. Take full control of Isotope with explicit, predictable options.
+			//    fitRows matches theme.js's known-good layout for this grid.
+			jQuery(GRID_SEL).isotope({
+				itemSelector: ITEM_SEL,
+				layoutMode: "fitRows",
+				filter: ".is-shown"
+			});
+
+			// 3. Remove theme.js's filter handler so it can't also set a filter.
+			jQuery(FILTER_SEL + " li a").off("click");
+
+			// 4. Our filter handler: update the active button, reset pagination,
+			//    and re-render.
+			jQuery(FILTER_SEL).on("click", "a", function (e) {
+				e.preventDefault();
+
+				jQuery(FILTER_SEL + " a").removeClass("is-checked");
+				jQuery(FILTER_SEL + " li").removeClass("is-checked");
+				jQuery(this).addClass("is-checked");
+				jQuery(this).parent().addClass("is-checked");
+
+				state.category = jQuery(this).attr("data-category") || "*";
+				state.shown = ITEMS_PER_PAGE;
+				render();
+			});
+
+			// 5. Load More: reveal the next batch of matching items.
+			jQuery(".grid_albums_trigger").on("click", function (e) {
+				e.preventDefault();
+				state.shown += ITEMS_PER_LOAD;
+				render();
+			});
+
+			// 6. Initial paint (category "*", first page).
+			render();
 		});
-
-		jQuery(".grid_albums_trigger").on("click", function(e) {
-			e.preventDefault();
-			portfolioPagination.loadMore();
-			setTimeout(function() {
-				jQuery(".cherga_isotope_trigger").isotope("reLayout");
-			}, 50);
-		});
-	});
+	})();
 	</script>
+	<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 
 </body>
 </html>
