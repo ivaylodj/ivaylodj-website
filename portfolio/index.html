@@ -446,15 +446,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		}
 	}
 
+	function resetPagination() {
+		// Show items 1-8, hide items 9+
+		jQuery('.cherga_albums_grid_item').each(function(index) {
+			if (index >= 8) {
+				jQuery(this).css('display', 'none').addClass('cherga_hidden_item');
+			} else {
+				jQuery(this).css('display', '').removeClass('cherga_hidden_item');
+			}
+		});
+		// Re-enable Load More button
+		jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
+	}
+
 	jQuery(document).ready(function() {
 		// Show items by removing loading class (makes them visible)
 		cherga_isotop_el_loading();
 
-		// Hide items 9 and beyond initially
-		jQuery('.cherga_albums_grid_item').each(function(index) {
-			if (index >= 8) {
-				jQuery(this).css('display', 'none').addClass('cherga_hidden_item');
-			}
+		// Initialize pagination
+		resetPagination();
+
+		// Reset pagination when filter buttons are clicked
+		jQuery('.cherga_grid_filter').on('click', 'a', function() {
+			setTimeout(function() {
+				resetPagination();
+				jQuery('.cherga_isotope_trigger').isotope();
+			}, 50);
 		});
 
 		// Load more functionality
