@@ -98,6 +98,11 @@
 .cherga_load_more_button_wrapper.all_posts_loaded {
 	display: none !important;
 }
+
+/* Portfolio pagination */
+.cherga_hidden_item {
+	display: none !important;
+}
 </style>
 </head>
 
@@ -456,22 +461,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	}
 
 	function resetPagination() {
-		// Re-apply current filter to the shown items
 		var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
-		if (currentFilter) {
-			jQuery('.cherga_isotope_trigger').isotope({ filter: currentFilter });
-		}
-
-		// Count total items matching current filter
 		var totalMatching = countMatchingItems(currentFilter);
 
 		// Show items 1-8, hide items 9+
 		var visibleCount = 0;
-		jQuery('.cherga_albums_grid_item').each(function(index) {
+		jQuery('.cherga_albums_grid_item').each(function() {
 			// Check if this item matches the current filter
-			var itemClasses = jQuery(this).attr('class');
 			var matches = false;
-
 			if (currentFilter === '*') {
 				matches = true;
 			} else {
@@ -481,10 +478,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 			if (matches) {
 				if (visibleCount < 8) {
-					jQuery(this).css('display', '').removeClass('cherga_hidden_item');
+					jQuery(this).removeClass('cherga_hidden_item');
 					visibleCount++;
 				} else {
-					jQuery(this).css('display', 'none').addClass('cherga_hidden_item');
+					jQuery(this).addClass('cherga_hidden_item');
 				}
 			}
 		});
@@ -508,8 +505,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		jQuery('.cherga_grid_filter').on('click', 'a', function() {
 			setTimeout(function() {
 				resetPagination();
-				jQuery('.cherga_isotope_trigger').isotope();
-			}, 50);
+				setTimeout(function() {
+					jQuery('.cherga_isotope_trigger').isotope('reLayout');
+				}, 100);
+			}, 100);
 		});
 
 		// Load more functionality
@@ -522,17 +521,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			var itemsToShow = hiddenItems.slice(0, itemsPerLoad);
 
 			itemsToShow.each(function() {
-				jQuery(this).css('display', '').removeClass('cherga_hidden_item');
+				jQuery(this).removeClass('cherga_hidden_item');
 			});
 
-			// Trigger Isotope reLayout multiple times like theme.js does
-			jQuery('.cherga_isotope_trigger').isotope();
+			// Trigger Isotope reLayout
 			setTimeout(function() {
 				jQuery('.cherga_isotope_trigger').isotope('reLayout');
-			}, 100);
-			setTimeout(function() {
-				jQuery('.cherga_isotope_trigger').isotope('layout');
-			}, 300);
+			}, 50);
 
 			// Hide button if all matching items are now visible
 			var totalMatching = countMatchingItems(currentFilter);
@@ -545,7 +540,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					var className = currentFilter.substring(1);
 					matches = jQuery(this).hasClass(className);
 				}
-				if (matches && jQuery(this).css('display') !== 'none') {
+				if (matches && !jQuery(this).hasClass('cherga_hidden_item')) {
 					visibleMatching++;
 				}
 			});
