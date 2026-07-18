@@ -470,10 +470,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	}
 
 	function updateLoadMoreButton() {
-		// Simple logic: if there are any hidden items, show Load More button
-		var hiddenCount = jQuery('.cherga_isotope_trigger').find('.cherga_hidden_item').length;
+		var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
+		var hiddenMatching = 0;
 
-		if (hiddenCount > 0) {
+		// Count items that match current filter AND have pagination class
+		jQuery('.cherga_isotope_trigger').find('.cherga_hidden_item').each(function() {
+			var matches = false;
+			if (currentFilter === '*') {
+				matches = true;
+			} else {
+				var className = currentFilter.substring(1);
+				matches = jQuery(this).hasClass(className);
+			}
+			if (matches) hiddenMatching++;
+		});
+
+		// Show Load More only if there are matching items hidden by pagination
+		if (hiddenMatching > 0) {
 			jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
 		} else {
 			jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
