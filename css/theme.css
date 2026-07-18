@@ -1328,6 +1328,8 @@ header.cherga_main_header nav.cherga_nav {
 header.cherga_main_header nav.cherga_nav > ul {
 	font-size: 0;
 	line-height: 0;
+	white-space: nowrap;
+	overflow: visible;
 }
 header.cherga_main_header nav.cherga_nav li {
 	position: relative;
@@ -1335,6 +1337,7 @@ header.cherga_main_header nav.cherga_nav li {
 header.cherga_main_header nav.cherga_nav ul.cherga_menu > li {
 	display: inline-block;
 	z-index: 77;
+	font-size: 1rem;
 }
 header.cherga_main_header nav.cherga_nav ul.cherga_menu > li:hover {
 	z-index: 88;
