@@ -114,15 +114,23 @@
 		portfolioPagination.updateVisibility();
 		portfolioPagination.updateLoadMoreButton();
 
-		jQuery(".cherga_grid_filter").on("click", "a", function() {
-			setTimeout(function() {
-				var newFilter = jQuery(".cherga_grid_filter .is-checked a").attr("data-category");
-				portfolioPagination.resetFilter(newFilter);
+		jQuery(".cherga_grid_filter").on("click", "a", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
 
-				setTimeout(function() {
-					jQuery(".cherga_isotope_trigger").isotope("reLayout");
-				}, 50);
-			}, 100);
+			// Update active filter button
+			jQuery(".cherga_grid_filter .is-checked").removeClass("is-checked");
+			jQuery(this).parent().addClass("is-checked");
+			jQuery(this).addClass("is-checked");
+
+			// Reset pagination with new filter
+			var newFilter = jQuery(this).attr("data-category");
+			portfolioPagination.resetFilter(newFilter);
+
+			// Trigger Isotope layout only (not filter)
+			setTimeout(function() {
+				jQuery(".cherga_isotope_trigger").isotope("layout");
+			}, 50);
 		});
 
 		jQuery(".grid_albums_trigger").on("click", function(e) {
@@ -614,15 +622,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		portfolioPagination.updateVisibility();
 		portfolioPagination.updateLoadMoreButton();
 
-		jQuery(".cherga_grid_filter").on("click", "a", function() {
-			setTimeout(function() {
-				var newFilter = jQuery(".cherga_grid_filter .is-checked a").attr("data-category");
-				portfolioPagination.resetFilter(newFilter);
+		jQuery(".cherga_grid_filter").on("click", "a", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
 
-				setTimeout(function() {
-					jQuery(".cherga_isotope_trigger").isotope("reLayout");
-				}, 50);
-			}, 100);
+			// Update active filter button
+			jQuery(".cherga_grid_filter .is-checked").removeClass("is-checked");
+			jQuery(this).parent().addClass("is-checked");
+			jQuery(this).addClass("is-checked");
+
+			// Reset pagination with new filter
+			var newFilter = jQuery(this).attr("data-category");
+			portfolioPagination.resetFilter(newFilter);
+
+			// Trigger Isotope layout only (not filter)
+			setTimeout(function() {
+				jQuery(".cherga_isotope_trigger").isotope("layout");
+			}, 50);
 		});
 
 		jQuery(".grid_albums_trigger").on("click", function(e) {
