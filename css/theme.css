@@ -91,6 +91,7 @@ Project: Cherga HTML
 html {
 	height: auto;
 	overflow-x: hidden;
+	overflow-y: scroll;
 	position: static;
 }
 
