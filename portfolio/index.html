@@ -66,13 +66,13 @@
 
 				if (matches) {
 					if (shown < portfolioPagination.shownCount) {
-						jQuery(this).removeClass("cherga_hidden_item").show();
+						jQuery(this).show();
 						shown++;
 					} else {
-						jQuery(this).addClass("cherga_hidden_item").hide();
+						jQuery(this).hide();
 					}
 				} else {
-					jQuery(this).removeClass("cherga_hidden_item");
+					jQuery(this).hide();
 				}
 			});
 		},
@@ -86,7 +86,7 @@
 				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
 				if (matches) {
 					totalMatching++;
-					if (!jQuery(this).hasClass("cherga_hidden_item")) {
+					if (jQuery(this).is(":visible")) {
 						shownMatching++;
 					}
 				}
@@ -566,13 +566,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 				if (matches) {
 					if (shown < portfolioPagination.shownCount) {
-						jQuery(this).removeClass("cherga_hidden_item").show();
+						jQuery(this).show();
 						shown++;
 					} else {
-						jQuery(this).addClass("cherga_hidden_item").hide();
+						jQuery(this).hide();
 					}
 				} else {
-					jQuery(this).removeClass("cherga_hidden_item");
+					jQuery(this).hide();
 				}
 			});
 		},
@@ -586,7 +586,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 				var matches = (filter === "*") || jQuery(this).hasClass(filter.substring(1));
 				if (matches) {
 					totalMatching++;
-					if (!jQuery(this).hasClass("cherga_hidden_item")) {
+					if (jQuery(this).is(":visible")) {
 						shownMatching++;
 					}
 				}
