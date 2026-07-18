@@ -457,6 +457,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		});
 		// Re-enable Load More button
 		jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
+
+		// Re-apply current filter to the shown items
+		var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
+		if (currentFilter) {
+			jQuery('.cherga_isotope_trigger').isotope({ filter: currentFilter });
+		}
 	}
 
 	jQuery(document).ready(function() {
