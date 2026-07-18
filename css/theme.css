@@ -1170,6 +1170,8 @@ header.cherga_main_header .cherga_main_header_wrapper {
 	line-height: 0;
 	position: relative;
 	z-index: 88;
+	white-space: nowrap;
+	overflow: visible;
 }
 header.cherga_main_header .cherga_header_left_part,
 header.cherga_main_header .cherga_header_middle_part,
@@ -1177,6 +1179,8 @@ header.cherga_main_header .cherga_header_right_part {
 	display: inline-block;
 	vertical-align: middle;
 	box-sizing: border-box;
+	font-size: 1rem;
+	white-space: normal;
 }
 .cherga_header_left_part {
 	text-align: left;
