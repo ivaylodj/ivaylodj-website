@@ -948,15 +948,6 @@
             }
           }
         };
-
-        // CRITICAL FIX: Force first menu item to always say "Portfolio"
-        // This prevents any JavaScript from accidentally changing it to the post title
-        var firstMenuLinks = document.querySelectorAll('.cherga_menu a');
-        if (firstMenuLinks && firstMenuLinks.length > 0) {
-          firstMenuLinks[0].textContent = 'Portfolio';
-          firstMenuLinks[0].href = 'portfolio/index.html';
-        }
-
         postIdx.send();
       }
     }, 100);
