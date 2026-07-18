@@ -552,7 +552,23 @@
 
         html += '</div>';
 
-        // "You may also like" - show 2 other posts
+        // Comments section (matches old template exactly)
+        html += '<div class="cherga_comments_cont">';
+        html +=   '<div class="cherga_comments_wrapper">';
+        html +=     '<h4 class="cherga_comments_title">Comments on This Post</h4>';
+        html +=     '<div class="comment-respond" id="respond">';
+        html +=       '<h5 class="cherga_reply_comment_title">Let us know your thoughts about this topic</h5>';
+        html +=       '<form class="comment-form" id="commentform" method="post">';
+        html +=         '<div class="row"><div class="comment-form-comment col col-12">';
+        html +=           '<textarea name="comment" cols="45" rows="5" placeholder="Your comments goes here." class="form-field" form="commentform"></textarea>';
+        html +=         '</div></div>';
+        html +=         '<p class="form-submit"><input name="submit" type="submit" class="submit" value="Send Comment" form="commentform"></p>';
+        html +=       '</form>';
+        html +=     '</div>';
+        html +=   '</div>';
+        html += '</div>';
+
+        // "You may also like" - show 2 other posts (after comments, matching Aurel order)
         html += '<div class="cherga_single_divider"></div>';
         html += '<h4 class="cherga_featured_posts_heading">You may also like</h4>';
         html += '<div class="cherga_featured_posts cherga_items_2 row">';
@@ -594,22 +610,6 @@
           relatedCount++;
         }
 
-        html += '</div>';
-
-        // Comments section (matches old template exactly)
-        html += '<div class="cherga_comments_cont">';
-        html +=   '<div class="cherga_comments_wrapper">';
-        html +=     '<h4 class="cherga_comments_title">Comments on This Post</h4>';
-        html +=     '<div class="comment-respond" id="respond">';
-        html +=       '<h5 class="cherga_reply_comment_title">Let us know your thoughts about this topic</h5>';
-        html +=       '<form class="comment-form" id="commentform" method="post">';
-        html +=         '<div class="row"><div class="comment-form-comment col col-12">';
-        html +=           '<textarea name="comment" cols="45" rows="5" placeholder="Your comments goes here." class="form-field" form="commentform"></textarea>';
-        html +=         '</div></div>';
-        html +=         '<p class="form-submit"><input name="submit" type="submit" class="submit" value="Send Comment" form="commentform"></p>';
-        html +=       '</form>';
-        html +=     '</div>';
-        html +=   '</div>';
         html += '</div>';
 
         document.getElementById('blog-post-content').innerHTML = html;
