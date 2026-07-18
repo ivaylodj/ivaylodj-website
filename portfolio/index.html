@@ -451,23 +451,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		}
 	}
 
-	function countMatchingItems(filterSelector) {
-		if (filterSelector === '*') {
-			return jQuery('.cherga_albums_grid_item').length;
-		}
-		// Remove the dot prefix from selector and use it as a class name
-		var className = filterSelector.substring(1);
-		return jQuery('.cherga_albums_grid_item.' + className).length;
+	function initializePortfolioPagination() {
+		// Show items by removing loading class
+		cherga_isotop_el_loading();
+
+		// Hide items 9+ initially - mark them with .added and cherga_hidden_item
+		jQuery('.cherga_albums_grid_item').each(function(index) {
+			if (index >= 8) {
+				jQuery(this).addClass('added cherga_hidden_item');
+			}
+		});
+
+		updateLoadMoreButton();
 	}
 
-	function resetPagination() {
+	function updateLoadMoreButton() {
 		var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
-		var totalMatching = countMatchingItems(currentFilter);
+		var $grid = jQuery('.cherga_isotope_trigger');
 
-		// Show items 1-8, hide items 9+
-		var visibleCount = 0;
-		jQuery('.cherga_albums_grid_item').each(function() {
-			// Check if this item matches the current filter
+		// Count total items matching current filter
+		var totalVisible = 0;
+		$grid.find('.cherga_albums_grid_item').each(function() {
 			var matches = false;
 			if (currentFilter === '*') {
 				matches = true;
@@ -475,64 +479,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 				var className = currentFilter.substring(1);
 				matches = jQuery(this).hasClass(className);
 			}
-
-			if (matches) {
-				if (visibleCount < 8) {
-					jQuery(this).removeClass('cherga_hidden_item');
-					visibleCount++;
-				} else {
-					jQuery(this).addClass('cherga_hidden_item');
-				}
-			}
+			if (matches) totalVisible++;
 		});
 
-		// Show/hide Load More button based on whether there are items beyond the first 8
-		if (totalMatching > 8) {
-			jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
-		} else {
-			jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
-		}
-	}
-
-	jQuery(document).ready(function() {
-		// Show items by removing loading class (makes them visible)
-		cherga_isotop_el_loading();
-
-		// Initialize pagination
-		resetPagination();
-
-		// Reset pagination when filter buttons are clicked
-		jQuery('.cherga_grid_filter').on('click', 'a', function() {
-			setTimeout(function() {
-				resetPagination();
-				setTimeout(function() {
-					jQuery('.cherga_isotope_trigger').isotope('reLayout');
-				}, 100);
-			}, 100);
-		});
-
-		// Load more functionality
-		jQuery('.grid_albums_trigger').on('click', function(e) {
-			e.preventDefault();
-
-			var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
-			var hiddenItems = jQuery('.cherga_hidden_item');
-			var itemsPerLoad = 4;
-			var itemsToShow = hiddenItems.slice(0, itemsPerLoad);
-
-			itemsToShow.each(function() {
-				jQuery(this).removeClass('cherga_hidden_item');
-			});
-
-			// Trigger Isotope reLayout
-			setTimeout(function() {
-				jQuery('.cherga_isotope_trigger').isotope('reLayout');
-			}, 50);
-
-			// Hide button if all matching items are now visible
-			var totalMatching = countMatchingItems(currentFilter);
-			var visibleMatching = 0;
-			jQuery('.cherga_albums_grid_item').each(function() {
+		// Count currently shown items (not hidden by pagination)
+		var currentlyShown = 0;
+		$grid.find('.cherga_albums_grid_item').each(function() {
+			if (!jQuery(this).hasClass('cherga_hidden_item')) {
 				var matches = false;
 				if (currentFilter === '*') {
 					matches = true;
@@ -540,14 +493,82 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					var className = currentFilter.substring(1);
 					matches = jQuery(this).hasClass(className);
 				}
-				if (matches && !jQuery(this).hasClass('cherga_hidden_item')) {
-					visibleMatching++;
+				if (matches) currentlyShown++;
+			}
+		});
+
+		// Show Load More button only if there are hidden items to show
+		if (currentlyShown >= totalVisible) {
+			jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
+		} else {
+			jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
+		}
+	}
+
+	jQuery(document).ready(function() {
+		// Initialize pagination on page load
+		initializePortfolioPagination();
+
+		// Handle filter clicks - reset pagination when filter changes
+		jQuery('.cherga_grid_filter').on('click', 'a', function() {
+			// Wait for theme.js to apply the filter
+			setTimeout(function() {
+				// Reset all items initially - show first 8, hide rest
+				var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
+				var shownCount = 0;
+
+				jQuery('.cherga_isotope_trigger').find('.cherga_albums_grid_item').each(function() {
+					var matches = false;
+					if (currentFilter === '*') {
+						matches = true;
+					} else {
+						var className = currentFilter.substring(1);
+						matches = jQuery(this).hasClass(className);
+					}
+
+					if (matches) {
+						if (shownCount < 8) {
+							jQuery(this).removeClass('cherga_hidden_item');
+							shownCount++;
+						} else {
+							jQuery(this).addClass('cherga_hidden_item');
+						}
+					}
+				});
+
+				// Update Load More button state
+				updateLoadMoreButton();
+
+				// Trigger Isotope layout
+				setTimeout(function() {
+					jQuery('.cherga_isotope_trigger').isotope('reLayout');
+				}, 50);
+			}, 100);
+		});
+
+		// Load More button click handler
+		jQuery('.grid_albums_trigger').on('click', function(e) {
+			e.preventDefault();
+
+			// Show next 4 hidden items
+			var shownCount = 0;
+			jQuery('.cherga_hidden_item').each(function() {
+				if (shownCount < 4) {
+					jQuery(this).removeClass('cherga_hidden_item');
+					shownCount++;
 				}
 			});
 
-			if (visibleMatching >= totalMatching) {
-				jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
-			}
+			// Update button state
+			updateLoadMoreButton();
+
+			// Trigger Isotope layout
+			setTimeout(function() {
+				jQuery('.cherga_isotope_trigger').isotope('reLayout');
+			}, 50);
+			setTimeout(function() {
+				jQuery('.cherga_isotope_trigger').isotope('layout');
+			}, 300);
 		});
 	});
 	</script>
