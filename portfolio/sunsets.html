@@ -749,10 +749,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<script src="../js/owl.carousel.min.js"></script>
 
 	<script src="../js/theme.js"></script>
-<footer class="cherga_footer_minimal" style="text-align:center;padding:20px;color:#888;font-size:12px;">
-  <span id="copyright-year-cf"></span>
-</footer>
-<script>document.getElementById('copyright-year-cf').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
+		<footer class="cherga_footer cherga_border_on">
+			<div class="cherga_footer_inner cherga_container">
+				<div class="cherga_logo_cont">
+					<a href="../index.html" class="cherga_image_logo cherga_dp cherga_no_select cherga_retina"></a>
+				</div>
+
+				<div class="cherga_copyright"><span id="copyright-year"></span></div>
+			</div>
+		</footer>
+		<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var pswpLinks = document.querySelectorAll('.cherga_pswp_slide');
