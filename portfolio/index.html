@@ -443,6 +443,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 	<script>
+	var PORTFOLIO_CONFIG = {
+		itemsPerPage: 8,
+		itemsPerLoad: 4
+	};
+
 	function cherga_isotop_el_loading() {
 		if (jQuery('.cherga_isotop_el_loading:first').length > 0) {
 			jQuery('.cherga_isotop_el_loading:first').removeClass('cherga_isotop_el_loading');
@@ -454,9 +459,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		// Show items by removing loading class
 		cherga_isotop_el_loading();
 
-		// Hide items 9+ initially - mark them with .added and cherga_hidden_item
+		// Hide items beyond itemsPerPage - mark them with .added and cherga_hidden_item
 		jQuery('.cherga_albums_grid_item').each(function(index) {
-			if (index >= 8) {
+			if (index >= PORTFOLIO_CONFIG.itemsPerPage) {
 				jQuery(this).addClass('added cherga_hidden_item');
 			}
 		});
@@ -497,7 +502,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					}
 
 					if (matches) {
-						if (shownCount < 8) {
+						if (shownCount < PORTFOLIO_CONFIG.itemsPerPage) {
 							jQuery(this).removeClass('cherga_hidden_item');
 							shownCount++;
 						} else {
@@ -520,10 +525,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		jQuery('.grid_albums_trigger').on('click', function(e) {
 			e.preventDefault();
 
-			// Show next 4 hidden items
+			// Show next itemsPerLoad hidden items
 			var shownCount = 0;
 			jQuery('.cherga_hidden_item').each(function() {
-				if (shownCount < 4) {
+				if (shownCount < PORTFOLIO_CONFIG.itemsPerLoad) {
 					jQuery(this).removeClass('cherga_hidden_item');
 					shownCount++;
 				}
