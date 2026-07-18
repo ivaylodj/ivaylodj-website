@@ -50,12 +50,13 @@
 - [x] Made single-post sidebar Categories/Tags functional: link to `blog.html?category=`/`blog.html?tag=` (were inert `javascript:void(0)` placeholders, faithful to Aurel but useless). Consistent with post-body tag links + blog-listing filters.
 - [ ] (optional, perf) `blog_post.js` still fetches `index.json` twice — consolidate later if desired.
 
-## Phase 4 — Consistency & polish (low risk)
-- [ ] `current-menu-item` desktop↔mobile alignment: `portfolio/europe-travels/index.html`, `seasons/index.html`, `world-travels/index.html`, `varna/index.html` (desktop `:88`), and `index.html` (mobile `:153`)
-- [ ] `blog.html:279` — copyright `div#copyright-year` → `span` pattern
-- [ ] `portfolio/index.html:368` — Vera Su tile label "portraits" → "black sea" (matches `black-sea` class/filter)
-- [ ] Remove dead commented `albums_grid.html` menu fragments: `index.html:88`, `about.html:700,701`
-- [ ] (optional) Normalize subdir canonicals to trailing-slash form
+## Phase 4 — Consistency & polish (low risk) — **DONE on branch**
+- [x] `current-menu-item` alignment: added to desktop nav on the 4 nested indexes (now 2 each: desktop+mobile). `index.html` (homepage, not the portfolio page) — removed the misleading desktop `current-menu-item` so it highlights nothing, consistent with mobile.
+- [x] `blog.html` — copyright `div#copyright-year` → `<div class="cherga_copyright"><span id="copyright-year"></span></div>`.
+- [x] `portfolio/index.html` — Vera Su tile label "portraits" → "black sea".
+- [x] Removed dead commented `albums_grid.html` menu fragments (`index.html`, `about.html` ×2).
+- [x] Fixed `Day%20of%20Varna` URL-encoding in visible title/meta/JSON-LD on `day-of-varna-2019.html` + `day-of-varna-2020.html` (image-path `%20` correctly preserved). `varna/index.html` had none in text.
+- [ ] (optional, skipped) Normalize subdir canonicals to trailing-slash form — cosmetic only.
 
 ## Phase 5 — Sticky header (isolated; known rabbit hole — browser-test vs Aurel)
 - [ ] Align JS threshold (`theme.js:851,860,1012` `>1024`) to `1200` OR move logo-shrink rules (`theme.css:1215–1234`) into `@media(min-width:1200px)`
@@ -71,11 +72,9 @@
 
 ---
 
-## Newly discovered during remediation (not yet scheduled)
-- [ ] URL-encoded titles/meta on Varna pages: `varna/day-of-varna-2019.html`, `day-of-varna-2020.html`, `varna/index.html` show `Day%20of%20Varna%20...` in `<title>`, `og:title`, `twitter:title`, JSON-LD (the visible `<h1>` is correct). Decode `%20`→space. (Cosmetic/SEO — slot into Phase 4.)
-
 ## Change log
 _(append commit hashes as phases land)_
 - Phase 0+1 — broken links, sitemap, CMS config, namibia widget + image-depth fix (merged to `main` @ 772ebea)
 - Phase 2 — masonry scripts, nested-index body class + CSS re-scope, theme.js demo removal, PhotoSwipe fix (removed breaking inline overrides), footer relocation ×7 (merged to `main` @ 5d3c647)
-- Phase 3 — blog_post.html de-duplication, dynamic sidebar wiring, setActiveTag→blog.html?tag=, GTM fix, SEO heads ×3, unified sort (branch `remediation`; needs browser eyeball before merge)
+- Phase 3 — blog_post.html de-duplication, dynamic sidebar wiring, setActiveTag→blog.html?tag=, GTM fix, SEO heads ×3, unified sort, section reorder, functional sidebar cat/tag links (merged to `main` @ 7a507f4)
+- Phase 4 — current-menu-item alignment ×5, blog.html copyright span, Vera Su label, dead comment removal, Day-of-Varna title decode (branch `remediation`)
