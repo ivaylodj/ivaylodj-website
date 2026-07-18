@@ -199,7 +199,79 @@
         var fmRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/m;
         var fmMatch = mdContent.match(fmRegex);
 
-        // Extract gallery configuration from GALLERY_CONFIG comment
+        // Parse gallery from YAML frontmatter (supports both single and nested top/bottom)
+        if (fmMatch && fmMatch[1]) {
+          var frontmatterText = fmMatch[1];
+          var lines = frontmatterText.split('\n');
+          var gallery = {};
+          var inGallery = false;
+          var currentSubGallery = null;
+          var inImages = false;
+
+          for (var fli = 0; fli < lines.length; fli++) {
+            var line = lines[fli];
+
+            // Check if we're entering gallery section
+            if (line.startsWith('gallery:')) {
+              inGallery = true;
+              currentSubGallery = null;
+              inImages = false;
+              continue;
+            }
+
+            // If we hit a new top-level key (no indent), exit gallery section
+            if (inGallery && line && !line.startsWith(' ') && !line.startsWith('\t')) {
+              inGallery = false;
+            }
+
+            if (!inGallery) continue;
+
+            // Check for sub-gallery sections (top: or bottom:)
+            if (line.match(/^\s+(top|bottom):\s*$/)) {
+              var subMatch = line.match(/^\s+(top|bottom):/);
+              currentSubGallery = subMatch[1];
+              if (!gallery[currentSubGallery]) gallery[currentSubGallery] = {};
+              inImages = false;
+              continue;
+            }
+
+            // Parse properties for current context
+            var target = currentSubGallery ? gallery[currentSubGallery] : gallery;
+
+            if (line.includes('columns:')) {
+              var colMatch = line.match(/columns:\s*(\d+)/);
+              if (colMatch) target.columns = parseInt(colMatch[1]);
+            }
+            if (line.includes('rows:')) {
+              var rowMatch = line.match(/rows:\s*(\d+)/);
+              if (rowMatch) target.rows = parseInt(rowMatch[1]);
+            }
+            if (line.includes('aspect_ratio:')) {
+              var aspectMatch = line.match(/aspect_ratio:\s*"([^"]+)"/);
+              if (aspectMatch) target.aspect_ratio = aspectMatch[1];
+            }
+            if (line.includes('images:')) {
+              inImages = true;
+              target.images = [];
+              continue;
+            }
+
+            // Parse image list items
+            if (inImages && line.trim().startsWith('- ')) {
+              var imgPath = line.trim().substring(2).trim();
+              if (imgPath.startsWith('"')) imgPath = imgPath.substring(1);
+              if (imgPath.endsWith('"')) imgPath = imgPath.substring(0, imgPath.length - 1);
+              if (imgPath) target.images.push(imgPath);
+            }
+          }
+
+          // Merge gallery into post object
+          if (Object.keys(gallery).length > 0) {
+            post.gallery = gallery;
+          }
+        }
+
+        // Extract gallery configuration from GALLERY_CONFIG comment (legacy)
         var galleryConfigFromMd = {};
         var configRegex = /<!-- GALLERY_CONFIG\n([\s\S]*?)\nEND_GALLERY_CONFIG -->/;
         var configMatch = mdContent.match(configRegex);
@@ -249,28 +321,60 @@
             html +=   '</div>';
             html += '</div>';
           } else if (template === 'blog_gallery') {
-            // blog_gallery template: parametrized grid layouts with configurable aspect ratios
-            var galleryImages = post.gallery_images && post.gallery_images.length > 0 ? post.gallery_images : [post.cover_image];
-            var topConfig = galleryConfigFromMd.top_gallery || { columns: 3, rows: 2, aspect_ratio: '5/4' };
-            var bottomConfig = galleryConfigFromMd.bottom_gallery || { columns: 4, rows: 1, aspect_ratio: '1/1' };
+            // blog_gallery template: support top and bottom galleries
+            if (post.gallery) {
+              // Render top gallery if defined
+              if (post.gallery.top && post.gallery.top.images && post.gallery.top.images.length > 0) {
+                var topConfig = post.gallery.top;
+                var topCols = parseInt(topConfig.columns) || 3;
+                var topRows = parseInt(topConfig.rows) || 2;
+                var topAspectRatio = topConfig.aspect_ratio || '5/4';
+                var topImages = topConfig.images || [];
+                var topItemCount = topCols * topRows;
+                var topDisplayCount = Math.min(topItemCount, topImages.length);
+                var topGalleryId = Math.random().toString(36).substr(2, 9);
 
-            // Top gallery
-            html += '<div class="cherga_post_formats cherga_pf_gallery cherga_pf_boxed">';
-            var topColClass = 'cherga_pf_gallery' + parseInt(topConfig.columns);
-            var topCount = parseInt(topConfig.columns) * parseInt(topConfig.rows);
-            html +=   '<div class="cherga_pf_gallery ' + topColClass + ' cherga_photoswipe_wrapper" data-uniqid="' + Math.random().toString(36).substr(2, 9) + '" data-aspect-ratio="' + topConfig.aspect_ratio + '">';
+                html += '<div class="cherga_post_formats cherga_gallery_grid cherga_pf_boxed">';
+                html +=   '<div class="cherga_gallery_grid_inner cherga_photoswipe_wrapper" data-uniqid="' + topGalleryId + '" data-aspect-ratio="' + topAspectRatio + '" data-columns="' + topCols + '">';
 
-            var topGridCount = Math.min(topCount, galleryImages.length);
-            for (var gi = 0; gi < topGridCount; gi++) {
-              html +=     '<div class="cherga_pf_gallery_item">';
-              html +=       '<a rel="pf_gallery_' + post.filename + '" href="' + galleryImages[gi] + '" class="cherga_pswp_slide cherga_dp cherga_no_select" data-size="1920x1280" data-count="' + gi + '">';
-              html +=         '<img src="' + galleryImages[gi] + '" alt="" />';
-              html +=       '</a>';
-              html +=     '</div>';
+                for (var tgi = 0; tgi < topDisplayCount; tgi++) {
+                  html +=     '<div class="cherga_gallery_item">';
+                  html +=       '<a rel="pf_gallery_' + post.filename + '_top" href="' + topImages[tgi] + '" class="cherga_pswp_slide cherga_dp cherga_no_select" data-size="1920x1280" data-count="' + tgi + '">';
+                  html +=         '<img src="' + topImages[tgi] + '" alt="" />';
+                  html +=       '</a>';
+                  html +=     '</div>';
+                }
+
+                html +=   '</div>';
+                html += '</div>';
+              }
+
+              // Render bottom gallery if defined
+              if (post.gallery.bottom && post.gallery.bottom.images && post.gallery.bottom.images.length > 0) {
+                var botConfig = post.gallery.bottom;
+                var botCols = parseInt(botConfig.columns) || 4;
+                var botRows = parseInt(botConfig.rows) || 1;
+                var botAspectRatio = botConfig.aspect_ratio || '1/1';
+                var botImages = botConfig.images || [];
+                var botItemCount = botCols * botRows;
+                var botDisplayCount = Math.min(botItemCount, botImages.length);
+                var botGalleryId = Math.random().toString(36).substr(2, 9);
+
+                html += '<div class="cherga_post_formats cherga_gallery_grid cherga_pf_boxed">';
+                html +=   '<div class="cherga_gallery_grid_inner cherga_photoswipe_wrapper" data-uniqid="' + botGalleryId + '" data-aspect-ratio="' + botAspectRatio + '" data-columns="' + botCols + '">';
+
+                for (var bgi = 0; bgi < botDisplayCount; bgi++) {
+                  html +=     '<div class="cherga_gallery_item">';
+                  html +=       '<a rel="pf_gallery_' + post.filename + '_bot" href="' + botImages[bgi] + '" class="cherga_pswp_slide cherga_dp cherga_no_select" data-size="1920x1280" data-count="' + bgi + '">';
+                  html +=         '<img src="' + botImages[bgi] + '" alt="" />';
+                  html +=       '</a>';
+                  html +=     '</div>';
+                }
+
+                html +=   '</div>';
+                html += '</div>';
+              }
             }
-
-            html +=   '</div>';
-            html += '</div>';
           } else if (template === 'blog_video') {
             // blog_video template: embedded video (Vimeo)
             html += '<div class="cherga_post_formats cherga_pf_video cherga_pf_boxed">';
@@ -312,6 +416,66 @@
 
         // Body content (preserves inline HTML from markdown)
         var bodyMd = fmMatch ? fmMatch[2] : mdContent;
+
+        // Process inline galleries in markdown
+        var inlineGalleryRegex = /<!-- GALLERY_INLINE\n([\s\S]*?)\nEND_GALLERY_INLINE -->/g;
+        bodyMd = bodyMd.replace(inlineGalleryRegex, function(match, galleryConfig) {
+          var inlineCfg = {};
+          var cfgLines = galleryConfig.split('\n');
+          var cfgImages = [];
+          var inImages = false;
+
+          for (var ci = 0; ci < cfgLines.length; ci++) {
+            var cfgLine = cfgLines[ci];
+            if (cfgLine.includes('columns:')) {
+              var colMatch = cfgLine.match(/columns:\s*(\d+)/);
+              if (colMatch) inlineCfg.columns = parseInt(colMatch[1]);
+            }
+            if (cfgLine.includes('rows:')) {
+              var rowMatch = cfgLine.match(/rows:\s*(\d+)/);
+              if (rowMatch) inlineCfg.rows = parseInt(rowMatch[1]);
+            }
+            if (cfgLine.includes('aspect_ratio:')) {
+              var aspMatch = cfgLine.match(/aspect_ratio:\s*"([^"]+)"/);
+              if (aspMatch) inlineCfg.aspect_ratio = aspMatch[1];
+            }
+            if (cfgLine.includes('images:')) {
+              inImages = true;
+              continue;
+            }
+            if (inImages && cfgLine.trim().startsWith('- ')) {
+              var imgPath = cfgLine.trim().substring(2).trim();
+              if (imgPath.startsWith('"')) imgPath = imgPath.substring(1);
+              if (imgPath.endsWith('"')) imgPath = imgPath.substring(0, imgPath.length - 1);
+              if (imgPath) cfgImages.push(imgPath);
+            }
+          }
+
+          // Render inline gallery
+          var inlineCols = inlineCfg.columns || 4;
+          var inlineRows = inlineCfg.rows || 1;
+          var inlineAspect = inlineCfg.aspect_ratio || '1/1';
+          var inlineItemCount = inlineCols * inlineRows;
+          var inlineDisplayCount = Math.min(inlineItemCount, cfgImages.length);
+          var inlineGalleryId = Math.random().toString(36).substr(2, 9);
+
+          var galleryHtml = '<div class="cherga_post_formats cherga_gallery_grid cherga_pf_boxed">';
+          galleryHtml +=   '<div class="cherga_gallery_grid_inner cherga_photoswipe_wrapper" data-uniqid="' + inlineGalleryId + '" data-aspect-ratio="' + inlineAspect + '" data-columns="' + inlineCols + '">';
+
+          for (var igi = 0; igi < inlineDisplayCount; igi++) {
+            galleryHtml +=     '<div class="cherga_gallery_item">';
+            galleryHtml +=       '<a rel="pf_gallery_' + post.filename + '_inline" href="' + cfgImages[igi] + '" class="cherga_pswp_slide cherga_dp cherga_no_select" data-size="1920x1280" data-count="' + igi + '">';
+            galleryHtml +=         '<img src="' + cfgImages[igi] + '" alt="" />';
+            galleryHtml +=       '</a>';
+            galleryHtml +=     '</div>';
+          }
+
+          galleryHtml +=   '</div>';
+          galleryHtml += '</div>';
+
+          return galleryHtml;
+        });
+
         html += '<div class="cherga_tiny cherga_blog_post_content">';
         html += parseMd(bodyMd);
         html += '</div>';
@@ -464,7 +628,9 @@
             }
           } else if (template === 'blog_gallery') {
             // Initialize PhotoSwipe for blog_gallery template
-            initializePhotoSwipe();
+            updatePhotoSwipeSizes(function() {
+              initializePhotoSwipe();
+            });
           }
         }, 100);
 
@@ -500,7 +666,37 @@
     postIdx.send();
   }
 
+  // Load image dimensions and update data-size attributes for PhotoSwipe
+  function updatePhotoSwipeSizes(callback) {
+    var photoswipeLinks = document.querySelectorAll('.cherga_pswp_slide');
+    var loadedCount = 0;
+    var totalCount = photoswipeLinks.length;
+
+
+    if (totalCount === 0) {
+      if (callback) callback();
+      return;
+    }
+
+    photoswipeLinks.forEach(function(link) {
+      var imgUrl = link.getAttribute('href');
+      var img = new Image();
+      img.onload = function() {
+        link.setAttribute('data-size', img.width + 'x' + img.height);
+        loadedCount++;
+        if (loadedCount === totalCount && callback) callback();
+      };
+      img.onerror = function() {
+        link.setAttribute('data-size', '1920x1280'); // fallback
+        loadedCount++;
+        if (loadedCount === totalCount && callback) callback();
+      };
+      img.src = imgUrl;
+    });
+  }
+
   function initializePhotoSwipe() {
+
     // Ensure PhotoSwipe container exists
     var pswp = document.querySelector('.pswp');
     if (!pswp) {
@@ -542,7 +738,6 @@
     // Build gallery array indexed by data-uniqid
     var galleryArray = {};
     var wrappers = jQuery('.cherga_photoswipe_wrapper');
-    console.log('Found ' + wrappers.length + ' photoswipe wrappers');
 
     wrappers.each(function() {
       var galleryId = jQuery(this).attr('data-uniqid');
@@ -560,7 +755,6 @@
       });
 
       galleryArray['gallery_' + galleryId] = { slides: slides };
-      console.log('Gallery ' + galleryId + ': ' + slides.length + ' slides');
     });
 
     // Handle clicks on gallery images
@@ -570,15 +764,12 @@
       var galleryId = $this.parents('.cherga_photoswipe_wrapper').attr('data-uniqid');
       var index = parseInt($this.attr('data-count'), 10);
 
-      console.log('Click: Gallery ' + galleryId + ', Index ' + index);
 
       var gallery = galleryArray['gallery_' + galleryId];
       if (!gallery || !gallery.slides) {
-        console.log('No gallery found for id: ' + galleryId);
         return;
       }
 
-      console.log('Opening PhotoSwipe with ' + gallery.slides.length + ' slides');
       var options = {
         index: index,
         bgOpacity: 0.7,

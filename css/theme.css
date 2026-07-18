@@ -5134,34 +5134,68 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 	padding-right: 50px;
 }
 
-/* --- Grid Gallery Widget --- */
+/* --- Blog Gallery Grid System --- */
+.cherga_gallery_grid_inner {
+	font-size: 0;
+	line-height: 0;
+	display: inline-block;
+	width: 100%;
+}
+
+.cherga_gallery_item {
+	display: inline-block;
+	vertical-align: top;
+	padding: 0 0 8px 8px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.cherga_gallery_item a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.cherga_gallery_item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	display: block;
+}
+
+/* Column width and aspect ratio rules */
+.cherga_gallery_grid_inner[data-columns="1"] .cherga_gallery_item { width: 100%; }
+.cherga_gallery_grid_inner[data-columns="2"] .cherga_gallery_item { width: 50%; }
+.cherga_gallery_grid_inner[data-columns="3"] .cherga_gallery_item { width: 33.333%; }
+.cherga_gallery_grid_inner[data-columns="4"] .cherga_gallery_item { width: 25%; }
+.cherga_gallery_grid_inner[data-columns="5"] .cherga_gallery_item { width: 20%; }
+.cherga_gallery_grid_inner[data-columns="6"] .cherga_gallery_item { width: 16.666%; }
+
+/* Aspect ratio variations */
+.cherga_gallery_grid_inner[data-aspect-ratio="1/1"] .cherga_gallery_item { aspect-ratio: 1 / 1; }
+.cherga_gallery_grid_inner[data-aspect-ratio="2/3"] .cherga_gallery_item { aspect-ratio: 2 / 3; }
+.cherga_gallery_grid_inner[data-aspect-ratio="3/2"] .cherga_gallery_item { aspect-ratio: 3 / 2; }
+.cherga_gallery_grid_inner[data-aspect-ratio="4/3"] .cherga_gallery_item { aspect-ratio: 4 / 3; }
+.cherga_gallery_grid_inner[data-aspect-ratio="5/4"] .cherga_gallery_item { aspect-ratio: 5 / 4; }
+.cherga_gallery_grid_inner[data-aspect-ratio="16/9"] .cherga_gallery_item { aspect-ratio: 16 / 9; }
+.cherga_gallery_grid_inner[data-aspect-ratio="9/16"] .cherga_gallery_item { aspect-ratio: 9 / 16; }
+
+/* --- Grid Gallery Widget (Legacy Aurel) --- */
 .cherga_grid_inner {
 	font-size: 0;
 	line-height: 0;
-	margin: 0 !important;
-	width: 100% !important;
+	margin-left: -30px;
 }
 .cherga_grid_inner .grid-item {
 	display: inline-block;
 	vertical-align: top;
-	padding: 8px;
-	box-sizing: border-box;
-}
-.cherga_widget_pm_grid_gallery {
-	width: 100vw !important;
-	margin-left: calc(-50vw + 50%) !important;
-}
-.cherga_widget_container,
-.cherga_front_end_display {
-	width: 100% !important;
-}
-.cherga_grid_wrapper {
-	width: 100% !important;
+	padding: 0 0 30px 30px;
 }
 .cherga_grid_inner .grid-item-inner {
 	position: relative;
-	width: 100% !important;
-	height: 100% !important;
 }
 .cherga_grid_inner .cherga-img-preloader {
 	display: none;
@@ -5173,11 +5207,9 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 	transition: opacity 400ms;
 }
 .cherga_grid_inner .grid-item a {
-	display: block !important;
-	position: relative !important;
-	overflow: hidden !important;
-	width: 100% !important;
-	height: 100% !important;
+	display: block;
+	position: relative;
+	overflow: hidden;
 }
 .cherga_grid_inner .grid-item a:before {
 	display:none;
@@ -5192,18 +5224,14 @@ body .cherga_testimonials_carousel.owl-theme .owl-dots .owl-dot span {
 	width: 33.33%;
 }
 .cherga_grid_inner.grid_columns4 .grid-item {
-	display: inline-block !important;
-	width: 25% !important;
-	aspect-ratio: 1 / 1 !important;
-	overflow: hidden !important;
-	vertical-align: top !important;
-	padding: 0 0 30px 30px !important;
-	box-sizing: border-box !important;
+	width: 25%;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
 }
 .cherga_grid_inner.grid_columns4 .grid-item img {
-	width: 100% !important;
-	height: 100% !important;
-	object-fit: cover !important;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .cherga_grid_inner.grid_columns5 .grid-item {
 	width: 20%;
