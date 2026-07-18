@@ -30,6 +30,15 @@
         });
         buildWidgets();
         renderPosts(posts);
+        // Apply ?tag= / ?category= filter from the URL (e.g. a tag link on a post)
+        var urlParams = new URLSearchParams(window.location.search);
+        var urlTag = urlParams.get('tag');
+        var urlCat = urlParams.get('category');
+        if (urlTag) {
+          filterByTag(urlTag);
+        } else if (urlCat) {
+          filterByCategory(urlCat);
+        }
       }
     };
     xhr.send();

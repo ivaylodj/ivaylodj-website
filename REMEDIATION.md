@@ -39,13 +39,14 @@
 - [x] PhotoSwipe: **REAL root cause found during browser testing** — 8 gallery pages carried inline `<style>` blocks with `!important` overrides on `.pswp__img`/`.pswp__zoom-wrap` (incl. `transform: translate(0,0) !important`) that defeated PhotoSwipe's own JS-driven positioning → transparent backdrop, images uncentered/overflowing. All pages already link `photoswipe.css`+`default-skin.css`, so these inline blocks were redundant *and* breaking. Removed every inline `.pswp` style block from all 8 pages (`sunsets, birds, namibia, unsorted, varna/day-of-varna-2019, day-of-varna-2020, funfair-winter, world-travels/namibia-2021`). Complementary JS fix in `theme.js`: read real dims from the already-loaded thumbnails at click time (thumb = same file as full image) + 0×0 fallback resolved via `gettingData`. **⚠ Needs browser re-verification.**
 - [x] Moved `<footer>` inside `cherga_site_wrapper` + added `cherga_back_to_top` on all 7 pages (`nightscapes`, `neowise`, `sunrises`, `vera-su`, `sunsets`, `unsorted`, `seasons/spring`). Div balance verified on all 7.
 
-## Phase 3 — Blog single-post page (HIGH risk — run `npm test` + browser)
-- [ ] `blog_post.html:122–172` — remove duplicated static blocks (tags/share/nav/comments); JS injects them
-- [ ] `blog_post.js:494` — replace `setActiveTag`/`window.parent` tag links (point to `blog.html?tag=`)
-- [ ] `blog_post.html` sidebar (175–237) — wire real IDs for `buildSidebarWidgets` OR remove dead function (`blog_post.js:798–888`, 662–669)
-- [ ] `blog_post.html:20` — GTM `GTM-5G6PPWB` → `GTM-WR3X354K`; add `<noscript>` + Cloudflare analytics
-- [ ] Add SEO/OG/canonical/JSON-LD head block to `blog.html`, `blog_post.html`, `blog_standard.html`
-- [ ] `blog_post.js:169–174` & `890–901` — fetch `index.json` once; unify sort comparator
+## Phase 3 — Blog single-post page (HIGH risk) — **DONE on branch (needs browser verification before merge)**
+- [x] Removed duplicated static blocks (tags/share/nav/comments) from `blog_post.html`; `blog_post.js` renders all of these into `#blog-post-content`. Div balance 36/36.
+- [x] `blog_post.js` tag links: replaced undefined `window.parent.setActiveTag(...)` with `blog.html?tag=<encoded>`; added `?tag=`/`?category=` URL-param handling in `blog.js` so the listing auto-filters.
+- [x] Sidebar wired dynamic: `#post-category-list`, `#blog-featured-posts-list`, `#post-tag-cloud`. Rewrote `buildSidebarWidgets` featured-posts to emit theme-styled `cherga_posts_item` markup (the old JS emitted `cherga_featured_post_item`, which has **zero** theme.css support). Removed dead/racy per-post category loop in `loadPost`.
+- [x] `blog_post.html`: GTM `GTM-5G6PPWB` → `GTM-WR3X354K`; added GTM `<noscript>` + Cloudflare analytics.
+- [x] Added SEO/OG/Twitter/canonical head to `blog.html`, `blog_standard.html`, `blog_post.html` (blog_post.js already updates title/canonical/description/og per-post — now those tags exist for it to update).
+- [x] Unified the two `index.json` sort comparators (were divergent: `localeCompare` vs `_originalIndex`; two posts share date 2022-01-22 so order actually differed). Double-fetch itself left as-is (perf only, not a bug) — noted below.
+- [ ] (optional, perf) `blog_post.js` still fetches `index.json` twice — consolidate later if desired.
 
 ## Phase 4 — Consistency & polish (low risk)
 - [ ] `current-menu-item` desktop↔mobile alignment: `portfolio/europe-travels/index.html`, `seasons/index.html`, `world-travels/index.html`, `varna/index.html` (desktop `:88`), and `index.html` (mobile `:153`)
@@ -74,4 +75,5 @@
 ## Change log
 _(append commit hashes as phases land)_
 - Phase 0+1 — broken links, sitemap, CMS config, namibia widget + image-depth fix (merged to `main` @ 772ebea)
-- Phase 2 — masonry scripts, nested-index body class + CSS re-scope, theme.js demo removal, PhotoSwipe on-the-fly sizing, footer relocation ×7 (branch `remediation`; needs browser eyeball before merge)
+- Phase 2 — masonry scripts, nested-index body class + CSS re-scope, theme.js demo removal, PhotoSwipe fix (removed breaking inline overrides), footer relocation ×7 (merged to `main` @ 5d3c647)
+- Phase 3 — blog_post.html de-duplication, dynamic sidebar wiring, setActiveTag→blog.html?tag=, GTM fix, SEO heads ×3, unified sort (branch `remediation`; needs browser eyeball before merge)

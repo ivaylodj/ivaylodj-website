@@ -491,7 +491,7 @@
         if (post.tags && post.tags.length) {
           html += '<div class="cherga_post_tags">Tagged in';
           for (var t = 0; t < post.tags.length; t++) {
-            html += ' <a href="javascript:void(0)" rel="tag" onclick="window.parent.setActiveTag(\'' + post.tags[t] + '\')">' + post.tags[t] + '</a>';
+            html += ' <a href="blog.html?tag=' + encodeURIComponent(post.tags[t]) + '" rel="tag">' + post.tags[t] + '</a>';
             if (t < post.tags.length - 1) html += ',';
           }
           html += '</div>';
@@ -657,16 +657,7 @@
         if (ogDescMeta)    ogDescMeta.content = post.excerpt || '';
 
         window.history.replaceState({}, '', 'blog_post.html?post=' + postFile);
-
-        // Sidebar: populate category list
-        var catListEl = document.getElementById('post-category-list');
-        if (catListEl && post.categories) {
-          for (var ci = 0; ci < post.categories.length; ci++) {
-            var li = document.createElement('li');
-            li.innerHTML = '<a href="javascript:void(0)" data-cat="' + post.categories[ci] + '">' + post.categories[ci] + '</a>';
-            catListEl.appendChild(li);
-          }
-        }
+        // Sidebar (categories, tags, featured posts) is built in buildSidebarWidgets().
       };
       contentXhr.send();
     };
@@ -803,20 +794,21 @@
       var maxFeatured = Math.min(3, allPosts.length);
       for (var i = 0; i < maxFeatured; i++) {
         var post = allPosts[i];
-        var li = document.createElement('li');
-        li.className = 'cherga_featured_post_item';
         var imgSrc = post.cover_image || 'img/clipart/banner.jpg';
         var dateStr = formatDate(post.date);
         var filename = post.filename.replace(/\.md$/, '');
-        li.innerHTML =
-          '<a class="cherga_featured_post_image" href="blog_post.html?post=' + filename + '">' +
-            '<img src="' + imgSrc + '" alt="">' +
+        // Emit the theme-styled markup (cherga_posts_item) used by the widget CSS.
+        var item = document.createElement('div');
+        item.className = 'cherga_posts_item cherga_block_with_fi';
+        item.innerHTML =
+          '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=' + filename + '">' +
+            '<img src="' + imgSrc + '" alt="" width="62" height="62" />' +
           '</a>' +
-          '<div class="cherga_featured_post_content">' +
-            '<a class="cherga_featured_post_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
-            '<div class="cherga_featured_post_meta">' + dateStr + '</div>' +
+          '<div class="cherga_posts_item_content">' +
+            '<a class="cherga_featured_post_widget_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+            '<div class="cherga_widget_meta"><div>' + dateStr + '</div></div>' +
           '</div>';
-        featuredList.appendChild(li);
+        featuredList.appendChild(item);
       }
     }
 
@@ -902,17 +894,12 @@
           if (postIdx.status !== 200) return;
 
           var allPosts = JSON.parse(postIdx.responseText);
-          // Apply stable sort: by date descending, then by original order
-          for (var i = 0; i < allPosts.length; i++) {
-            allPosts[i]._originalIndex = i;
-          }
+          // Same comparator as loadPost() so ordering is consistent everywhere
+          // (date descending, then filename for a stable tie-break).
           allPosts.sort(function(a, b) {
-            var dateA = new Date(a.date).getTime();
-            var dateB = new Date(b.date).getTime();
-            if (dateA !== dateB) {
-              return dateB - dateA;
-            }
-            return a._originalIndex - b._originalIndex;
+            var dateCompare = new Date(b.date) - new Date(a.date);
+            if (dateCompare !== 0) return dateCompare;
+            return a.filename.localeCompare(b.filename);
           });
           var postFilename = postFile.match(/\.md$/) ? postFile : postFile + '.md';
           var post = null;
