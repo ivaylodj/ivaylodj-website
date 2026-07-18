@@ -99,7 +99,6 @@
 	display: none !important;
 }
 
-/* Portfolio pagination */
 .cherga_hidden_item {
 	display: none !important;
 }
@@ -466,42 +465,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	}
 
 	function updateLoadMoreButton() {
-		var currentFilter = jQuery('.cherga_grid_filter .is-checked a').attr('data-category');
-		var $grid = jQuery('.cherga_isotope_trigger');
+		// Simple logic: if there are any hidden items, show Load More button
+		var hiddenCount = jQuery('.cherga_isotope_trigger').find('.cherga_hidden_item').length;
 
-		// Count total items matching current filter
-		var totalVisible = 0;
-		$grid.find('.cherga_albums_grid_item').each(function() {
-			var matches = false;
-			if (currentFilter === '*') {
-				matches = true;
-			} else {
-				var className = currentFilter.substring(1);
-				matches = jQuery(this).hasClass(className);
-			}
-			if (matches) totalVisible++;
-		});
-
-		// Count currently shown items (not hidden by pagination)
-		var currentlyShown = 0;
-		$grid.find('.cherga_albums_grid_item').each(function() {
-			if (!jQuery(this).hasClass('cherga_hidden_item')) {
-				var matches = false;
-				if (currentFilter === '*') {
-					matches = true;
-				} else {
-					var className = currentFilter.substring(1);
-					matches = jQuery(this).hasClass(className);
-				}
-				if (matches) currentlyShown++;
-			}
-		});
-
-		// Show Load More button only if there are hidden items to show
-		if (currentlyShown >= totalVisible) {
-			jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
-		} else {
+		if (hiddenCount > 0) {
 			jQuery('.cherga_load_more_button_wrapper').removeClass('all_posts_loaded');
+		} else {
+			jQuery('.cherga_load_more_button_wrapper').addClass('all_posts_loaded');
 		}
 	}
 
