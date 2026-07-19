@@ -8,10 +8,10 @@ categories:
 tags:
   - General
   - Photography
-excerpt: "Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new humble amateur photographer website."
+excerpt: "Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new fine art photography website."
 ---
 
-<span class="cherga_drop_cap"><span class="cherga_drop_cap_letter">W</span></span>elcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new humble amateur photographer website.
+<span class="cherga_drop_cap"><span class="cherga_drop_cap_letter">W</span></span>elcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new fine art photography website.
 
 ## Idea and Mission
 

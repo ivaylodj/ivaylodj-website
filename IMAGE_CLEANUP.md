@@ -34,7 +34,9 @@ Deleted 34 fully-unused Aurel demo folders + 2 unused logos (`logo.nightowl.png`
 - Rebuilt `nightscapes.html` Ken Burns `data-slides` → contiguous img-1..45.
 - No other file needed changes: outside `nightscapes.html`, only `img-1`/`img-5` are referenced (both in the ungapped 1–8 range, so unchanged). All refs resolve; 52 tests pass.
 
-## ⏳ OPEN FOLLOW-UP — Featured-posts / cover-image fixes (resume here next session)
+## ✅ RESOLVED — Featured-posts / cover-image fixes (2026-07-19, commit `2b9b6b2`)
+
+**Resolution (what shipped):** Golden Hour Sunsets cover repointed `Sunsets/img-1` → `Sunsets/img-2` (de-duplicates it from First Post, which keeps `Sunsets/img-1`; Welcome Message keeps `Sunrises/img-1`) in both `_posts/index.json` and `_posts/2024-06-15-gallery-collection.md`. `about.html` hardcoded footer featured widget fixed to the real top-2 posts (Golden Hour Sunsets + First Post) with working `blog_post.html?post=…` links. `portfolio/world-travels/namibia-2021.html` widgetized pre-footer **removed entirely** (slim footer now, matching the other 21 galleries). Dynamic featured-posts widgets (blog.html / blog_post.html) auto-corrected. 52 tests pass. *The original investigation + plan below is kept as historical record; note the shipped fix differs from the draft plan's "First Post → Nightscapes" idea — we de-duplicated via Golden Hour instead, per user instruction.*
 
 **Context:** user noticed **"First Post"** and **"Golden Hour Sunsets"** show the *same* image, and the About-footer featured post shows a wrong image.
 
@@ -52,7 +54,7 @@ Deleted 34 fully-unused Aurel demo folders + 2 unused logos (`logo.nightowl.png`
 3. (optional) normalize the `namibia-2021.html` footer featured placeholders.
 4. Verify blog listing + both sidebars + about footer show correct, non-duplicate images.
 
-**Also still pending:** final user review of the whole `image-cleanup` branch (About square carousel + Nightscapes renumber), then **merge `image-cleanup` → `main`** (currently `main`=80cbd57, unmerged).
+**Merge status:** `image-cleanup` is **merged to `main`**; `main` is at `2b9b6b2` (pushed to origin). Nothing pending here.
 
 ## Notes for the future
 - New photos go under `img/photos/<Album>/img-N.jpg`. Decap CMS media folder is now `img/photos`.
