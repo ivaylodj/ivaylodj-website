@@ -2,7 +2,7 @@
 title: "Golden Hour Sunsets"
 date: 2024-06-15
 template: "blog_gallery"
-cover_image: "img/photos/Sunsets/img-1.jpg"
+cover_image: "img/photos/Sunsets/img-2.jpg"
 categories: ["Sunsets", "Photography"]
 tags: ["photography", "sunsets", "golden hour", "landscape"]
 excerpt: "A stunning collection of sunset photography exploring the interplay of light, color, and atmosphere during golden hour."
