@@ -25,15 +25,15 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 
 ---
 
-## ⏭️ PHASE 2 — SEO structure (~1 day) — NEXT
-- [ ] **Add one keyword-bearing `<h1>`** to the 9–11 slider/kenburns gallery pages that have none: `nightscapes, sunrises, neowise, vera-su, seasons/spring, varna/funfair-summer, world-travels/morocco, europe-travels/rome, europe-travels/la-ciotat` (grid galleries already have H1). Visually light, matches grid galleries.
-- [ ] **Alt text** for ~98 gallery photos shipping `alt=""`: birds (7), sunsets (30), unsorted (33), varna/day-of-varna-2019 (8), day-of-varna-2020 (11), varna/funfair-winter (9). Descriptive, for a11y + image SEO.
-- [ ] **Structured data enrichment:** single canonical `Person` node with `@id` (e.g. `https://ivaylodj.com/#person`) referenced by every page's `author`; add `WebSite` node (NO SearchAction — no on-site search); `BreadcrumbList` on 22 portfolio pages (Home > Portfolio > [subdir] > page); `Blog` on blog.html + `BlogPosting` on real posts; add `email` + headshot `image` to Person. *(blog.html/blog_post.html currently have NO JSON-LD.)*
-- [ ] **`/llms.txt`** (absent) — concise factual markdown: who Ivaylo Djounov is, genres, key galleries + URLs, contact, socials.
-- [ ] **Plain-HTML factual bio block** on home/about ("Ivaylo Djounov is a fine-art photographer based in Varna, Bulgaria, specialising in nightscapes and astrophotography…") — AI engines quote crawlable prose, not JS sliders.
-- [ ] Cross-page naming consistency (P3): "Portfolio" is named 4 ways (nav "Portfolio" / index title "Photo Galleries" / index H1 "My Photography Collections" / about H2 "Explore My Collections") — pick one. Funfair label drift (H1 "Varna Funfair Winter" vs tile "Funfair Winter").
+## ✅ PHASE 2 — SEO structure — DONE (commits `7f2d1f8`, `74133b3`)
+- [x] Visually-hidden `<h1>` (page title) added to 9 slider galleries + blog.html + contacts.html (blog_post.html gets its H1 from blog_post.js). New `.cherga_sr_only` utility in theme.css.
+- [x] Alt text populated on 108 previously-empty images (98 gallery photos, contextual per gallery; + about tiles/featured thumbs, sidebar banners, contacts photo).
+- [x] Structured-data graph: index.html `@graph` = Person(`@id` #person) + WebSite(#website) + ProfilePage; about.html Person unified via @id; blog.html Blog JSON-LD; **22 portfolio pages** each got BreadcrumbList + author `@id`->#person. All JSON-LD validated.
+- [x] `/llms.txt` (AI answer-engine surface: bio, galleries, socials).
+- [x] Plain-text bio: already satisfied — homepage + about.html carry extensive crawlable prose (not JS-only).
+- [ ] (P3, deferred) Cross-page naming consistency: "Portfolio" named 4 ways (nav / index title "Photo Galleries" / index H1 "My Photography Collections" / about H2 "Explore My Collections"); funfair label drift (H1 "Varna Funfair Winter" vs tile "Funfair Winter"). Minor.
 
-## ⏭️ PHASE 3 — Performance / Core Web Vitals (~half day)
+## ⏭️ PHASE 3 — Performance / Core Web Vitals (~half day) — NEXT
 - [ ] **Images:** `img/photos` = 161 MB, JPG-only, some 1.4–1.86 MB (Morocco/img-2 1.86 MB, Batova/img-6 1.4 MB, Nightscapes/img-1 964 KB). Compress to ~150–250 KB, generate WebP/AVIF + responsive sizes (Cloudflare Polish/Images can automate). `back_1.jpg` OG/hero = 1.6 MB.
 - [ ] **Lazy-loading** (`loading="lazy"`) + width/height on media (0 pages use it → CLS/LCP risk). NOTE: galleries inject photos via JS `data-slides` (no `<img>` tags) → invisible to image search/LLMs; add real `<img>`/`<noscript>` fallbacks where feasible.
 - [ ] **Dedicated OG card** 1200×630 (<300 KB, tagged `og:image:width/height/alt`) instead of 1.6 MB back_1.jpg.
