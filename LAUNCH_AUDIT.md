@@ -39,7 +39,8 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 - [~] Lazy-loading — DEFERRED: gallery grids are isotope masonry with `height:auto` images; native `loading="lazy"` breaks below-fold layout. Would need a lazy lib + isotope relayout-on-load shim. Revisit only if desired.
 - [~] Dedicated OG card — DEFERRED (low value): gallery pages already use their own photo as `og:image` (good for social); only home/about/blog/contacts would benefit from a generic 1200×630 card. Minor.
 
-## ⏭️ PHASE 4 — Content investment (needs USER's words) — NEXT `[!]`
+## ⏭️ PHASE 4 — Content investment (needs USER's words) — IN PROGRESS `[!]`
+**First-pass copy drafted in `DRAFT_COPY_PHASE4.md`** (17 gallery intros, 2 blog posts, About E-E-A-T block) — awaiting user edits, then I wire it in (grid galleries = visible intro slot; slider galleries = new slim intro band below the fullscreen slider, pending user OK).
 - [ ] **2–4 sentence intro paragraph per gallery** (where/when/gear/technique + location keywords: "Milky Way over the Bulgarian Black Sea coast", "Batova", "Kaliakra"). Biggest classic-SEO content gap — galleries are `<h1>` + slider, near-zero crawlable text.
 - [ ] A few **real blog posts** ("How I shoot the Milky Way from Bulgaria", "Photographing comet Neowise"); remove/replace the "First Post / More posts coming soon" stub featured on About.
 - [ ] Strengthen **About E-E-A-T** (exhibitions/awards/publications/years active/gear + byline photo).
@@ -49,9 +50,9 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 - [ ] Canonical domain: 301 pages.dev + www → `https://ivaylodj.com` (schema/canonicals already non-www). Force HTTPS. Cloudflare Pages custom-domain + redirect rules.
 - [ ] Refresh sitemap `lastmod` to launch date; re-verify every `<loc>` resolves on live host (incl. trailing-slash + `%20` image paths).
 - [ ] Google Search Console + Bing Webmaster: verify domain, submit sitemap. Enable Cloudflare **IndexNow**.
-- [ ] Real branded **404 page** (none exists).
+- [x] Real branded **404 page** — `404.html` (dark/gold theme, noindex, absolute paths); Cloudflare Pages auto-serves it (commit `2fe5b67`).
 - [ ] Confirm GTM (`GTM-WR3X354K`) published + Cloudflare Analytics fire on prod. Validate structured data (Rich Results Test) + OG (FB/Twitter validators) on live domain.
-- [ ] Confirm `_templates/`, `coverage/`, `node_modules/` excluded from deployed output (gitignored — verify).
+- [x] Deploy exclusions verified: `node_modules/` + `coverage/` not tracked (not deployed); `_templates/` is tracked but `robots.txt` disallows it (acceptable; optional to remove from repo later).
 
 ---
 
