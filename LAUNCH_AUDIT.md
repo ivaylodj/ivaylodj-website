@@ -33,13 +33,13 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 - [x] Plain-text bio: already satisfied — homepage + about.html carry extensive crawlable prose (not JS-only).
 - [ ] (P3, deferred) Cross-page naming consistency: "Portfolio" named 4 ways (nav / index title "Photo Galleries" / index H1 "My Photography Collections" / about H2 "Explore My Collections"); funfair label drift (H1 "Varna Funfair Winter" vs tile "Funfair Winter"). Minor.
 
-## ⏭️ PHASE 3 — Performance / Core Web Vitals (~half day) — NEXT
-- [ ] **Images:** `img/photos` = 161 MB, JPG-only, some 1.4–1.86 MB (Morocco/img-2 1.86 MB, Batova/img-6 1.4 MB, Nightscapes/img-1 964 KB). Compress to ~150–250 KB, generate WebP/AVIF + responsive sizes (Cloudflare Polish/Images can automate). `back_1.jpg` OG/hero = 1.6 MB.
-- [ ] **Lazy-loading** (`loading="lazy"`) + width/height on media (0 pages use it → CLS/LCP risk). NOTE: galleries inject photos via JS `data-slides` (no `<img>` tags) → invisible to image search/LLMs; add real `<img>`/`<noscript>` fallbacks where feasible.
-- [ ] **Dedicated OG card** 1200×630 (<300 KB, tagged `og:image:width/height/alt`) instead of 1.6 MB back_1.jpg.
-- [ ] Fonts: `preconnect` to fonts.googleapis/gstatic + `&display=swap` (currently render-blocking, no preconnect). `defer` where safe. jQuery stack is legacy but functional — low priority.
+## ✅ PHASE 3 — Performance / Core Web Vitals — DONE within Free-plan scope (commit `c9c0f43`)
+- [x] Fonts: `preconnect` (fonts.googleapis.com + fonts.gstatic.com) + `&display=swap` on all 27 pages — removes render-blocking wait / FOIT.
+- [x] Images (investigated, left as-is): lossless `jpegtran` pass = only **~1%** (images already 2048px, well-encoded sRGB, minimal metadata) → reverted (not worth binary-history churn). Meaningful savings need **lossy** re-encode (declined — fine-art quality) or **Cloudflare Polish** (Pro-plan; site is on **Free**, staying Free). Effectively optimal for the constraints.
+- [~] Lazy-loading — DEFERRED: gallery grids are isotope masonry with `height:auto` images; native `loading="lazy"` breaks below-fold layout. Would need a lazy lib + isotope relayout-on-load shim. Revisit only if desired.
+- [~] Dedicated OG card — DEFERRED (low value): gallery pages already use their own photo as `og:image` (good for social); only home/about/blog/contacts would benefit from a generic 1200×630 card. Minor.
 
-## ⏭️ PHASE 4 — Content investment (needs USER's words) `[!]`
+## ⏭️ PHASE 4 — Content investment (needs USER's words) — NEXT `[!]`
 - [ ] **2–4 sentence intro paragraph per gallery** (where/when/gear/technique + location keywords: "Milky Way over the Bulgarian Black Sea coast", "Batova", "Kaliakra"). Biggest classic-SEO content gap — galleries are `<h1>` + slider, near-zero crawlable text.
 - [ ] A few **real blog posts** ("How I shoot the Milky Way from Bulgaria", "Photographing comet Neowise"); remove/replace the "First Post / More posts coming soon" stub featured on About.
 - [ ] Strengthen **About E-E-A-T** (exhibitions/awards/publications/years active/gear + byline photo).
