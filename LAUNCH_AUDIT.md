@@ -62,6 +62,20 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 - **theme.js remaining hygiene** — none outstanding (setTimeout sweep + nested-toggle done in Phase 1).
 
 ## How to resume
-1. Read this file; first unchecked box = where we are (Phase 2, add H1s).
-2. Every code change: verify against disk (grep), `npm test` (52), serve-check on `python3 -m http.server 8000`, then commit per phase.
-3. Phase 4 + pre-launch need user input (copy, domain/DNS, GSC access).
+
+**EXACT STATE — end of 2026-07-21 session.** Branch `main`, clean, pushed. HEAD = `55aa5c7`.
+Phases **1, 2, 3 DONE** (see above). Server: `python3 -m http.server 8000`. 52 tests pass.
+
+**We are HERE → Phase 4 (content), awaiting the user's edits.** The ball is in the user's court:
+1. **User edits `DRAFT_COPY_PHASE4.md`** (17 gallery intros + 2 blog posts + About E-E-A-T block; fill `[brackets]`). When they say it's ready → I wire the copy in:
+   - Grid galleries (sunsets, birds, unsorted, autumn, namibia-2021, day-of-varna-2019/2020, funfair-winter) → replace the italic subtitle in the existing visible intro `<p>` slot under the H1.
+   - Slider galleries (nightscapes, neowise, sunrises, vera-su, spring, funfair-summer, morocco, rome, la-ciotat) → **PENDING USER OK**: add a slim intro band *below* the fullscreen slider (crawlable, keeps immersive first view).
+   - Blog posts → new `_posts/YYYY-MM-DD-slug.md` + `_posts/index.json` entries (confirm NEOWISE cover folder name on disk).
+   - About → insert the Background/E-E-A-T block; confirm `img/clipart/about_me.jpg` is really the photographer.
+2. **Pre-launch dashboard tasks (user-only, for 07-22)** — still open in the checklist above: canonical-domain 301s (pages.dev+www→ivaylodj.com), GSC + Bing verify + submit sitemap + IndexNow, confirm GTM published + analytics on prod, validate structured data/OG on live domain. *(Offered: I can draft step-by-step instructions for these.)*
+3. **Blog comments** — separate, parked on user's Supabase Phase-0 (`COMMENTS_PLAN.md`).
+
+**Workflow reminder:** verify against disk (grep), `npm test` (52), serve-check on :8000, commit per logical unit (no AI attribution), verify push (local==origin). `DRAFT_COPY_PHASE4.md` is a temp working doc — delete it once its copy is live.
+
+## Commit log (this launch effort)
+`c343935` plan · `7f2d1f8` H1s/alt/llms · `74133b3` schema/breadcrumbs · `c9c0f43` fonts · `2fe5b67` 404 + drafts · `55aa5c7` state (HEAD). Earlier: `2b9b6b2`, `7630387` (Phase 1).
