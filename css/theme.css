@@ -8820,3 +8820,16 @@ body .gm-style .gm-style-mtc div {
 .cherga_mobile_nav .menu-item-has-children .sub-menu a {
 	padding-left: 10px;
 }
+
+/* Visually-hidden (screen-reader / SEO) — page H1 on fullscreen slider galleries */
+.cherga_sr_only {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}

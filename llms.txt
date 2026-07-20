@@ -1,0 +1,39 @@
+# Ivaylo Djounov — Fine Art Photographer
+
+> Ivaylo Djounov is a fine art photographer based in Varna, Bulgaria, specialising in nightscapes and astrophotography, landscapes, seascapes (sunsets and sunrises), wildlife, and travel photography. This site presents his photographic galleries, a journal, and contact details.
+
+## About
+- Name: Ivaylo Djounov
+- Role: Fine art photographer
+- Based in: Varna, Bulgaria
+- Disciplines: nightscape & astrophotography, landscape, seascape (sunsets & sunrises), wildlife, travel, street
+- Website: https://ivaylodj.com
+- About: https://ivaylodj.com/about.html
+- Contact: https://ivaylodj.com/contacts.html
+
+## Galleries
+- Portfolio index: https://ivaylodj.com/portfolio/
+- Nightscapes: https://ivaylodj.com/portfolio/nightscapes.html
+- Comet NEOWISE: https://ivaylodj.com/portfolio/neowise.html
+- Sunsets: https://ivaylodj.com/portfolio/sunsets.html
+- Sunrises: https://ivaylodj.com/portfolio/sunrises.html
+- Birds & Wildlife: https://ivaylodj.com/portfolio/birds.html
+- Various: https://ivaylodj.com/portfolio/unsorted.html
+- Vera Su (shipwreck, Bulgarian Black Sea coast): https://ivaylodj.com/portfolio/vera-su.html
+- Varna — Day of Varna 2019: https://ivaylodj.com/portfolio/varna/day-of-varna-2019.html
+- Varna — Day of Varna 2020: https://ivaylodj.com/portfolio/varna/day-of-varna-2020.html
+- Varna — Funfair (Summer): https://ivaylodj.com/portfolio/varna/funfair-summer.html
+- Varna — Funfair (Winter): https://ivaylodj.com/portfolio/varna/funfair-winter.html
+- Seasons — Spring: https://ivaylodj.com/portfolio/seasons/spring.html
+- Seasons — Autumn: https://ivaylodj.com/portfolio/seasons/autumn.html
+- World Travels — Namibia: https://ivaylodj.com/portfolio/world-travels/namibia-2021.html
+- World Travels — Morocco: https://ivaylodj.com/portfolio/world-travels/morocco.html
+- Europe — Rome: https://ivaylodj.com/portfolio/europe-travels/rome.html
+- Europe — La Ciotat: https://ivaylodj.com/portfolio/europe-travels/la-ciotat.html
+
+## Journal
+- Blog: https://ivaylodj.com/blog.html
+
+## Social
+- Instagram: https://www.instagram.com/ivaylodj
+- Facebook: https://www.facebook.com/ivaylo.djounov
