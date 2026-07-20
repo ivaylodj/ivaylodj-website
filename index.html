@@ -43,24 +43,40 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "mainEntity": {
-    "@type": "Person",
-    "name": "Ivaylo Djounov",
-    "url": "https://ivaylodj.com",
-    "jobTitle": "Fine Art Photographer",
-    "description": "Fine art photographer from Varna, Bulgaria specialising in nightscapes, astrophotography, landscapes, wildlife and travel photography.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Varna",
-      "addressCountry": "BG"
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://ivaylodj.com/#person",
+      "name": "Ivaylo Djounov",
+      "url": "https://ivaylodj.com",
+      "jobTitle": "Fine Art Photographer",
+      "description": "Fine art photographer from Varna, Bulgaria specialising in nightscapes, astrophotography, landscapes, wildlife and travel photography.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Varna",
+        "addressCountry": "BG"
+      },
+      "knowsAbout": ["Nightscape Photography", "Astrophotography", "Landscape Photography", "Wildlife Photography", "Travel Photography", "Fine Art Photography"],
+      "sameAs": [
+        "https://www.facebook.com/ivaylo.djounov",
+        "https://www.instagram.com/ivaylodj"
+      ]
     },
-    "knowsAbout": ["Nightscape Photography", "Astrophotography", "Landscape Photography", "Wildlife Photography", "Travel Photography", "Fine Art Photography"],
-    "sameAs": [
-      "https://www.facebook.com/ivaylo.djounov",
-      "https://www.instagram.com/ivaylodj"
-    ]
-  }
+    {
+      "@type": "WebSite",
+      "@id": "https://ivaylodj.com/#website",
+      "url": "https://ivaylodj.com",
+      "name": "Ivaylo Djounov Photography",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://ivaylodj.com/#person" }
+    },
+    {
+      "@type": "ProfilePage",
+      "url": "https://ivaylodj.com",
+      "isPartOf": { "@id": "https://ivaylodj.com/#website" },
+      "about": { "@id": "https://ivaylodj.com/#person" }
+    }
+  ]
 }
 </script>
 <!-- Cloudflare Web Analytics -->

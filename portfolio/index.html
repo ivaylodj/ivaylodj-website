@@ -49,6 +49,7 @@
   "url": "https://ivaylodj.com/portfolio/",
   "author": {
     "@type": "Person",
+    "@id": "https://ivaylodj.com/#person",
     "name": "Ivaylo Djounov",
     "url": "https://ivaylodj.com"
   }
@@ -99,6 +100,26 @@
 	display: none !important;
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ivaylodj.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Portfolio",
+      "item": "https://ivaylodj.com/portfolio/"
+    }
+  ]
+}
+</script>
 	<!-- Favicon & PWA -->
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
