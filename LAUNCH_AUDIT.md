@@ -1,6 +1,6 @@
 # Launch Audit & Plan — ivaylodj.com
 
-**Goal:** best-in-class, polished fine-art photography site that ranks as highly as possible in **search engines and AI/answer engines** for "ivaylodj", "Ivaylo Djounov", "fine art photography Varna/Bulgaria", "nightscape/astrophotography Bulgaria", and the site's hot topics — for the real-domain go-live on **2026-07-22**.
+**Goal:** best-in-class, polished fine-art photography site that ranks as highly as possible in **search engines and AI/answer engines** for "ivaylodj", "Ivaylo Djounov", "fine art photography Varna/Bulgaria", "nightscape/astrophotography Bulgaria", and the site's hot topics — for the real-domain go-live on **2026-07-24** (postponed +48h from 07-22; `csoon_ivaylodj` countdown now ends 2026-07-24 23:59:59).
 
 **Source:** two deep audits (content/photography+design; SEO/AEO) run 2026-07-19/20. This doc = the actionable, phased plan + record. Resume from the first unchecked item.
 
@@ -46,7 +46,7 @@ User edited `DRAFT_COPY_PHASE4.md`; copy cleaned + wired in. **Design decided wi
 - [x] **About E-E-A-T** — new Background block (six years active, Varna/Black Sea, focus genres, full Sony gear list, availability). *(No exhibitions/awards/publications yet — user has none; byline photo `img/clipart/about_me.jpg` retained.)*
 - [x] contacts.html "ABOUT ME" — tightened to a fine-art, contact-focused intro.
 
-## ⏭️ PRE-LAUNCH CHECKLIST — 2026-07-22 `[!]`
+## ⏭️ PRE-LAUNCH CHECKLIST — 2026-07-24 (postponed +48h) `[!]`
 - [ ] Canonical domain: 301 pages.dev + www → `https://ivaylodj.com` (schema/canonicals already non-www). Force HTTPS. Cloudflare Pages custom-domain + redirect rules.
 - [ ] Refresh sitemap `lastmod` to launch date; re-verify every `<loc>` resolves on live host (incl. trailing-slash + `%20` image paths).
 - [ ] Google Search Console + Bing Webmaster: verify domain, submit sitemap. Enable Cloudflare **IndexNow**.
@@ -63,12 +63,13 @@ User edited `DRAFT_COPY_PHASE4.md`; copy cleaned + wired in. **Design decided wi
 
 ## How to resume
 
-**EXACT STATE — 2026-07-22 session.** Branch `main`, clean, pushed. HEAD = `a1eef87`.
-Phases **1, 2, 3, 4 DONE** (see above). Server: `python3 -m http.server 8000`. 52 tests pass.
+**EXACT STATE — 2026-07-22 session.** Branch `main`, clean, pushed. HEAD = `da21437` (+ this doc commit).
+Phases **1, 2, 3, 4 DONE**, incl. P3 naming consistency. Server: `python3 -m http.server 8000`. 52 tests pass.
 `DRAFT_COPY_PHASE4.md` deleted (all its copy is now live).
+**Launch postponed +48h → 2026-07-24:** `csoon_ivaylodj` countdown updated to 2026-07-24 23:59:59 (commit `6a6d4dd`, pushed).
 
 **We are HERE → all content phases done; only the launch-day dashboard tasks remain.**
-1. **Pre-launch dashboard tasks (user-only, for 07-22)** — still open in the checklist above: canonical-domain 301s (pages.dev+www→ivaylodj.com), refresh sitemap `lastmod`, GSC + Bing verify + submit sitemap + IndexNow, confirm GTM published + analytics on prod, validate structured data/OG on live domain. *(Offered: I can draft step-by-step instructions for these.)*
+1. **Pre-launch dashboard tasks (user-only, for 07-24)** — still open in the checklist above: canonical-domain 301s (pages.dev+www→ivaylodj.com), refresh sitemap `lastmod`, GSC + Bing verify + submit sitemap + IndexNow, confirm GTM published + analytics on prod, validate structured data/OG on live domain. *(Offered: I can draft step-by-step instructions for these.)*
 2. **Blog comments** — separate, parked on user's Supabase Phase-0 (`COMMENTS_PLAN.md`).
 3. **Optional polish (P3, deferred):** cross-page "Portfolio" naming consistency (nav / "Photo Galleries" / "My Photography Collections" / "Explore My Collections"); funfair label drift.
 

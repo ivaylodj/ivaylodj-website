@@ -1,5 +1,5 @@
 PROJECT:
-The project "ivaylodj-website" is a static personal hobby photographer exhibition website, containing photo galleries, contact/personla info and blog section (decapcms). The photos should not exceed 2048 pxl on the long edge. No photo should be present in more than 1 place i.e. one copy only permitted to save storage! The site source and resources are pushed to GH and then automatically deployed on CloudFlare (CF) Pages Free plan. The domain name is ivaylodj.com. It is currently pointing at a "Coming Soon" website until 22.07.2026, when the Production should be live.
+The project "ivaylodj-website" is a static personal hobby photographer exhibition website, containing photo galleries, contact/personla info and blog section (decapcms). The photos should not exceed 2048 pxl on the long edge. No photo should be present in more than 1 place i.e. one copy only permitted to save storage! The site source and resources are pushed to GH and then automatically deployed on CloudFlare (CF) Pages Free plan. The domain name is ivaylodj.com. It is currently pointing at a "Coming Soon" website until 24.07.2026 (postponed +48h from 22.07), when the Production should be live.
 
 The project folders and files are:
 Local: ~/gh-ivaylodj.com/ivaylodj-website  
