@@ -1,7 +1,12 @@
 # Blog Comments — Plan & Resume Doc
 
-**Status:** PLANNING — not built yet. Nothing wired into the site. This doc lets us resume cold on any day.
-**Last updated:** 2026-07-19
+**Status:** ACTIVE — chosen as the pre-launch priority (2026-07-22), ahead of SPA (deferred → `SPA_POST_LAUNCH_PLAN.md`). Nothing built into the site yet.
+**Last updated:** 2026-07-22
+
+### ▶ RESUME HERE (next session)
+Analysis done + agreed comments are safe pre-launch (additive/isolated: new JS + a **sibling `#comments` container** on blog posts only; blog_post.js overwrites `#blog-post-content.innerHTML` at L586, so mount OUTSIDE it → barely touch that fragile file). `supabase/schema.sql` is ready. Blocked on **user Phase 0** (Supabase project + Google OAuth + hand back Project URL + anon key — see Phase 0 below; only the user can do it).
+**Two things pending from user:** (1) do Phase 0 & hand over Project URL + anon key; (2) confirm moderation posture — **recommended: instant display**.
+**Agreed next action:** I **pre-build the front-end in parallel** (no dependency) on a `comments` branch — `js/comments.js` (Google auth/session/submit/render: avatar, name, provider badge, relative time), `js/comments-config.js` stub, `#comments` container + one script tag in `blog_post.html`, Cherga-theme CSS, GDPR consent line, delete-own, loading/empty states — then drop in config + test live OAuth (on localhost + pages.dev; ivaylodj.com live from launch) the moment the keys land. Target: ship before go-live 2026-07-24.
 
 ---
 
