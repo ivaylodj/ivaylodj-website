@@ -31,7 +31,7 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 - [x] Structured-data graph: index.html `@graph` = Person(`@id` #person) + WebSite(#website) + ProfilePage; about.html Person unified via @id; blog.html Blog JSON-LD; **22 portfolio pages** each got BreadcrumbList + author `@id`->#person. All JSON-LD validated.
 - [x] `/llms.txt` (AI answer-engine surface: bio, galleries, socials).
 - [x] Plain-text bio: already satisfied — homepage + about.html carry extensive crawlable prose (not JS-only).
-- [ ] (P3, deferred) Cross-page naming consistency: "Portfolio" named 4 ways (nav / index title "Photo Galleries" / index H1 "My Photography Collections" / about H2 "Explore My Collections"); funfair label drift (H1 "Varna Funfair Winter" vs tile "Funfair Winter"). Minor.
+- [x] (P3) Cross-page naming consistency — DONE (commit pending): coherent system = **Portfolio** (nav/URL/hub `<title>` now "Photography Portfolio"; was "Photo Galleries") contains **Collections** (hub H1 "My Photography Collections" + about H2 "Explore My Collections", already consistent). Full tile↔H1 audit fixed 6 drifts: hub tiles Neowise→"Comet NEOWISE", Vera Su→"Vera Su Shipwreck", Birds→"Birds & Wildlife", Unsorted→"Various" (labels + alt); funfair H1s "Varna Funfair Summer/Winter"→"Funfair Summer/Winter" to match title/breadcrumb/JSON-LD/tile. All other tiles already matched their H1s.
 
 ## ✅ PHASE 3 — Performance / Core Web Vitals — DONE within Free-plan scope (commit `c9c0f43`)
 - [x] Fonts: `preconnect` (fonts.googleapis.com + fonts.gstatic.com) + `&display=swap` on all 27 pages — removes render-blocking wait / FOIT.
