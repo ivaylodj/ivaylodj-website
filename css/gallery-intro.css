@@ -1,0 +1,79 @@
+/* =========================================================================
+   Gallery intro styling — ivaylodj.com
+   Loaded only on portfolio gallery pages.
+   - Slider galleries: sticky-reveal caption overlaid on the fullscreen slider.
+   - Grid galleries:   full intro over the hero image + legibility scrim.
+   ========================================================================= */
+
+/* ---- Slider galleries: sticky-reveal hero ----------------------------- */
+/* The theme sets overflow:hidden on .cherga_site_wrapper, which disables
+   position:sticky. Re-enable it on slider pages only (html.cherga_slider_reveal),
+   keeping horizontal scroll off at the document root to avoid a side scrollbar. */
+html.cherga_slider_reveal { overflow-x: hidden; }
+html.cherga_slider_reveal .cherga_site_wrapper { overflow: visible; }
+
+/* front_end_display becomes the scroll section; the extra height (beyond the
+   100vh pinned image) is the scroll distance over which the caption lifts away. */
+.cherga_front_end_display.cherga_hero_scroll {
+	position: relative;
+	height: 200vh;
+}
+
+/* The slider wrapper (has .screen_height; height set by slider JS) is pinned. */
+.cherga_hero_pinned {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+}
+
+/* Caption: anchored to the top of the scroll section, scrolls up and off
+   over the pinned image, sliding under the header. */
+.cherga_hero_caption {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+	padding: 150px 24px 90px;
+	text-align: center;
+	pointer-events: none;
+	background: linear-gradient(to bottom,
+		rgba(17, 17, 17, 0.82) 0%,
+		rgba(17, 17, 17, 0.55) 45%,
+		rgba(17, 17, 17, 0) 100%);
+}
+.cherga_hero_caption_inner { max-width: 900px; margin: 0 auto; }
+.cherga_hero_caption h1 { color: #fff; margin: 0 0 20px; }
+.cherga_hero_caption p {
+	color: #ececec;
+	font-size: 19px;
+	line-height: 32px;
+	margin: 0 auto;
+	max-width: 860px;
+	text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Grid galleries: intro over hero + legibility scrim --------------- */
+.cherga_grid_hero { position: relative; }
+.cherga_hero_scrim {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background: linear-gradient(to bottom,
+		rgba(17, 17, 17, 0.58) 0%,
+		rgba(17, 17, 17, 0.28) 45%,
+		rgba(17, 17, 17, 0.48) 100%);
+}
+.cherga_grid_hero_text { position: relative; z-index: 2; }
+.cherga_grid_hero_text p { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55); }
+.cherga_grid_hero_intro { color: #fff; font-size: 19px; line-height: 30px; }
+
+/* ---- Mobile ----------------------------------------------------------- */
+@media (max-width: 767px) {
+	.cherga_front_end_display.cherga_hero_scroll { height: 180vh; }
+	.cherga_hero_caption { padding: 110px 18px 70px; }
+	.cherga_hero_caption p { font-size: 16px; line-height: 27px; }
+	.cherga_grid_hero_text p,
+	.cherga_grid_hero_intro { font-size: 16px; line-height: 27px; }
+}
