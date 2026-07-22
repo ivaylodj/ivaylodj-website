@@ -245,35 +245,84 @@ jQuery(document).on('click', '.cherga_photo_proofing_notified', function (event)
 });
 
 jQuery(function() {
-	// Check native support
+	// --- Full-view (native fullscreen) with cross-page persistence ---
+	// The site is multi-page: every navigation unloads the document, which forces the
+	// browser out of fullscreen, and the Fullscreen API can only be (re)entered from a
+	// user gesture. So we persist the *intent* in localStorage, keep the visible state in
+	// sync, and re-enter on the first interaction on each new page.
 	if (!jQuery.fullscreen.isNativelySupported()) {
 		jQuery('.cherga_toogle_fullview').remove();
+		try { localStorage.removeItem('cherga_fullview'); } catch (e) {}
+		return;
 	}
 
-	// Toggle Fullscreen
-	jQuery('.cherga_toogle_fullview').on('click', function(){
-		jQuery('html').toggleClass('cherga_in_fullview_mode');
+	var CHERGA_FS_KEY = 'cherga_fullview';
+	var cherga_fs_navigating = false;
 
+	function cherga_fs_save(on) {
+		try { localStorage.setItem(CHERGA_FS_KEY, on ? 'on' : 'off'); } catch (e) {}
+	}
+	function cherga_fs_wanted() {
+		try { return localStorage.getItem(CHERGA_FS_KEY) === 'on'; } catch (e) { return false; }
+	}
+
+	// A pending unload (link click / reload) forces fullscreen off; flag it so we don't
+	// mistake that for the user intentionally leaving full-view.
+	jQuery(window).on('beforeunload pagehide', function () { cherga_fs_navigating = true; });
+
+	// Toggle button = authority for intentional on/off. Keyed off the *visible* state
+	// (the class) so it stays correct even before the post-navigation re-entry gesture.
+	jQuery('.cherga_toogle_fullview').on('click', function () {
 		if (jQuery('html').hasClass('cherga_in_fullview_mode')) {
-			jQuery('html').fullscreen({overflow : 'visible'});
-			return false;
+			jQuery('html').removeClass('cherga_in_fullview_mode');
+			cherga_fs_save(false);
+			if (jQuery.fullscreen.isFullScreen()) { jQuery.fullscreen.exit(); }
 		} else {
-			jQuery.fullscreen.exit();
-			return false;
+			jQuery('html').addClass('cherga_in_fullview_mode');
+			cherga_fs_save(true);
+			jQuery('html').fullscreen({ overflow: 'visible' });
 		}
+		return false;
 	});
 
-	// Document's event
-	jQuery(document).on('fscreenchange', function(e, state, elem) {
+	// Keep the visible state + stored intent in sync with the real fullscreen state.
+	jQuery(document).on('fscreenchange', function () {
 		if (jQuery.fullscreen.isFullScreen()) {
-			// We currently in fullscreen mode
+			jQuery('html').addClass('cherga_in_fullview_mode');
 		} else {
-			// We exiting fullscreen mode
 			jQuery('html').removeClass('cherga_in_fullview_mode');
+			// Only forget the intent when the user left full-view in-page (Esc / browser UI).
+			// Exits caused by navigating away must persist so the next page restores it.
+			if (!cherga_fs_navigating) { cherga_fs_save(false); }
 			cherga_window.trigger('resize');
 			setTimeout(function () { cherga_window.trigger('resize'); }, 500);
 		}
 	});
+
+	// Restore across page loads: reflect intent visually now, re-enter on first gesture.
+	if (cherga_fs_wanted() && !jQuery.fullscreen.isFullScreen()) {
+		jQuery('html').addClass('cherga_in_fullview_mode');
+
+		var cherga_fs_detach = function () {
+			document.removeEventListener('pointerdown', cherga_fs_reenter, true);
+			document.removeEventListener('keydown', cherga_fs_reenter, true);
+			document.removeEventListener('click', cherga_fs_reenter, true);
+		};
+		var cherga_fs_reenter = function (e) {
+			// Let the toggle manage its own clicks (the user may be turning it off).
+			if (e && e.target && jQuery(e.target).closest('.cherga_toogle_fullview').length) {
+				cherga_fs_detach();
+				return;
+			}
+			cherga_fs_detach();
+			if (!jQuery.fullscreen.isFullScreen()) {
+				jQuery('html').fullscreen({ overflow: 'visible' });
+			}
+		};
+		document.addEventListener('pointerdown', cherga_fs_reenter, true);
+		document.addEventListener('keydown', cherga_fs_reenter, true);
+		document.addEventListener('click', cherga_fs_reenter, true);
+	}
 });
 
 // Contact Form
