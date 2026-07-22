@@ -39,12 +39,12 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 - [~] Lazy-loading — DEFERRED: gallery grids are isotope masonry with `height:auto` images; native `loading="lazy"` breaks below-fold layout. Would need a lazy lib + isotope relayout-on-load shim. Revisit only if desired.
 - [~] Dedicated OG card — DEFERRED (low value): gallery pages already use their own photo as `og:image` (good for social); only home/about/blog/contacts would benefit from a generic 1200×630 card. Minor.
 
-## ⏭️ PHASE 4 — Content investment (needs USER's words) — IN PROGRESS `[!]`
-**First-pass copy drafted in `DRAFT_COPY_PHASE4.md`** (17 gallery intros, 2 blog posts, About E-E-A-T block) — awaiting user edits, then I wire it in (grid galleries = visible intro slot; slider galleries = new slim intro band below the fullscreen slider, pending user OK).
-- [ ] **2–4 sentence intro paragraph per gallery** (where/when/gear/technique + location keywords: "Milky Way over the Bulgarian Black Sea coast", "Batova", "Kaliakra"). Biggest classic-SEO content gap — galleries are `<h1>` + slider, near-zero crawlable text.
-- [ ] A few **real blog posts** ("How I shoot the Milky Way from Bulgaria", "Photographing comet Neowise"); remove/replace the "First Post / More posts coming soon" stub featured on About.
-- [ ] Strengthen **About E-E-A-T** (exhibitions/awards/publications/years active/gear + byline photo).
-- [ ] contacts.html "ABOUT ME" block ("Hey! Thanks for stopping by!") — tighten to contact-focused intro, align with fine-art positioning.
+## ✅ PHASE 4 — Content investment — DONE (commits `b992bb8`, `a1eef87`)
+User edited `DRAFT_COPY_PHASE4.md`; copy cleaned + wired in. **Design decided with user via live mockups:** slider galleries → **sticky-reveal caption overlaid on the fullscreen slider** (scrolls up to reveal the frame; pure CSS `position:sticky`, overflow-fix scoped via `html.cherga_slider_reveal`); grid galleries → **full intro over the hero image + legibility scrim**. All in shared `css/gallery-intro.css`.
+- [x] **Intro paragraph per gallery** — all **17** galleries (9 sliders + 8 grids), location keywords gold-highlighted. Applied via verified script handling every structural variant (kenburns vs slider_gallery; with-tagline vs h1-only heroes). Sliders' redundant `sr_only` H1 replaced by the visible caption H1.
+- [x] **Real blog posts** — `2026-06-20-milky-way-from-bulgaria` (blog_standard) + `2026-07-12-chasing-comet-neowise` (blog_image). Removed `2022-01-22-first-post` stub + index.json entry; About Featured-Posts widget re-pointed to the Milky Way post. Blog listing/sidebar are dynamic (auto-update).
+- [x] **About E-E-A-T** — new Background block (six years active, Varna/Black Sea, focus genres, full Sony gear list, availability). *(No exhibitions/awards/publications yet — user has none; byline photo `img/clipart/about_me.jpg` retained.)*
+- [x] contacts.html "ABOUT ME" — tightened to a fine-art, contact-focused intro.
 
 ## ⏭️ PRE-LAUNCH CHECKLIST — 2026-07-22 `[!]`
 - [ ] Canonical domain: 301 pages.dev + www → `https://ivaylodj.com` (schema/canonicals already non-www). Force HTTPS. Cloudflare Pages custom-domain + redirect rules.
@@ -63,19 +63,16 @@ Prior related commit: `2b9b6b2` (Golden Hour cover de-dup, about.html hero type+
 
 ## How to resume
 
-**EXACT STATE — end of 2026-07-21 session.** Branch `main`, clean, pushed. HEAD = `55aa5c7`.
-Phases **1, 2, 3 DONE** (see above). Server: `python3 -m http.server 8000`. 52 tests pass.
+**EXACT STATE — 2026-07-22 session.** Branch `main`, clean, pushed. HEAD = `a1eef87`.
+Phases **1, 2, 3, 4 DONE** (see above). Server: `python3 -m http.server 8000`. 52 tests pass.
+`DRAFT_COPY_PHASE4.md` deleted (all its copy is now live).
 
-**We are HERE → Phase 4 (content), awaiting the user's edits.** The ball is in the user's court:
-1. **User edits `DRAFT_COPY_PHASE4.md`** (17 gallery intros + 2 blog posts + About E-E-A-T block; fill `[brackets]`). When they say it's ready → I wire the copy in:
-   - Grid galleries (sunsets, birds, unsorted, autumn, namibia-2021, day-of-varna-2019/2020, funfair-winter) → replace the italic subtitle in the existing visible intro `<p>` slot under the H1.
-   - Slider galleries (nightscapes, neowise, sunrises, vera-su, spring, funfair-summer, morocco, rome, la-ciotat) → **PENDING USER OK**: add a slim intro band *below* the fullscreen slider (crawlable, keeps immersive first view).
-   - Blog posts → new `_posts/YYYY-MM-DD-slug.md` + `_posts/index.json` entries (confirm NEOWISE cover folder name on disk).
-   - About → insert the Background/E-E-A-T block; confirm `img/clipart/about_me.jpg` is really the photographer.
-2. **Pre-launch dashboard tasks (user-only, for 07-22)** — still open in the checklist above: canonical-domain 301s (pages.dev+www→ivaylodj.com), GSC + Bing verify + submit sitemap + IndexNow, confirm GTM published + analytics on prod, validate structured data/OG on live domain. *(Offered: I can draft step-by-step instructions for these.)*
-3. **Blog comments** — separate, parked on user's Supabase Phase-0 (`COMMENTS_PLAN.md`).
+**We are HERE → all content phases done; only the launch-day dashboard tasks remain.**
+1. **Pre-launch dashboard tasks (user-only, for 07-22)** — still open in the checklist above: canonical-domain 301s (pages.dev+www→ivaylodj.com), refresh sitemap `lastmod`, GSC + Bing verify + submit sitemap + IndexNow, confirm GTM published + analytics on prod, validate structured data/OG on live domain. *(Offered: I can draft step-by-step instructions for these.)*
+2. **Blog comments** — separate, parked on user's Supabase Phase-0 (`COMMENTS_PLAN.md`).
+3. **Optional polish (P3, deferred):** cross-page "Portfolio" naming consistency (nav / "Photo Galleries" / "My Photography Collections" / "Explore My Collections"); funfair label drift.
 
 **Workflow reminder:** verify against disk (grep), `npm test` (52), serve-check on :8000, commit per logical unit (no AI attribution), verify push (local==origin). `DRAFT_COPY_PHASE4.md` is a temp working doc — delete it once its copy is live.
 
 ## Commit log (this launch effort)
-`c343935` plan · `7f2d1f8` H1s/alt/llms · `74133b3` schema/breadcrumbs · `c9c0f43` fonts · `2fe5b67` 404 + drafts · `55aa5c7` state (HEAD). Earlier: `2b9b6b2`, `7630387` (Phase 1).
+`c343935` plan · `7f2d1f8` H1s/alt/llms · `74133b3` schema/breadcrumbs · `c9c0f43` fonts · `2fe5b67` 404 + drafts · `55aa5c7` state · `b992bb8` Phase 4 gallery intros (all 17) · `a1eef87` Phase 4 blog posts + About E-E-A-T + contacts (HEAD). Earlier: `2b9b6b2`, `7630387` (Phase 1).
