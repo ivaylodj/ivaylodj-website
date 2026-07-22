@@ -1,23 +1,23 @@
 [
   {
-    "filename": "2022-01-22-first-post.md",
-    "title": "First Post",
-    "date": "2022-01-22",
+    "filename": "2026-07-12-chasing-comet-neowise.md",
+    "title": "Chasing Comet NEOWISE",
+    "date": "2026-07-12",
     "template": "blog_image",
-    "cover_image": "img/photos/Sunsets/img-1.jpg",
-    "categories": ["Sunsets", "Nature"],
-    "tags": ["photography", "sunsets", "nature"],
-    "excerpt": "Welcome to my photography blog. More posts coming soon."
+    "cover_image": "img/photos/Neowise/img-1.jpg",
+    "categories": ["Nightscapes", "Astrophotography"],
+    "tags": ["neowise", "comet", "astrophotography", "bulgaria"],
+    "excerpt": "Photographing comet C/2020 F3 (NEOWISE) over the Bulgarian Black Sea coast — a naked-eye visitor that won't return for ~6,800 years."
   },
   {
-    "filename": "2022-01-22-welcome-post.md",
-    "title": "Welcome Message",
-    "date": "2022-01-22",
+    "filename": "2026-06-20-milky-way-from-bulgaria.md",
+    "title": "How I Photograph the Milky Way from Bulgaria",
+    "date": "2026-06-20",
     "template": "blog_standard",
-    "cover_image": "img/photos/Sunrises/img-1.jpg",
-    "categories": ["Photography", "Behind the Scenes"],
-    "tags": ["photography", "travel", "behind-the-scenes"],
-    "excerpt": "Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new humble amateur photographer website."
+    "cover_image": "img/photos/Nightscapes/img-1.jpg",
+    "categories": ["Nightscapes", "How-To"],
+    "tags": ["astrophotography", "milky way", "nightscape", "bulgaria", "tutorial"],
+    "excerpt": "How I plan, shoot and process Milky Way nightscapes on the Bulgarian Black Sea coast — gear, settings and the patience it takes."
   },
   {
     "filename": "2024-06-15-gallery-collection.md",
@@ -40,5 +40,15 @@
     "categories": ["Sunsets", "Photography"],
     "tags": ["photography", "sunsets", "golden hour", "landscape"],
     "excerpt": "A stunning collection of sunset photography exploring the interplay of light, color, and atmosphere during golden hour."
+  },
+  {
+    "filename": "2022-01-22-welcome-post.md",
+    "title": "Welcome Message",
+    "date": "2022-01-22",
+    "template": "blog_standard",
+    "cover_image": "img/photos/Sunrises/img-1.jpg",
+    "categories": ["Photography", "Behind the Scenes"],
+    "tags": ["photography", "travel", "behind-the-scenes"],
+    "excerpt": "Welcome to my web corner. Hello and thank you for sparing your valuable time to visit my brand new fine art photography website."
   }
 ]

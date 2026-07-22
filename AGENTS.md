@@ -94,9 +94,10 @@ The Aurel theme codebase is the single source of truth for correct HTML structur
 │   ├── blog_post.js (single post — loads markdown, renders template + sidebar, navigation, related posts)
 │   ├── theme.js (global theme, PhotoSwipe, sticky header, carousel, animations)
 │   ├── jquery.min.js, isotope.pkgd.min.js, imagesloaded.pkgd.min.js, owl.carousel.min.js, photoswipe*.js, etc.
-├── _posts/               (3 posts)
+├── _posts/               (4 posts)
 │   ├── index.json (metadata: filename, title, date, template, cover_image, categories, tags, excerpt)
-│   ├── 2022-01-22-first-post.md, 2022-01-22-welcome-post.md, 2024-06-15-gallery-collection.md
+│   ├── 2022-01-22-welcome-post.md, 2024-06-15-gallery-collection.md,
+│   ├── 2026-06-20-milky-way-from-bulgaria.md, 2026-07-12-chasing-comet-neowise.md
 ├── static/admin/config.yml (Decap CMS: blog + portfolio collections)
 ├── sitemap.xml, robots.txt
 ├── _tests/ (52 tests, 8 suites)
