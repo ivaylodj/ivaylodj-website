@@ -13,11 +13,11 @@
  * state — the UI shows a friendly notice instead of erroring.
  * ========================================================================== */
 window.COMMENTS_CONFIG = {
-  // e.g. 'https://abcdefghijklmno.supabase.co'
-  supabaseUrl: 'REPLACE_WITH_SUPABASE_PROJECT_URL',
+  // Supabase Project URL (public endpoint).
+  supabaseUrl: 'https://hzezbcryltiqnvekaxqg.supabase.co',
 
-  // the `anon` `public` API key (a long JWT-looking string)
-  supabaseAnonKey: 'REPLACE_WITH_SUPABASE_ANON_KEY',
+  // Publishable client key (safe to commit; RLS is the real access control).
+  supabaseAnonKey: 'sb_publishable_Dl_9b_fHlzXdySMbZMgUZg_aAaYNuWP',
 
   // Where users return after Google sign-in. Defaults to the current page so
   // the user lands back on the exact post they were reading. Must also be
