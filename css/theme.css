@@ -3243,11 +3243,12 @@ body .nav-links a.next i {
 	display: block;
 	aspect-ratio: 3 / 2;
 	overflow: hidden;
+	background: #000;
 }
 #blog-post-content .cherga_featured_posts .cherga_fimage_cont a img {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;   /* show the whole cover; letterbox/pillarbox with black */
 	object-position: center;
 }
 
