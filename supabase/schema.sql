@@ -53,6 +53,17 @@ drop policy if exists "delete own" on public.comments;
 create policy "delete own" on public.comments
   for delete using (auth.uid() = user_id);
 
+-- 3. Table grants ------------------------------------------------------------
+-- RLS decides WHICH ROWS each role may touch; these GRANTs decide whether the
+-- Data API roles may touch the table at ALL. Making them explicit means the
+-- schema works regardless of the project's "Automatically expose new tables"
+-- setting. Row access is still fully constrained by the policies above.
+--   anon (logged-out visitors): read only.
+--   authenticated (signed-in users): read + write (RLS limits writes to own rows).
+grant usage on schema public to anon, authenticated;
+grant select on public.comments to anon, authenticated;
+grant insert, update, delete on public.comments to authenticated;
+
 -- ============================================================================
 -- MODERATION
 --   Default above = INSTANT display (status defaults to 'approved').
