@@ -69,6 +69,7 @@
 
     var db = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
     var currentUser = null;
+    var commentsById = {}; // id -> row, for edit (original body) & delete prompts
 
     // ----- Helpers ---------------------------------------------------------
     function esc(s) {
@@ -153,12 +154,18 @@
         ? '<a class="cmt_action cmt_reply_link" href="javascript:void(0)" data-id="' +
             esc(c.id) + '">Reply</a>'
         : '';
+      var edit = mine
+        ? '<a class="cmt_action cmt_edit_link" href="javascript:void(0)" data-id="' +
+            esc(c.id) + '">Edit</a>'
+        : '';
       var del = mine
         ? '<a class="cmt_action cmt_delete" href="javascript:void(0)" data-id="' +
             esc(c.id) + '">Delete</a>'
         : '';
-      var actions = (reply || del)
-        ? '<div class="cmt_actions">' + reply + del + '</div>' : '';
+      var actions = (reply || edit || del)
+        ? '<div class="cmt_actions">' + reply + edit + del + '</div>' : '';
+      var edited = c.edited_at
+        ? ' <span class="cmt_edited">(edited)</span>' : '';
 
       return '<div class="cmt_item depth-' + depth + '">' +
         '<div class="cmt_ava_cont">' + avatarHtml(info) + '</div>' +
@@ -167,7 +174,7 @@
             '<span class="cherga_comment_author cmt_author">' + esc(c.author_name) + '</span>' +
             badge + pending +
           '</div>' +
-          '<div class="cherga_comment_meta cmt_meta"><div>' + esc(relTime(c.created_at)) + '</div></div>' +
+          '<div class="cherga_comment_meta cmt_meta"><div>' + esc(relTime(c.created_at)) + edited + '</div></div>' +
           '<div class="cherga_comment_text cmt_text"><p>' + body + '</p></div>' +
           actions +
         '</div>' +
@@ -196,7 +203,9 @@
       // grouped by parent (shown oldest-first, i.e. chronological under parent).
       var tops = [];
       var repliesByParent = {};
+      commentsById = {};
       rows.forEach(function (r) {
+        commentsById[r.id] = r;
         if (r.parent_id) {
           (repliesByParent[r.parent_id] = repliesByParent[r.parent_id] || []).push(r);
         } else {
@@ -215,6 +224,7 @@
 
       each('.cmt_delete', function (el) { el.addEventListener('click', onDelete); });
       each('.cmt_reply_link', function (el) { el.addEventListener('click', onReplyClick); });
+      each('.cmt_edit_link', function (el) { el.addEventListener('click', onEditClick); });
     }
 
     function each(sel, fn) {
@@ -306,6 +316,78 @@
           btn.disabled = false;
           btn.textContent = 'Post reply';
           if (window.console) console.error('[comments] reply failed', e2);
+        });
+      });
+    }
+
+    // ----- Edit own comment ------------------------------------------------
+    function onEditClick(e) {
+      var id = e.currentTarget.getAttribute('data-id');
+      var c = commentsById[id];
+      if (!c) return;
+      var item = e.currentTarget;
+      while (item && !(item.className && item.className.indexOf('cmt_item') !== -1)) {
+        item = item.parentNode;
+      }
+      if (!item) return;
+      var textEl = item.querySelector('.cmt_text');
+      var actionsEl = item.querySelector('.cmt_actions');
+      if (item.querySelector('.cmt_edit_form')) return; // already editing
+
+      textEl.style.display = 'none';
+      if (actionsEl) actionsEl.style.display = 'none';
+
+      var form = document.createElement('div');
+      form.className = 'cmt_edit_form';
+      form.innerHTML =
+        '<textarea class="cmt_edit_body" maxlength="' + MAX_LEN + '"></textarea>' +
+        '<div class="cmt_form_foot">' +
+          '<span class="cmt_edit_count cmt_count"></span>' +
+          '<span class="cmt_reply_btns">' +
+            '<a class="cmt_action cmt_edit_cancel" href="javascript:void(0)">Cancel</a>' +
+            '<button type="button" class="cmt_btn cmt_edit_save">Save</button>' +
+          '</span>' +
+        '</div>' +
+        '<p class="cmt_edit_error cmt_error" style="display:none;"></p>';
+      textEl.parentNode.insertBefore(form, textEl.nextSibling);
+
+      var ta = form.querySelector('.cmt_edit_body');
+      var count = form.querySelector('.cmt_edit_count');
+      var err = form.querySelector('.cmt_edit_error');
+      var save = form.querySelector('.cmt_edit_save');
+      ta.value = c.body;                    // set via .value (no escaping needed)
+      count.textContent = ta.value.length + ' / ' + MAX_LEN;
+      ta.focus();
+      ta.addEventListener('input', function () {
+        count.textContent = ta.value.length + ' / ' + MAX_LEN;
+      });
+
+      function restore() {
+        if (form.parentNode) form.parentNode.removeChild(form);
+        textEl.style.display = '';
+        if (actionsEl) actionsEl.style.display = '';
+      }
+      form.querySelector('.cmt_edit_cancel').addEventListener('click', restore);
+
+      save.addEventListener('click', function () {
+        var text = (ta.value || '').trim();
+        if (!text) { err.textContent = 'Comment can’t be empty.'; err.style.display = 'block'; return; }
+        if (text === c.body) { restore(); return; } // no change
+        err.style.display = 'none';
+        save.disabled = true;
+        save.textContent = 'Saving…';
+        db.from('comments').update({
+          body: text,
+          edited_at: new Date().toISOString()
+        }).eq('id', id).select().then(function (res) {
+          if (res.error) throw res.error;
+          return loadComments();
+        }).catch(function (e2) {
+          err.textContent = 'Sorry, the edit couldn’t be saved. Please try again.';
+          err.style.display = 'block';
+          save.disabled = false;
+          save.textContent = 'Save';
+          if (window.console) console.error('[comments] edit failed', e2);
         });
       });
     }
@@ -415,7 +497,20 @@
     function onDelete(e) {
       var id = e.currentTarget.getAttribute('data-id');
       if (!id) return;
-      if (!window.confirm('Delete your comment? This cannot be undone.')) return;
+      // Deleting a top-level comment cascades to its replies (schema ON DELETE
+      // CASCADE) — including replies by other people. Warn accordingly.
+      var thread = e.currentTarget;
+      while (thread && !(thread.className && thread.className.indexOf('cmt_thread') !== -1)) {
+        thread = thread.parentNode;
+      }
+      var isTop = !(commentsById[id] && commentsById[id].parent_id);
+      var replyCount = (isTop && thread)
+        ? thread.querySelectorAll('.cmt_item.depth-2').length : 0;
+      var msg = replyCount
+        ? 'Delete your comment and its ' + replyCount + ' repl' +
+            (replyCount > 1 ? 'ies' : 'y') + '? This cannot be undone.'
+        : 'Delete your comment? This cannot be undone.';
+      if (!window.confirm(msg)) return;
       db.from('comments').delete().eq('id', id).then(function (res) {
         if (res.error) throw res.error;
         return loadComments();
