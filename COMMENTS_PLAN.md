@@ -1,19 +1,29 @@
 # Blog Comments — Plan & Resume Doc
 
-**Status:** ACTIVE — pre-launch priority (2026-07-22), ahead of SPA (deferred → `SPA_POST_LAUNCH_PLAN.md`). **Front-end pre-build DONE on branch `comments`** (2026-07-23). Not merged to `main`; live testing blocked only on the user's Supabase keys.
-**Last updated:** 2026-07-23
+**Status:** ✅ **BUILT, LIVE-TESTED, and MERGED to `main`** (2026-07-24). Supabase project live, schema applied, Google OAuth working, email notifications working. Full Aurel comment pattern implemented.
+**Last updated:** 2026-07-24
 
-### ▶ RESUME HERE (next session)
-**Front-end is built and committed on branch `comments`** — isolated & additive, exactly as planned:
-- `js/comments.js` — Google sign-in/session/submit/render (avatar w/ initials fallback, name, provider badge, relative time), delete-own, char counter, loading/empty/error states, **all user strings HTML-escaped**. Reads the `?post=` slug itself → **zero changes to the fragile `blog_post.js`**.
-- `js/comments-config.js` — stub with `REPLACE_WITH_…` placeholders; until real keys land the UI shows a graceful "being set up" notice instead of erroring.
-- `blog_post.html` — sibling `<div id="comments">` inside `.col9` (never wiped by blog_post.js's `#blog-post-content` overwrite at L586) + 3 deferred `<script>` tags (supabase-js@2 CDN → config → comments.js).
-- `css/theme.css` — comments block appended (dark theme + `#ffbf00` accent; reuses `.cherga_comment_*`).
-- **Moderation = INSTANT display** — CONFIRMED by user 2026-07-23. Matches `schema.sql` default (`status='approved'`). Submit UX still handles a `pending` result gracefully if the DB is later switched.
+### ▶ STATE (what shipped)
+Backend live on Supabase (project `hzezbcryltiqnvekaxqg`, EU/Frankfurt). Front-end in the template's in-content comments section on **all** post templates.
+- `js/comments.js` — Google sign-in/session; **threaded** list (Aurel pattern: depth-1 top-level + depth-2 replies); **Reply / Edit / Delete** own; avatar (initials fallback), name, provider badge, relative time, `(edited)` marker; char counter; loading/empty/error states; **all user strings HTML-escaped**. Exposes `window.PMComments.mount(slug)`. After Google redirect, scrolls back to the comment box.
+- `js/comments-config.js` — **live** Project URL + publishable key (both public by design; RLS is the guard).
+- `blog_post.js` — emits the wrapper + `Comments on This Post` heading + `<div id="comments">` in the common render path, then calls `PMComments.mount(postFile)`. Replaced the theme's static placeholder form.
+- `blog_post.html` — 3 deferred `<script>` tags (supabase-js@2 CDN → config → comments.js).
+- `css/theme.css` — comments styling (theme-consistent buttons: `#3a3e43`→`#ffbf00` hover, Roboto; threading indent; edit/reply forms). Plus scoped fix: `#blog-post-content` "You may also like" thumbnails = uniform 3:2 box, portraits letterboxed on black.
+- `supabase/schema.sql` — table + RLS + grants (applied). `supabase/notify_new_comment.sql` — pg_net + Vault + Resend trigger (applied; Resend key stored encrypted in Supabase Vault, NOT in repo).
+- **Moderation = INSTANT display** (CONFIRMED). `status` defaults to `approved`.
 
-**Still blocked on user Phase 0** (Supabase project + Google OAuth + hand back Project URL + anon key — see Phase 0; only the user can do it).
-**Next action when keys arrive:** (1) paste Project URL + anon key into `js/comments-config.js`; (2) run `supabase/schema.sql` in the SQL Editor (Phase 1); (3) test live OAuth on `localhost:8000` + `*.pages.dev`; (4) merge `comments` → `main`. Target: ship before go-live 2026-07-24.
-**Follow-up (not blocking):** no `privacy.html` exists on the site — the consent line therefore does NOT link out. Before/at launch, create a privacy policy page (GDPR: we store name, avatar, provider, comment) and re-add the link in `comments.js`.
+### Remaining follow-ups (non-blocking)
+1. **Privacy policy page** — GDPR (we store name, avatar, provider, comment). Draft under review; once confirmed, add `privacy.html` + re-add the consent link in `comments.js` + footer link.
+2. **Google consent screen** — App name/branding done; still to do: upload logo + verify `ivaylodj.com` ownership (Google Search Console DNS TXT in Cloudflare) so the screen shows the brand for everyone. Free "Option A".
+3. **Facebook login later** — enable provider in Supabase + add a button; no schema change (`author_provider` already stored).
+
+## How to moderate (as site owner)
+Comments show instantly. To hide/remove anything, use the **Supabase Dashboard** (service key → bypasses RLS):
+- **Hide (recommended, keeps the record):** Table Editor → `comments` → set the row's `status` to `spam` (or `pending`). Public read only shows `status='approved'`, so it vanishes immediately. SQL: `update public.comments set status='spam' where id='…';`
+- **Delete permanently:** Table Editor → select row → Delete, or `delete from public.comments where id='…';` (deleting a top-level comment cascades to its replies).
+- Users can already delete/edit **their own** comments from the site (RLS-enforced).
+- New-comment **email alerts** arrive at `ivaylo.djounov@gmail.com` (Resend trigger) so you know when to check.
 
 ---
 
