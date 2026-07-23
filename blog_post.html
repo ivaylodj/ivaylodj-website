@@ -155,13 +155,11 @@
 					<!-- Content Container -->
 					<div class="cherga_content col9">
 						<div id="blog-post-content">
-							<!-- Post body, tags, sharing, navigation and related posts
-							     are all rendered here dynamically by js/blog_post.js -->
+							<!-- Post body, tags, sharing, navigation, comments and related
+							     posts are all rendered here dynamically by js/blog_post.js.
+							     The comments section mounts js/comments.js into its #comments
+							     div (Supabase + Google sign-in). -->
 						</div>
-						<!-- Comments: a SIBLING of #blog-post-content on purpose, so it is
-						     never wiped when blog_post.js overwrites that div's innerHTML.
-						     Rendered by js/comments.js (Supabase + Google sign-in). -->
-						<div id="comments"></div>
 					</div>
 					<!-- Sidebar Container -->
 					<div class="cherga_sidebar col3">

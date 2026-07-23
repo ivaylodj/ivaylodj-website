@@ -1,42 +1,38 @@
 /* ============================================================================
  * ivaylodj.com — Blog comments (Supabase + Google sign-in)
  * ----------------------------------------------------------------------------
- * Fully self-contained: reads the post slug from the ?post= query param itself
- * (same source as blog_post.js) so it does NOT depend on, and never touches,
- * blog_post.js's #blog-post-content render. Mounts into the sibling #comments
- * container in blog_post.html.
+ * Renders INTO the template's own comments section. blog_post.js builds the
+ * wrapper + "Comments on This Post" heading + an empty <div id="comments">
+ * (in its correct position, for every post template) and then calls
+ * window.PMComments.mount(slug) once that markup is in the DOM. This replaces
+ * the theme's static placeholder form with a working, moderated system.
  *
  * Security notes:
- *   - Talks to Supabase with the PUBLIC anon key; Row-Level Security is the
- *     real access control (see supabase/schema.sql).
+ *   - Talks to Supabase with the PUBLIC anon/publishable key; Row-Level
+ *     Security is the real access control (see supabase/schema.sql).
  *   - ALL user-supplied strings are HTML-escaped before injection (esc()).
  *   - Moderation posture: INSTANT display (status defaults to 'approved' in
- *     the DB). Switching to pre-moderation is a one-line DB change; this file
- *     already handles a 'pending' insert result gracefully.
+ *     the DB). A 'pending' insert result is still handled gracefully.
  * ========================================================================== */
 (function () {
   'use strict';
 
-  var MOUNT_ID = 'comments';
   var MAX_LEN = 4000;
 
-  function ready(fn) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', fn);
+  function mountComments(slugArg) {
+    var mount = document.getElementById('comments');
+    if (!mount) return; // Section not on the page (e.g. post failed to load)
+
+    // Post slug: prefer the value blog_post.js passes; fall back to ?post=.
+    var postSlug;
+    if (slugArg) {
+      postSlug = String(slugArg).replace(/\.md$/, '');
     } else {
-      fn();
+      var params = new URLSearchParams(window.location.search);
+      var postParam = params.get('post');
+      if (!postParam) return;
+      postSlug = postParam.replace(/\.md$/, '');
     }
-  }
-
-  ready(function () {
-    var mount = document.getElementById(MOUNT_ID);
-    if (!mount) return; // Only present on blog_post.html
-
-    // Only show comments when we're actually viewing a specific post.
-    var params = new URLSearchParams(window.location.search);
-    var postParam = params.get('post');
-    if (!postParam) return;
-    var postSlug = postParam.replace(/\.md$/, '');
 
     var cfg = window.COMMENTS_CONFIG || {};
     var configured =
@@ -46,9 +42,7 @@
       cfg.supabaseAnonKey.indexOf('REPLACE_WITH') === -1;
 
     // ----- Scaffold (reuses the theme's .cherga_comment_* styling) ---------
-    mount.className = 'cherga_comments_cont';
     mount.innerHTML =
-      '<h3 class="cherga_comments_title">Comments</h3>' +
       '<div id="comments-list" class="cherga_comment_list cmt_list">' +
         '<p class="cmt_state">Loading comments…</p>' +
       '</div>' +
@@ -201,9 +195,13 @@
     }
 
     // ----- Compose / respond area -----------------------------------------
+    var REPLY_TITLE =
+      '<h5 class="cherga_reply_comment_title cmt_reply_title">Let us know your thoughts about this topic</h5>';
+
     function renderRespond() {
       if (!currentUser) {
         respondEl.innerHTML =
+          REPLY_TITLE +
           '<div class="cmt_signin">' +
             '<p class="cmt_signin_lead">Join the conversation — sign in to leave a comment.</p>' +
             '<button type="button" id="cmt-google" class="cmt_google_btn">' +
@@ -217,6 +215,7 @@
 
       var info = userInfo(currentUser);
       respondEl.innerHTML =
+        REPLY_TITLE +
         '<div id="respond" class="cmt_form">' +
           '<div class="cmt_form_id">' +
             '<div class="cmt_ava_cont cmt_ava_sm">' + avatarHtml(info) + '</div>' +
@@ -250,7 +249,7 @@
       var e = document.getElementById('cmt-error');
       if (!e) return;
       e.textContent = msg;
-      e.style.display = 'block';
+      e.style.display = msg ? 'block' : 'none';
     }
 
     // ----- Actions ---------------------------------------------------------
@@ -293,10 +292,9 @@
         body.value = '';
         var cnt = document.getElementById('cmt-count');
         if (cnt) cnt.textContent = '0 / ' + MAX_LEN;
+        showError('');
         var inserted = res.data && res.data[0];
         if (inserted && inserted.status === 'pending') {
-          showError(''); // clear
-          document.getElementById('cmt-error').style.display = 'none';
           alert('Thanks! Your comment was submitted and will appear once approved.');
         }
         return loadComments();
@@ -334,5 +332,8 @@
     });
 
     loadComments();
-  });
+  }
+
+  // Exposed so blog_post.js can mount comments after it injects the section.
+  window.PMComments = { mount: mountComments };
 })();
