@@ -8833,3 +8833,290 @@ body .gm-style .gm-style-mtc div {
 	white-space: nowrap;
 	border: 0;
 }
+
+/* ============================================================================ */
+/* Blog comments (Supabase + Google sign-in) — js/comments.js                   */
+/* Harmonises with the Cherga dark theme + amber (#ffbf00) accent.              */
+/* ============================================================================ */
+.cherga_comments_cont {
+	margin-top: 54px;
+}
+.cherga_comments_cont .cherga_comments_title {
+	margin-bottom: 30px;
+}
+
+/* --- States (loading / empty / error) --- */
+.cmt_state {
+	color: #79838e;
+	font-style: italic;
+	margin: 0;
+}
+
+/* --- Comment list --- */
+.cmt_list {
+	border-bottom: none;
+	padding: 0;
+	margin: 0 0 40px 0;
+	font-size: 14px;
+	line-height: 24px;
+}
+.cmt_item {
+	position: relative;
+	padding: 0 0 26px 0;
+	margin: 0 0 26px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.cmt_item:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+/* Avatar (image or initials fallback) */
+.cmt_ava_cont {
+	width: 54px;
+	height: 54px;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 20px;
+}
+.cmt_avatar {
+	width: 54px;
+	height: 54px;
+	border-radius: 50%;
+	display: block;
+	object-fit: cover;
+	background: #23272b;
+}
+.cmt_avatar_fallback {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #ffbf00;
+	font-weight: 700;
+	font-size: 18px;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+.cmt_ava_sm,
+.cmt_ava_sm .cmt_avatar {
+	width: 42px;
+	height: 42px;
+	font-size: 15px;
+}
+
+.cmt_item .cherga_comment_body {
+	display: inline-block;
+	vertical-align: top;
+	width: calc(100% - 78px);
+	font-size: 14px;
+	line-height: 24px;
+}
+
+/* Head: author + provider badge + status */
+.cmt_head {
+	margin-bottom: 4px;
+}
+.cmt_author {
+	color: #ffffff;
+	font-weight: 700;
+	margin-right: 10px;
+}
+.cmt_badge {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 10px;
+	line-height: 1;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	padding: 4px 8px;
+	border-radius: 3px;
+	background: rgba(255, 255, 255, 0.08);
+	color: #b7c0c9;
+}
+.cmt_badge_google {
+	background: rgba(255, 191, 0, 0.14);
+	color: #ffbf00;
+}
+.cmt_badge_facebook {
+	background: rgba(66, 103, 178, 0.22);
+	color: #8ab0ff;
+}
+.cmt_pending {
+	display: inline-block;
+	margin-left: 8px;
+	font-size: 11px;
+	font-style: italic;
+	color: #79838e;
+}
+.cmt_meta div {
+	margin-bottom: 8px;
+}
+.cmt_text p {
+	margin-bottom: 0;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+.cmt_delete {
+	background: none;
+	border: none;
+	padding: 6px 0 0 0;
+	margin: 0;
+	height: auto;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+	color: #79838e;
+	text-transform: none;
+	cursor: pointer;
+	transition: color 250ms;
+}
+.cmt_delete:hover {
+	color: #ffbf00;
+}
+
+/* --- Respond area --- */
+.cmt_respond {
+	margin-top: 10px;
+}
+
+/* Signed-out: Google button */
+.cmt_signin_lead {
+	color: #b7c0c9;
+	margin-bottom: 16px;
+}
+.cmt_google_btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	height: 50px;
+	padding: 0 24px;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	background: transparent;
+	color: #ffffff;
+	font-size: 14px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background 300ms, border 300ms;
+}
+.cmt_google_btn:hover {
+	background: rgba(255, 255, 255, 0.06);
+	border-color: rgba(255, 191, 0, 0.6);
+}
+.cmt_g_icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: #ffbf00;
+	color: #1b1e21;
+	font-weight: 700;
+	font-size: 14px;
+	font-family: Arial, sans-serif;
+}
+
+/* Signed-in: compose form */
+.cmt_form_id {
+	margin-bottom: 16px;
+}
+.cmt_form_id .cmt_ava_cont {
+	margin-right: 14px;
+}
+.cmt_form_id_text {
+	display: inline-block;
+	vertical-align: middle;
+}
+.cmt_form_id_text .cmt_author {
+	display: block;
+	margin-bottom: 2px;
+}
+.cmt_signout {
+	background: none;
+	border: none;
+	padding: 0;
+	height: auto;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+	text-transform: none;
+	color: #79838e;
+	cursor: pointer;
+	transition: color 250ms;
+}
+.cmt_signout:hover {
+	color: #ffbf00;
+}
+.cmt_form textarea {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.02);
+	height: 120px;
+	margin-bottom: 12px;
+	transition: border 250ms;
+}
+.cmt_form textarea:focus {
+	border-color: rgba(255, 191, 0, 0.6);
+	background: rgba(255, 255, 255, 0.03);
+}
+.cmt_form_foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+.cmt_count {
+	color: #79838e;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+}
+.cmt_submit {
+	height: 50px;
+	padding: 0 26px;
+	border: none;
+	background: #ffbf00;
+	color: #1b1e21;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: opacity 300ms;
+}
+.cmt_submit:hover {
+	opacity: 0.88;
+}
+.cmt_submit[disabled] {
+	opacity: 0.5;
+	cursor: default;
+}
+.cmt_error {
+	color: #e2725b;
+	font-size: 13px;
+	margin: 12px 0 0 0;
+}
+.cmt_consent {
+	color: #79838e;
+	font-size: 12px;
+	line-height: 20px;
+	margin: 14px 0 0 0;
+}
+
+@media only screen and (max-width: 480px) {
+	.cmt_ava_cont {
+		width: 42px;
+		height: 42px;
+		margin-right: 14px;
+	}
+	.cmt_avatar {
+		width: 42px;
+		height: 42px;
+		font-size: 15px;
+	}
+	.cmt_item .cherga_comment_body {
+		width: calc(100% - 56px);
+	}
+	.cmt_form_foot {
+		justify-content: flex-start;
+	}
+}

@@ -1,12 +1,19 @@
 # Blog Comments — Plan & Resume Doc
 
-**Status:** ACTIVE — chosen as the pre-launch priority (2026-07-22), ahead of SPA (deferred → `SPA_POST_LAUNCH_PLAN.md`). Nothing built into the site yet.
-**Last updated:** 2026-07-22
+**Status:** ACTIVE — pre-launch priority (2026-07-22), ahead of SPA (deferred → `SPA_POST_LAUNCH_PLAN.md`). **Front-end pre-build DONE on branch `comments`** (2026-07-23). Not merged to `main`; live testing blocked only on the user's Supabase keys.
+**Last updated:** 2026-07-23
 
 ### ▶ RESUME HERE (next session)
-Analysis done + agreed comments are safe pre-launch (additive/isolated: new JS + a **sibling `#comments` container** on blog posts only; blog_post.js overwrites `#blog-post-content.innerHTML` at L586, so mount OUTSIDE it → barely touch that fragile file). `supabase/schema.sql` is ready. Blocked on **user Phase 0** (Supabase project + Google OAuth + hand back Project URL + anon key — see Phase 0 below; only the user can do it).
-**Two things pending from user:** (1) do Phase 0 & hand over Project URL + anon key; (2) confirm moderation posture — **recommended: instant display**.
-**Agreed next action:** I **pre-build the front-end in parallel** (no dependency) on a `comments` branch — `js/comments.js` (Google auth/session/submit/render: avatar, name, provider badge, relative time), `js/comments-config.js` stub, `#comments` container + one script tag in `blog_post.html`, Cherga-theme CSS, GDPR consent line, delete-own, loading/empty states — then drop in config + test live OAuth (on localhost + pages.dev; ivaylodj.com live from launch) the moment the keys land. Target: ship before go-live 2026-07-24.
+**Front-end is built and committed on branch `comments`** — isolated & additive, exactly as planned:
+- `js/comments.js` — Google sign-in/session/submit/render (avatar w/ initials fallback, name, provider badge, relative time), delete-own, char counter, loading/empty/error states, **all user strings HTML-escaped**. Reads the `?post=` slug itself → **zero changes to the fragile `blog_post.js`**.
+- `js/comments-config.js` — stub with `REPLACE_WITH_…` placeholders; until real keys land the UI shows a graceful "being set up" notice instead of erroring.
+- `blog_post.html` — sibling `<div id="comments">` inside `.col9` (never wiped by blog_post.js's `#blog-post-content` overwrite at L586) + 3 deferred `<script>` tags (supabase-js@2 CDN → config → comments.js).
+- `css/theme.css` — comments block appended (dark theme + `#ffbf00` accent; reuses `.cherga_comment_*`).
+- **Moderation = INSTANT display** — CONFIRMED by user 2026-07-23. Matches `schema.sql` default (`status='approved'`). Submit UX still handles a `pending` result gracefully if the DB is later switched.
+
+**Still blocked on user Phase 0** (Supabase project + Google OAuth + hand back Project URL + anon key — see Phase 0; only the user can do it).
+**Next action when keys arrive:** (1) paste Project URL + anon key into `js/comments-config.js`; (2) run `supabase/schema.sql` in the SQL Editor (Phase 1); (3) test live OAuth on `localhost:8000` + `*.pages.dev`; (4) merge `comments` → `main`. Target: ship before go-live 2026-07-24.
+**Follow-up (not blocking):** no `privacy.html` exists on the site — the consent line therefore does NOT link out. Before/at launch, create a privacy policy page (GDPR: we store name, avatar, provider, comment) and re-add the link in `comments.js`.
 
 ---
 
@@ -21,8 +28,8 @@ Let visitors comment on blog posts, but only after signing in with a **real big-
 - **Supabase dashboard account:** sign in with **GitHub + 2FA** (repo already on GitHub; solo project). Set billing/contact email to a stable address. This is separate from the end-user Google login.
 - **Architecture separation:** Decap/git = *authored* content (posts). Supabase DB = *user-generated* content (comments). Do NOT store comments in git (commit-per-comment would trigger a rebuild each time).
 
-## Open decision (confirm on resume)
-- **Moderation posture.** Recommended default: **instant display** (`status` defaults to `approved`), with admin able to hide/delete and users able to delete their own. One-line switch to pre-moderation documented in `supabase/schema.sql`. → *Confirm instant vs pre-approval before Phase 2.*
+## Decided
+- **Moderation posture = INSTANT display** (CONFIRMED by user 2026-07-23). `status` defaults to `approved`; admin can hide/delete via dashboard, users can delete their own. One-line switch to pre-moderation documented in `supabase/schema.sql`; `comments.js` already handles a `pending` insert result.
 
 ---
 
@@ -61,12 +68,12 @@ Let visitors comment on blog posts, but only after signing in with a **real big-
 ## Data captured per comment (see `supabase/schema.sql`)
 `post_slug, user_id, author_name, author_avatar_url, author_provider, body, parent_id, status, created_at, edited_at`
 
-## Files (planned)
-- `supabase/schema.sql` — ✅ created (DB schema + RLS; ready to paste).
-- `js/comments-config.js` — TODO (Project URL + anon key).
-- `js/comments.js` — TODO (auth + submit + render).
-- `blog_post.html` / `js/blog_post.js` — TODO (mount point + init by post slug).
-- `css/theme.css` (or inline) — TODO (styling).
+## Files (status)
+- `supabase/schema.sql` — ✅ created (DB schema + RLS; ready to paste). Not yet run (Phase 1, needs user's project).
+- `js/comments-config.js` — ✅ created (stub w/ placeholders; graceful-disabled until keys land).
+- `js/comments.js` — ✅ created (auth + submit + render + delete-own; XSS-safe; self-sources slug).
+- `blog_post.html` — ✅ `#comments` sibling container + 3 deferred script tags. `js/blog_post.js` — untouched (by design).
+- `css/theme.css` — ✅ comments block appended.
 
 ## How to resume
 1. Read this file + `supabase/schema.sql`.

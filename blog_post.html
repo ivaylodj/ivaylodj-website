@@ -155,9 +155,13 @@
 					<!-- Content Container -->
 					<div class="cherga_content col9">
 						<div id="blog-post-content">
-							<!-- Post body, tags, sharing, navigation, related posts and comments
+							<!-- Post body, tags, sharing, navigation and related posts
 							     are all rendered here dynamically by js/blog_post.js -->
 						</div>
+						<!-- Comments: a SIBLING of #blog-post-content on purpose, so it is
+						     never wiped when blog_post.js overwrites that div's innerHTML.
+						     Rendered by js/comments.js (Supabase + Google sign-in). -->
+						<div id="comments"></div>
 					</div>
 					<!-- Sidebar Container -->
 					<div class="cherga_sidebar col3">
@@ -232,6 +236,11 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/blog_post.js"></script>
 	<script src="js/theme.js"></script>
+	<!-- Blog comments: Supabase client (CDN) + config + logic. Deferred so it
+	     never blocks the post/gallery render; comments load independently. -->
+	<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script defer src="js/comments-config.js"></script>
+	<script defer src="js/comments.js"></script>
 	<script>document.getElementById('copyright-year').innerHTML = '© ' + new Date().getFullYear() + ' Ivaylo Djounov Photography. All Rights Reserved.';</script>
 </body>
 </html>
