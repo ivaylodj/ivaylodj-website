@@ -8840,6 +8840,7 @@ body .gm-style .gm-style-mtc div {
 /* ============================================================================ */
 .cherga_comments_cont {
 	margin-top: 54px;
+	margin-bottom: 54px;   /* air before "You may also like" (theme divider has no CSS) */
 }
 .cherga_comments_cont .cherga_comments_title {
 	margin-bottom: 30px;
@@ -8957,21 +8958,64 @@ body .gm-style .gm-style-mtc div {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 }
-.cmt_delete {
+/* Per-comment action links (Reply / Delete) — Aurel meta pattern */
+.cmt_actions {
+	margin-top: 10px;
+	font-size: 0;   /* remove inline-block whitespace; children reset size */
+}
+.cmt_action {
+	display: inline-block;
+	margin-right: 18px;
+	padding: 0;
 	background: none;
 	border: none;
-	padding: 6px 0 0 0;
-	margin: 0;
-	height: auto;
+	font-family: inherit;
 	font-size: 12px;
 	letter-spacing: 0.5px;
 	color: #79838e;
 	text-transform: none;
+	text-decoration: none;
 	cursor: pointer;
 	transition: color 250ms;
 }
-.cmt_delete:hover {
+.cmt_action:hover {
 	color: #ffbf00;
+}
+
+/* Threading: reset the theme's depth padding, then indent replies (depth-2) */
+.cmt_thread {
+	margin-bottom: 0;
+}
+.cmt_list .cmt_item {
+	padding-left: 0;
+}
+.cmt_list .cmt_item.depth-2 {
+	padding-left: 74px;
+}
+
+/* Inline reply form (appears under a comment when "Reply" is clicked) */
+.cmt_reply_slot:empty {
+	display: none;
+}
+.cmt_reply_form {
+	margin: 2px 0 24px 74px;
+}
+.cmt_reply_form textarea {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.02);
+	height: 90px;
+	margin-bottom: 12px;
+	font-family: inherit;
+	transition: border 250ms;
+}
+.cmt_reply_form textarea:focus {
+	border-color: rgba(255, 191, 0, 0.6);
+	background: rgba(255, 255, 255, 0.03);
+}
+.cmt_reply_btns {
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
 }
 
 /* --- Respond area --- */
@@ -8979,42 +9023,49 @@ body .gm-style .gm-style-mtc div {
 	margin-top: 10px;
 }
 
-/* Signed-out: Google button */
-.cmt_signin_lead {
-	color: #b7c0c9;
-	margin-bottom: 16px;
-}
-.cmt_google_btn {
+/* Shared button — mirrors the theme's input[type=submit]: dark grey by
+   default, amber on hover, Roboto/uppercase. Keeps comments on template rules. */
+.cmt_btn {
 	display: inline-flex;
 	align-items: center;
-	gap: 12px;
+	justify-content: center;
+	gap: 10px;
 	height: 50px;
 	padding: 0 24px;
-	border: 1px solid rgba(255, 255, 255, 0.15);
-	background: transparent;
+	border: none;
+	background: #3a3e43;
 	color: #ffffff;
+	font-family: "Roboto", sans-serif;
 	font-size: 14px;
 	letter-spacing: 0.6px;
 	text-transform: uppercase;
 	cursor: pointer;
-	transition: background 300ms, border 300ms;
+	transition: background 300ms;
 }
-.cmt_google_btn:hover {
-	background: rgba(255, 255, 255, 0.06);
-	border-color: rgba(255, 191, 0, 0.6);
-}
-.cmt_g_icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 22px;
-	height: 22px;
-	border-radius: 50%;
+.cmt_btn:hover {
 	background: #ffbf00;
-	color: #1b1e21;
-	font-weight: 700;
-	font-size: 14px;
-	font-family: Arial, sans-serif;
+}
+.cmt_btn[disabled] {
+	opacity: 0.5;
+	cursor: default;
+}
+.cmt_btn[disabled]:hover {
+	background: #3a3e43;
+}
+.cmt_google_btn .fa {
+	font-size: 16px;
+}
+
+/* Signed-out: reply title + Google button on a single row */
+.cmt_signin_row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+.cmt_signin_row .cherga_reply_comment_title {
+	margin-bottom: 0;
 }
 
 /* Signed-in: compose form */
@@ -9037,6 +9088,7 @@ body .gm-style .gm-style-mtc div {
 	border: none;
 	padding: 0;
 	height: auto;
+	font-family: inherit;
 	font-size: 12px;
 	letter-spacing: 0.5px;
 	text-transform: none;
@@ -9052,6 +9104,7 @@ body .gm-style .gm-style-mtc div {
 	background: rgba(255, 255, 255, 0.02);
 	height: 120px;
 	margin-bottom: 12px;
+	font-family: inherit;
 	transition: border 250ms;
 }
 .cmt_form textarea:focus {
@@ -9067,28 +9120,9 @@ body .gm-style .gm-style-mtc div {
 }
 .cmt_count {
 	color: #79838e;
+	font-family: inherit;
 	font-size: 12px;
 	letter-spacing: 0.5px;
-}
-.cmt_submit {
-	height: 50px;
-	padding: 0 26px;
-	border: none;
-	background: #ffbf00;
-	color: #1b1e21;
-	font-size: 14px;
-	font-weight: 700;
-	letter-spacing: 0.6px;
-	text-transform: uppercase;
-	cursor: pointer;
-	transition: opacity 300ms;
-}
-.cmt_submit:hover {
-	opacity: 0.88;
-}
-.cmt_submit[disabled] {
-	opacity: 0.5;
-	cursor: default;
 }
 .cmt_error {
 	color: #e2725b;
@@ -9115,6 +9149,12 @@ body .gm-style .gm-style-mtc div {
 	}
 	.cmt_item .cherga_comment_body {
 		width: calc(100% - 56px);
+	}
+	.cmt_list .cmt_item.depth-2 {
+		padding-left: 40px;
+	}
+	.cmt_reply_form {
+		margin-left: 40px;
 	}
 	.cmt_form_foot {
 		justify-content: flex-start;

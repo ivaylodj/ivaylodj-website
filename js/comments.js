@@ -4,15 +4,18 @@
  * Renders INTO the template's own comments section. blog_post.js builds the
  * wrapper + "Comments on This Post" heading + an empty <div id="comments">
  * (in its correct position, for every post template) and then calls
- * window.PMComments.mount(slug) once that markup is in the DOM. This replaces
- * the theme's static placeholder form with a working, moderated system.
+ * window.PMComments.mount(slug) once that markup is in the DOM.
+ *
+ * Follows the Aurel comment pattern: a threaded list (top-level comments with
+ * nested replies, depth-1 / depth-2) where each top-level comment has a
+ * "Reply" link, plus a compose box for new top-level comments. Replies are
+ * stored via the schema's parent_id column.
  *
  * Security notes:
  *   - Talks to Supabase with the PUBLIC anon/publishable key; Row-Level
  *     Security is the real access control (see supabase/schema.sql).
  *   - ALL user-supplied strings are HTML-escaped before injection (esc()).
- *   - Moderation posture: INSTANT display (status defaults to 'approved' in
- *     the DB). A 'pending' insert result is still handled gracefully.
+ *   - Moderation posture: INSTANT display (status defaults to 'approved').
  * ========================================================================== */
 (function () {
   'use strict';
@@ -130,7 +133,8 @@
         esc(initials(info.name)) + '</span>';
     }
 
-    function commentHtml(c) {
+    // depth: 1 = top-level, 2 = reply. Only top-level comments get a Reply link.
+    function commentItemHtml(c, depth) {
       var info = {
         name: c.author_name,
         avatar: c.author_avatar_url,
@@ -143,13 +147,20 @@
         : '';
       var pending = c.status === 'pending'
         ? '<span class="cmt_pending">awaiting approval</span>' : '';
-      var del = mine
-        ? '<button type="button" class="cmt_delete" data-id="' + esc(c.id) +
-            '">Delete</button>'
-        : '';
-      // Body: escaped, then newlines to <br> (no other HTML allowed).
       var body = esc(c.body).replace(/\n/g, '<br>');
-      return '<div class="cmt_item depth-1">' +
+
+      var reply = depth === 1
+        ? '<a class="cmt_action cmt_reply_link" href="javascript:void(0)" data-id="' +
+            esc(c.id) + '">Reply</a>'
+        : '';
+      var del = mine
+        ? '<a class="cmt_action cmt_delete" href="javascript:void(0)" data-id="' +
+            esc(c.id) + '">Delete</a>'
+        : '';
+      var actions = (reply || del)
+        ? '<div class="cmt_actions">' + reply + del + '</div>' : '';
+
+      return '<div class="cmt_item depth-' + depth + '">' +
         '<div class="cmt_ava_cont">' + avatarHtml(info) + '</div>' +
         '<div class="cherga_comment_body">' +
           '<div class="cmt_head">' +
@@ -158,9 +169,21 @@
           '</div>' +
           '<div class="cherga_comment_meta cmt_meta"><div>' + esc(relTime(c.created_at)) + '</div></div>' +
           '<div class="cherga_comment_text cmt_text"><p>' + body + '</p></div>' +
-          del +
+          actions +
         '</div>' +
       '</div>';
+    }
+
+    function threadHtml(top, replies) {
+      var html = '<div class="cmt_thread">';
+      html += commentItemHtml(top, 1);
+      for (var i = 0; i < replies.length; i++) {
+        html += commentItemHtml(replies[i], 2);
+      }
+      // Inline reply form gets injected here when "Reply" is clicked.
+      html += '<div class="cmt_reply_slot" data-parent="' + esc(top.id) + '"></div>';
+      html += '</div>';
+      return html;
     }
 
     function renderList(rows) {
@@ -169,11 +192,33 @@
           '<p class="cmt_state cmt_empty">No comments yet. Be the first to share your thoughts.</p>';
         return;
       }
-      listEl.innerHTML = rows.map(commentHtml).join('');
-      Array.prototype.forEach.call(
-        listEl.querySelectorAll('.cmt_delete'),
-        function (btn) { btn.addEventListener('click', onDelete); }
-      );
+      // Split into top-level comments (newest-first from the query) and replies
+      // grouped by parent (shown oldest-first, i.e. chronological under parent).
+      var tops = [];
+      var repliesByParent = {};
+      rows.forEach(function (r) {
+        if (r.parent_id) {
+          (repliesByParent[r.parent_id] = repliesByParent[r.parent_id] || []).push(r);
+        } else {
+          tops.push(r);
+        }
+      });
+      Object.keys(repliesByParent).forEach(function (k) {
+        repliesByParent[k].sort(function (a, b) {
+          return new Date(a.created_at) - new Date(b.created_at);
+        });
+      });
+
+      listEl.innerHTML = tops.map(function (t) {
+        return threadHtml(t, repliesByParent[t.id] || []);
+      }).join('');
+
+      each('.cmt_delete', function (el) { el.addEventListener('click', onDelete); });
+      each('.cmt_reply_link', function (el) { el.addEventListener('click', onReplyClick); });
+    }
+
+    function each(sel, fn) {
+      Array.prototype.forEach.call(listEl.querySelectorAll(sel), fn);
     }
 
     function loadComments() {
@@ -194,19 +239,88 @@
         });
     }
 
-    // ----- Compose / respond area -----------------------------------------
+    // ----- Shared insert ---------------------------------------------------
+    function postComment(text, parentId) {
+      var info = userInfo(currentUser);
+      var row = {
+        post_slug: postSlug,
+        user_id: info.id,
+        author_name: info.name,
+        author_avatar_url: info.avatar || null,
+        author_provider: info.provider,
+        body: text
+      };
+      if (parentId) row.parent_id = parentId;
+      return db.from('comments').insert(row).select().then(function (res) {
+        if (res.error) throw res.error;
+        return res.data && res.data[0];
+      });
+    }
+
+    // ----- Reply (threaded) ------------------------------------------------
+    function onReplyClick(e) {
+      var id = e.currentTarget.getAttribute('data-id');
+      if (!id) return;
+      if (!currentUser) { signIn(); return; } // must sign in to reply
+
+      var slot = listEl.querySelector('.cmt_reply_slot[data-parent="' + id + '"]');
+      if (!slot) return;
+      if (slot.firstChild) { slot.innerHTML = ''; return; } // toggle off
+
+      slot.innerHTML =
+        '<div class="cmt_reply_form">' +
+          '<textarea class="cmt_reply_body" maxlength="' + MAX_LEN + '" ' +
+            'placeholder="Write a reply…"></textarea>' +
+          '<div class="cmt_form_foot">' +
+            '<span class="cmt_reply_count cmt_count">0 / ' + MAX_LEN + '</span>' +
+            '<span class="cmt_reply_btns">' +
+              '<a class="cmt_action cmt_reply_cancel" href="javascript:void(0)">Cancel</a>' +
+              '<button type="button" class="cmt_btn cmt_reply_submit">Post reply</button>' +
+            '</span>' +
+          '</div>' +
+          '<p class="cmt_reply_error cmt_error" style="display:none;"></p>' +
+        '</div>';
+
+      var ta = slot.querySelector('.cmt_reply_body');
+      var count = slot.querySelector('.cmt_reply_count');
+      var err = slot.querySelector('.cmt_reply_error');
+      var btn = slot.querySelector('.cmt_reply_submit');
+      ta.focus();
+      ta.addEventListener('input', function () {
+        count.textContent = ta.value.length + ' / ' + MAX_LEN;
+      });
+      slot.querySelector('.cmt_reply_cancel').addEventListener('click', function () {
+        slot.innerHTML = '';
+      });
+      btn.addEventListener('click', function () {
+        var text = (ta.value || '').trim();
+        if (!text) { err.textContent = 'Please write something before posting.'; err.style.display = 'block'; return; }
+        err.style.display = 'none';
+        btn.disabled = true;
+        btn.textContent = 'Posting…';
+        postComment(text, id).then(function () {
+          return loadComments();
+        }).catch(function (e2) {
+          err.textContent = 'Sorry, your reply couldn’t be posted. Please try again.';
+          err.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Post reply';
+          if (window.console) console.error('[comments] reply failed', e2);
+        });
+      });
+    }
+
+    // ----- Compose / respond area (new top-level comment) ------------------
     var REPLY_TITLE =
       '<h5 class="cherga_reply_comment_title cmt_reply_title">Let us know your thoughts about this topic</h5>';
 
     function renderRespond() {
       if (!currentUser) {
         respondEl.innerHTML =
-          REPLY_TITLE +
-          '<div class="cmt_signin">' +
-            '<p class="cmt_signin_lead">Join the conversation — sign in to leave a comment.</p>' +
-            '<button type="button" id="cmt-google" class="cmt_google_btn">' +
-              '<span class="cmt_g_icon" aria-hidden="true">G</span>' +
-              'Continue with Google' +
+          '<div class="cmt_signin_row">' +
+            REPLY_TITLE +
+            '<button type="button" id="cmt-google" class="cmt_btn cmt_google_btn">' +
+              '<i class="fa fa-google" aria-hidden="true"></i> Continue with Google' +
             '</button>' +
           '</div>';
         document.getElementById('cmt-google').addEventListener('click', signIn);
@@ -228,7 +342,7 @@
             'placeholder="Write a comment…"></textarea>' +
           '<div class="cmt_form_foot">' +
             '<span id="cmt-count" class="cmt_count">0 / ' + MAX_LEN + '</span>' +
-            '<button type="button" id="cmt-submit" class="cmt_submit">Post comment</button>' +
+            '<button type="button" id="cmt-submit" class="cmt_btn cmt_submit">Post comment</button>' +
           '</div>' +
           '<p id="cmt-error" class="cmt_error" style="display:none;"></p>' +
           '<p class="cmt_consent">By posting, your name and avatar from your ' +
@@ -264,6 +378,7 @@
       db.auth.signOut().then(function () {
         currentUser = null;
         renderRespond();
+        loadComments(); // refresh so Reply/Delete affordances update
       });
     }
 
@@ -276,24 +391,14 @@
         showError('Comment is too long (max ' + MAX_LEN + ' characters).');
         return;
       }
-      var info = userInfo(currentUser);
       btn.disabled = true;
       btn.textContent = 'Posting…';
 
-      db.from('comments').insert({
-        post_slug: postSlug,
-        user_id: info.id,
-        author_name: info.name,
-        author_avatar_url: info.avatar || null,
-        author_provider: info.provider,
-        body: text
-      }).select().then(function (res) {
-        if (res.error) throw res.error;
+      postComment(text, null).then(function (inserted) {
         body.value = '';
         var cnt = document.getElementById('cmt-count');
         if (cnt) cnt.textContent = '0 / ' + MAX_LEN;
         showError('');
-        var inserted = res.data && res.data[0];
         if (inserted && inserted.status === 'pending') {
           alert('Thanks! Your comment was submitted and will appear once approved.');
         }
@@ -329,6 +434,7 @@
     db.auth.onAuthStateChange(function (_event, session) {
       currentUser = (session && session.user) || null;
       renderRespond();
+      loadComments(); // Reply/Delete affordances depend on auth state
     });
 
     loadComments();
