@@ -3234,6 +3234,23 @@ body .nav-links a.next i {
 	width: 20%;
 }
 
+/* "You may also like" (blog-post related grid): give every cover the same
+   landscape 3:2 box (the native ratio of the landscape covers) and crop with
+   object-fit, so a portrait cover matches the landscape height instead of
+   running tall. Scoped to #blog-post-content so the blog.html / about.html
+   grids are unaffected. */
+#blog-post-content .cherga_featured_posts .cherga_fimage_cont a {
+	display: block;
+	aspect-ratio: 3 / 2;
+	overflow: hidden;
+}
+#blog-post-content .cherga_featured_posts .cherga_fimage_cont a img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
 /* ------------------------------- */
 /* ---------- Shop Page ---------- */
 /* ------------------------------- */
