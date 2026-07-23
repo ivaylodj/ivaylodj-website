@@ -8839,6 +8839,20 @@ body .gm-style .gm-style-mtc div {
 	padding-left: 10px;
 }
 
+/* Footer copyright — Privacy link + separator */
+.cherga_copyright a {
+	color: inherit;
+	text-decoration: underline;
+	transition: color 250ms;
+}
+.cherga_copyright a:hover {
+	color: #ffbf00;
+}
+.cherga_footer_sep {
+	opacity: 0.5;
+	margin: 0 4px;
+}
+
 /* Visually-hidden (screen-reader / SEO) — page H1 on fullscreen slider galleries */
 .cherga_sr_only {
 	position: absolute !important;
