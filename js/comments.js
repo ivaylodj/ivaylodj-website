@@ -71,6 +71,26 @@
     var currentUser = null;
     var commentsById = {}; // id -> row, for edit (original body) & delete prompts
 
+    // Did this page load come back from the Google OAuth redirect? Captured
+    // synchronously now, before supabase-js / blog_post.js rewrite the URL, so
+    // we can scroll the user back to the comment box instead of the page top.
+    var cameFromOAuth =
+      /[?&](code|access_token)=/.test(window.location.search) ||
+      /(access_token|code)=/.test(window.location.hash);
+    var didAutoScroll = false;
+
+    function scrollBackIfReturning() {
+      if (!cameFromOAuth || didAutoScroll) return;
+      didAutoScroll = true;
+      // Let layout settle (images/related posts) before scrolling.
+      setTimeout(function () {
+        var target = document.getElementById('comments-respond') || mount;
+        if (target && target.scrollIntoView) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
+
     // ----- Helpers ---------------------------------------------------------
     function esc(s) {
       return String(s == null ? '' : s)
@@ -524,12 +544,14 @@
     db.auth.getSession().then(function (res) {
       currentUser = (res.data && res.data.session && res.data.session.user) || null;
       renderRespond();
+      if (currentUser) scrollBackIfReturning();
     });
 
     db.auth.onAuthStateChange(function (_event, session) {
       currentUser = (session && session.user) || null;
       renderRespond();
       loadComments(); // Reply/Delete affordances depend on auth state
+      if (currentUser) scrollBackIfReturning();
     });
 
     loadComments();
