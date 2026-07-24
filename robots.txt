@@ -2,5 +2,15 @@ User-agent: *
 Allow: /
 Disallow: /_templates/
 Disallow: /static/admin/
+Disallow: /_tests/
+Disallow: /AGENTS.md
+Disallow: /CLAUDE.md
+Disallow: /COMMENTS_PLAN.md
+Disallow: /GO_LIVE_RUNBOOK.md
+Disallow: /IMAGE_CLEANUP.md
+Disallow: /LAUNCH_AUDIT.md
+Disallow: /MEMORY.md
+Disallow: /REMEDIATION.md
+Disallow: /SPA_POST_LAUNCH_PLAN.md
 
 Sitemap: https://ivaylodj.com/sitemap.xml

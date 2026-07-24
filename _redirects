@@ -1,0 +1,15 @@
+# Cloudflare Pages redirects. Path-based, first-match-wins.
+# Block internal planning docs + test files from public access (301 -> home).
+# NOTE: never add a "/*.md" rule — the splat would also match /_posts/*.md,
+# which the blog fetches at runtime. Keep these as explicit paths.
+
+/AGENTS.md               /  301
+/CLAUDE.md               /  301
+/COMMENTS_PLAN.md        /  301
+/GO_LIVE_RUNBOOK.md      /  301
+/IMAGE_CLEANUP.md        /  301
+/LAUNCH_AUDIT.md         /  301
+/MEMORY.md               /  301
+/REMEDIATION.md          /  301
+/SPA_POST_LAUNCH_PLAN.md /  301
+/_tests/*                /  301

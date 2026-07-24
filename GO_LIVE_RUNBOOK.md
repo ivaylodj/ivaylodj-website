@@ -76,12 +76,17 @@ curl -sI 'https://www.ivaylodj.com/blog_post.html?post=2026-07-12-chasing-comet-
 - **Validate on live domain** — Google Rich Results Test (structured data), Facebook Sharing Debugger + X/Twitter Card Validator (OG tags).
 - **Google OAuth consent** — finish **logo upload** (still pending) so the brand shows for all comment sign-ins.
 
-## 7. Optional hardening — internal planning docs are publicly reachable
+## 7. Internal planning docs hidden — ✅ DONE (in-repo)
 
-12 internal `.md` docs (e.g. `CLAUDE.md`, `LAUNCH_AUDIT.md`, `COMMENTS_PLAN.md`) are git-tracked, so with no build step Cloudflare Pages serves them at e.g. `https://ivaylodj.com/CLAUDE.md`. They are **not linked and not in the sitemap** (so not normally indexed), and contain no real secrets (Supabase keys are public-by-design, guarded by RLS), but they're reachable by direct URL. A blanket `*.md` block is **unsafe** — the blog fetches `_posts/*.md` at runtime. If you want them hidden, pick one:
+Internal docs + the `_tests/` dir were git-tracked and (no build step) served publicly at e.g. `https://ivaylodj.com/CLAUDE.md`. Now handled in-repo:
 
-- **Lightweight (indexing only):** add explicit `Disallow:` lines to `robots.txt` for each root doc. Stops compliant crawlers; does not block direct access.
-- **Path 301 (in-repo, safe):** add a `_redirects` file listing each doc (NOT `/_posts/*`), e.g. `/CLAUDE.md / 301`. `_redirects` is path-based so this is fine and needs no dashboard.
-- **Cleanest (structural):** move planning docs into a subfolder excluded from deploy via a small build step — deferred, more invasive.
+- **`_redirects`** 301s each internal doc + `/_tests/*` → `/`, so they're never served. Path-based, first-match-wins; **`_posts/*.md` is deliberately untouched** (the blog fetches those at runtime — a blanket `/*.md` rule would break the blog, so explicit paths are used). Cloudflare treats `_redirects` as config, so it isn't itself served.
+- **`robots.txt`** has matching `Disallow:` lines so they're never indexed even if a link leaks.
+- `README.MD` is left public (conventional for a repo). `CLAUDE.md`/`AGENTS.md` stay at repo root (agent tooling needs them there) — the edge redirect hides them regardless of location.
 
-Tell me which and I'll implement it.
+Verify after deploy:
+```sh
+curl -sI https://ivaylodj.com/CLAUDE.md          | grep -iE 'HTTP/|^location'   # → 301 → /
+curl -sI https://ivaylodj.com/_tests/STATUS.md   | grep -iE 'HTTP/|^location'   # → 301 → /
+curl -sI 'https://ivaylodj.com/blog_post.html?post=2026-07-12-chasing-comet-neowise' | grep -i 'HTTP/'  # → 200 (blog unaffected)
+```
