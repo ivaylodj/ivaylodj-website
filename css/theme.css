@@ -8842,7 +8842,7 @@ body .gm-style .gm-style-mtc div {
 /* Footer copyright — Privacy link + separator */
 .cherga_copyright a {
 	color: inherit;
-	text-decoration: underline;
+	text-decoration: none;
 	transition: color 250ms;
 }
 .cherga_copyright a:hover {
