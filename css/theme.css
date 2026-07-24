@@ -3022,6 +3022,9 @@ body .nav-links a.next i {
 	padding: 4px 10px 4px 10px;
 	margin-right: 7px;
 	color: #ffffff;
+	box-sizing: border-box;
+	min-width: 118px;
+	text-align: center;
 }
 .cherga_sharing a.cherga_share_facebook,
 .cherga_sharing a.cherga_share_twitter,
