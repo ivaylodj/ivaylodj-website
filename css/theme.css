@@ -3041,6 +3041,17 @@ body .nav-links a.next i {
 .cherga_sharing a.cherga_share_pinterest {
 	background: #bd081c;
 }
+.cherga_sharing a.cherga_share_copy,
+.cherga_sharing a.cherga_share_copy:hover {
+	color: #ffffff;
+}
+.cherga_sharing a.cherga_share_copy {
+	background: #3a3e43;
+	cursor: pointer;
+}
+.cherga_sharing a.cherga_share_copy.cherga_copied {
+	background: #2e7d32;
+}
 
 .cherga_posts_navigation {
 	border-top:1px solid rgba(255,255,255,0.05);

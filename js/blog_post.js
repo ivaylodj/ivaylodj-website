@@ -469,12 +469,16 @@
         }
 
         // Share buttons
-        var encUrl  = encodeURIComponent(window.location.href);
+        var shareUrl = window.location.href;
+        var encUrl  = encodeURIComponent(shareUrl);
         var encTitle = encodeURIComponent(title);
+        var pinMedia = post.cover_image ? '&media=' + encodeURIComponent(window.location.origin + '/' + post.cover_image) : '';
         html += '<div class="cherga_sharing">';
         html +=   '<span class="cherga_sharing_label">Share This Post</span> ';
-        html +=   '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encUrl + '&t=' + encTitle + '" target="_blank" title="Share on Facebook" class="cherga_share_facebook">Facebook</a>';
-        html +=   ' <a href="https://twitter.com/intent/tweet?url=' + encUrl + '&text=' + encTitle + '" target="_blank" title="Share on Twitter/X" class="cherga_share_twitter">Twitter/X</a>';
+        html +=   '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encUrl + '&t=' + encTitle + '" target="_blank" rel="noopener" title="Share on Facebook" class="cherga_share_facebook">Facebook</a>';
+        html +=   ' <a href="https://twitter.com/intent/tweet?url=' + encUrl + '&text=' + encTitle + '" target="_blank" rel="noopener" title="Share on X" class="cherga_share_twitter">X</a>';
+        html +=   ' <a href="https://pinterest.com/pin/create/button/?url=' + encUrl + '&description=' + encTitle + pinMedia + '" target="_blank" rel="noopener" title="Pin on Pinterest" class="cherga_share_pinterest">Pinterest</a>';
+        html +=   ' <a href="#" role="button" title="Copy link" class="cherga_share_copy" data-copy-url="' + shareUrl + '">Copy link</a>';
         html += '</div>';
         html += '<div class="clear"></div>';
 
@@ -582,6 +586,38 @@
         // (all templates). Independent of the template-specific init below.
         if (window.PMComments && typeof window.PMComments.mount === 'function') {
           window.PMComments.mount(postFile);
+        }
+
+        // "Copy link" share button — clipboard with graceful fallback + "Copied!" feedback
+        var copyBtn = document.querySelector('.cherga_share_copy');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = copyBtn.getAttribute('data-copy-url') || window.location.href;
+            var confirmCopied = function () {
+              var orig = copyBtn.textContent;
+              copyBtn.textContent = 'Copied!';
+              copyBtn.classList.add('cherga_copied');
+              setTimeout(function () {
+                copyBtn.textContent = orig;
+                copyBtn.classList.remove('cherga_copied');
+              }, 1800);
+            };
+            var fallbackCopy = function () {
+              try {
+                var ta = document.createElement('textarea');
+                ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta); ta.focus(); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta);
+                confirmCopied();
+              } catch (err) {}
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(url).then(confirmCopied).catch(fallbackCopy);
+            } else {
+              fallbackCopy();
+            }
+          });
         }
 
         // Initialize template-specific functionality
