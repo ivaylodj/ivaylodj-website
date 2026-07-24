@@ -606,7 +606,7 @@ jQuery(document).ready(function () {
 
 	// Back To Top
 	jQuery('.cherga_back_to_top').attr('data-bottom', parseInt(jQuery('.cherga_back_to_top').css('bottom')));
-	if (cherga_window.scrollTop() > cherga_window.height()) {
+	if (cherga_window.scrollTop() > 300) {
 		jQuery('.cherga_back_to_top').addClass('cherga_show_me');
 	} else {
 		jQuery('.cherga_back_to_top').removeClass('cherga_show_me');
@@ -627,7 +627,7 @@ jQuery(document).ready(function () {
 		}
 	}
 	cherga_window.on('scroll', function(){
-		if (cherga_window.scrollTop() > cherga_window.height()) {
+		if (cherga_window.scrollTop() > 300) {
 			jQuery('.cherga_back_to_top').addClass('cherga_show_me');
 		} else {
 			jQuery('.cherga_back_to_top').removeClass('cherga_show_me');
