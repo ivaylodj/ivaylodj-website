@@ -50,7 +50,7 @@ describe('Related Posts Section', () => {
 
   test('should include post title for related posts', () => {
     const post = mockPosts[0];
-    const html = `<h4 class="cherga_post_title"><a href="blog_post.html?post=${post.filename}">${post.title}</a></h4>`;
+    const html = `<h4 class="cherga_post_title"><a href="blog_post?post=${post.filename}">${post.title}</a></h4>`;
     expect(html).toContain(post.title);
   });
 
@@ -68,8 +68,8 @@ describe('Related Posts Section', () => {
   test('should create clickable links to related posts', () => {
     const post = mockPosts[0];
     const filename = post.filename.replace(/\.md$/, '');
-    const link = `blog_post.html?post=${filename}`;
-    expect(link).toContain('blog_post.html');
+    const link = `blog_post?post=${filename}`;
+    expect(link).toContain('blog_post');
     expect(link).toContain(filename);
   });
 

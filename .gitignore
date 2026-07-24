@@ -20,3 +20,6 @@ cypress/screenshots/
 # Backup / stray-copy files
 *.bak
 *.old.*
+
+# Wrangler (Cloudflare Pages dev) cache
+.wrangler/

@@ -450,7 +450,7 @@
           '<p class="cmt_consent">By posting, your name and avatar from your ' +
             esc(providerLabel(info.provider)) + ' account are shown publicly with your ' +
             'comment. You can delete your own comments at any time. ' +
-            'See the <a href="privacy.html">Privacy Policy</a>.</p>' +
+            'See the <a href="privacy">Privacy Policy</a>.</p>' +
         '</div>';
 
       var body = document.getElementById('cmt-body');

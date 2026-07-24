@@ -162,7 +162,7 @@
 
     if (!postFile) {
       document.getElementById('blog-post-content').innerHTML = 
-        'No post specified. <a href="blog.html">&larr; Back to Blog</a>';
+        'No post specified. <a href="blog">&larr; Back to Blog</a>';
       return;
     }
 
@@ -186,7 +186,7 @@
 
       if (!post) {
         document.getElementById('blog-post-content').innerHTML = 
-          'Post not found. <a href="blog.html">&larr; Back to Blog</a>';
+          'Post not found. <a href="blog">&larr; Back to Blog</a>';
         return;
       }
 
@@ -196,7 +196,7 @@
       contentXhr.onload = function() {
         if (contentXhr.status !== 200) {
           document.getElementById('blog-post-content').innerHTML = 
-            'Failed to load post. <a href="blog.html">&larr; Back to Blog</a>';
+            'Failed to load post. <a href="blog">&larr; Back to Blog</a>';
           return;
         }
 
@@ -462,7 +462,7 @@
         if (post.tags && post.tags.length) {
           html += '<div class="cherga_post_tags">Tagged in';
           for (var t = 0; t < post.tags.length; t++) {
-            html += ' <a href="blog.html?tag=' + encodeURIComponent(post.tags[t]) + '" rel="tag">' + post.tags[t] + '</a>';
+            html += ' <a href="blog?tag=' + encodeURIComponent(post.tags[t]) + '" rel="tag">' + post.tags[t] + '</a>';
             if (t < post.tags.length - 1) html += ',';
           }
           html += '</div>';
@@ -500,11 +500,11 @@
           var prevFilename = prevPost.filename.replace(/\.md$/, '');
           html +=   '<div class="cherga_prev_post_wrapper col">';
           html +=     '<span class="cherga_prev_post_button cherga_post_nav_button">';
-          html +=       '<a href="blog_post.html?post=' + prevFilename + '" rel="prev">';
+          html +=       '<a href="blog_post?post=' + prevFilename + '" rel="prev">';
           html +=         '<i class="fa fa-arrow-left"></i> PREV POST';
           html +=       '</a>';
           html +=     '</span>';
-          html +=     '<a class="cherga_prev_post_title" href="blog_post.html?post=' + prevFilename + '">' + prevPost.title + '</a>';
+          html +=     '<a class="cherga_prev_post_title" href="blog_post?post=' + prevFilename + '">' + prevPost.title + '</a>';
           html +=   '</div>';
         }
 
@@ -513,11 +513,11 @@
           var nextFilename = nextPost.filename.replace(/\.md$/, '');
           html +=   '<div class="cherga_next_post_wrapper col push-right">';
           html +=     '<span class="cherga_next_post_button cherga_post_nav_button">';
-          html +=       '<a href="blog_post.html?post=' + nextFilename + '" rel="next">';
+          html +=       '<a href="blog_post?post=' + nextFilename + '" rel="next">';
           html +=         'NEXT POST <i class="fa fa-arrow-right"></i>';
           html +=       '</a>';
           html +=     '</span>';
-          html +=     '<a class="cherga_next_post_title" href="blog_post.html?post=' + nextFilename + '">' + nextPost.title + '</a>';
+          html +=     '<a class="cherga_next_post_title" href="blog_post?post=' + nextFilename + '">' + nextPost.title + '</a>';
           html +=   '</div>';
         }
 
@@ -550,7 +550,7 @@
           html += '<div class="cherga_posts_item col col6">';
           html +=   '<div class="cherga_fimage_cont">';
           if (relPost.cover_image) {
-            html +=     '<a href="blog_post.html?post=' + relFilename + '" class="cherga_dp cherga_no_select">';
+            html +=     '<a href="blog_post?post=' + relFilename + '" class="cherga_dp cherga_no_select">';
             html +=       '<img src="' + relPost.cover_image + '" alt="' + relPost.title + '"/>';
             html +=     '</a>';
           }
@@ -565,7 +565,7 @@
             html += '<div class="cherga_post_meta_item">in ' + relCats.join(', ') + '</div>';
           }
           html +=     '<h4 class="cherga_post_title">';
-          html +=       '<a href="blog_post.html?post=' + relFilename + '">' + relPost.title + '</a>';
+          html +=       '<a href="blog_post?post=' + relFilename + '">' + relPost.title + '</a>';
           html +=     '</h4>';
           html +=     '<div class="cherga_excerpt">' + (relPost.excerpt || '') + '</div>';
           html +=   '</div>';
@@ -616,7 +616,7 @@
         document.title = title + ' | Ivaylo Djounov Photography Blog';
 
         var canonicalMeta  = document.querySelector("link[rel='canonical']");
-        if (canonicalMeta) canonicalMeta.href = 'https://ivaylodj.com/blog_post.html?post=' + postFile;
+        if (canonicalMeta) canonicalMeta.href = 'https://ivaylodj.com/blog_post?post=' + postFile;
 
         var descMeta       = document.querySelector('meta[name="description"]');
         if (descMeta)      descMeta.content = post.excerpt || '';
@@ -626,7 +626,7 @@
         var ogDescMeta     = document.querySelector('meta[property="og:description"]');
         if (ogDescMeta)    ogDescMeta.content = post.excerpt || '';
 
-        window.history.replaceState({}, '', 'blog_post.html?post=' + postFile);
+        window.history.replaceState({}, '', 'blog_post?post=' + postFile);
         // Sidebar (categories, tags, featured posts) is built in buildSidebarWidgets().
       };
       contentXhr.send();
@@ -771,11 +771,11 @@
         var item = document.createElement('div');
         item.className = 'cherga_posts_item cherga_block_with_fi';
         item.innerHTML =
-          '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=' + filename + '">' +
+          '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post?post=' + filename + '">' +
             '<img src="' + imgSrc + '" alt="" width="62" height="62" />' +
           '</a>' +
           '<div class="cherga_posts_item_content">' +
-            '<a class="cherga_featured_post_widget_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+            '<a class="cherga_featured_post_widget_title" href="blog_post?post=' + filename + '">' + post.title + '</a>' +
             '<div class="cherga_widget_meta"><div>' + dateStr + '</div></div>' +
           '</div>';
         featuredList.appendChild(item);
@@ -799,7 +799,7 @@
       for (var c in catMap) {
         var li = document.createElement('li');
         var a = document.createElement('a');
-        a.href = 'blog.html?category=' + encodeURIComponent(c);
+        a.href = 'blog?category=' + encodeURIComponent(c);
         a.textContent = c;
         li.appendChild(a);
         catList.appendChild(li);
@@ -825,7 +825,7 @@
       });
       for (var t = 0; t < sortedTags.length; t++) {
         var link = document.createElement('a');
-        link.href = 'blog.html?tag=' + encodeURIComponent(sortedTags[t]);
+        link.href = 'blog?tag=' + encodeURIComponent(sortedTags[t]);
         link.textContent = sortedTags[t];
         tagCloud.appendChild(link);
       }
@@ -842,7 +842,7 @@
         var dateStr = formatDate(post.date);
         var filename = post.filename.replace(/\.md$/, '');
         li.innerHTML =
-          '<a href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<a href="blog_post?post=' + filename + '">' + post.title + '</a>' +
           '<div class="cherga_post_date">' + dateStr + '</div>';
         footerList.appendChild(li);
       }

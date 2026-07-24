@@ -115,11 +115,11 @@ describe('Blog Sidebar Rendering', () => {
       li.className = 'cherga_featured_post_item';
       const filename = post.filename.replace(/\.md$/, '');
       li.innerHTML =
-        '<a class="cherga_featured_post_image" href="blog_post.html?post=' + filename + '">' +
+        '<a class="cherga_featured_post_image" href="blog_post?post=' + filename + '">' +
           '<img src="' + post.cover_image + '" alt="">' +
         '</a>' +
         '<div class="cherga_featured_post_content">' +
-          '<a class="cherga_featured_post_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<a class="cherga_featured_post_title" href="blog_post?post=' + filename + '">' + post.title + '</a>' +
           '<div class="cherga_featured_post_meta">' + post.date + '</div>' +
         '</div>';
       list.appendChild(li);

@@ -128,11 +128,11 @@
       var filename = post.filename.replace(/\.md$/, '');
 
       div.innerHTML =
-        '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=' + filename + '">' +
+        '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post?post=' + filename + '">' +
           '<img src="' + imgSrc + '" alt="" width="62" height="62" />' +
         '</a>' +
         '<div class="cherga_posts_item_content">' +
-          '<a class="cherga_featured_post_widget_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<a class="cherga_featured_post_widget_title" href="blog_post?post=' + filename + '">' + post.title + '</a>' +
           '<div class="cherga_widget_meta">' +
             '<div>' + dateStr + '</div>' +
           '</div>' +
@@ -158,11 +158,11 @@
       var filename = post.filename.replace(/\.md$/, '');
 
       div.innerHTML =
-        '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post.html?post=' + filename + '">' +
+        '<a class="cherga_posts_item_image cherga_dp cherga_no_select" href="blog_post?post=' + filename + '">' +
           '<img src="' + imgSrc + '" alt="" width="62" height="62" />' +
         '</a>' +
         '<div class="cherga_posts_item_content">' +
-          '<a class="cherga_featured_post_widget_title" href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<a class="cherga_featured_post_widget_title" href="blog_post?post=' + filename + '">' + post.title + '</a>' +
           '<div class="cherga_widget_meta">' +
             '<div>' + dateStr + '</div>' +
           '</div>' +
@@ -232,10 +232,10 @@
 
       item.innerHTML = postImg + metaHtml +
         '<h2 class="cherga_post_listing_title">' +
-          '<a href="blog_post.html?post=' + filename + '">' + post.title + '</a>' +
+          '<a href="blog_post?post=' + filename + '">' + post.title + '</a>' +
         '</h2>' +
         '<div class="cherga_excerpt">' + excerpt + '</div>' +
-        '<a class="cherga_read_more_button" href="blog_post.html?post=' + filename + '">Read More</a>';
+        '<a class="cherga_read_more_button" href="blog_post?post=' + filename + '">Read More</a>';
 
       container.appendChild(item);
     }
