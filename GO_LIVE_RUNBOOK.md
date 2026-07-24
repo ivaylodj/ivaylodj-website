@@ -46,23 +46,23 @@ Account → **Bulk Redirects** → create a list, add:
 Same as step 3 but for the Pages hostname.
 
 ### Option A — Redirect Rule
-- New rule `pages.dev → apex`: Field `Hostname` equals `<your-project>.pages.dev` → Dynamic `concat("https://ivaylodj.com", http.request.uri.path)`, **301**, preserve query string ✅.
+- New rule `pages.dev → apex`: Field `Hostname` equals `ivaylodj-website.pages.dev` → Dynamic `concat("https://ivaylodj.com", http.request.uri.path)`, **301**, preserve query string ✅.
 - ⚠ Redirect Rules live on a **zone**; the `*.pages.dev` hostname is not in your zone, so if the rule doesn't fire, use **Option B (Bulk Redirect)** which operates account-wide — this is Cloudflare's documented path for pages.dev.
 
 ### Option B — Bulk Redirect (documented, reliable for pages.dev)
 Account → **Bulk Redirects** → add to the list:
-`Source <your-project>.pages.dev` → `Target https://ivaylodj.com`, **301**, same four parameters as above.
+`Source ivaylodj-website.pages.dev` → `Target https://ivaylodj.com`, **301**, same four parameters as above.
 
 ## 5. Verify (after DNS/cert propagate)
 
 ```sh
 curl -sI https://www.ivaylodj.com/         | grep -iE 'HTTP/|^location'   # → 301 → https://ivaylodj.com/
-curl -sI https://<your-project>.pages.dev/ | grep -iE 'HTTP/|^location'   # → 301 → https://ivaylodj.com/
+curl -sI https://ivaylodj-website.pages.dev/ | grep -iE 'HTTP/|^location'   # → 301 → https://ivaylodj.com/
 curl -sI http://ivaylodj.com/              | grep -iE 'HTTP/|^location'   # → 301/308 → https (Always Use HTTPS)
 curl -sI https://ivaylodj.com/             | grep -iE 'HTTP/'             # → 200
 # path + query preservation:
-curl -sI 'https://www.ivaylodj.com/blog_post.html?post=2026-07-12-chasing-comet-neowise' | grep -i '^location'
-#   → location: https://ivaylodj.com/blog_post.html?post=2026-07-12-chasing-comet-neowise
+curl -sI 'https://www.ivaylodj.com/blog_post?post=2026-07-12-chasing-comet-neowise' | grep -i '^location'
+#   → location: https://ivaylodj.com/blog_post?post=2026-07-12-chasing-comet-neowise
 ```
 
 ---
@@ -88,5 +88,5 @@ Verify after deploy:
 ```sh
 curl -sI https://ivaylodj.com/CLAUDE.md          | grep -iE 'HTTP/|^location'   # → 301 → /
 curl -sI https://ivaylodj.com/_tests/STATUS.md   | grep -iE 'HTTP/|^location'   # → 301 → /
-curl -sI 'https://ivaylodj.com/blog_post.html?post=2026-07-12-chasing-comet-neowise' | grep -i 'HTTP/'  # → 200 (blog unaffected)
+curl -sI 'https://ivaylodj.com/blog_post?post=2026-07-12-chasing-comet-neowise' | grep -i 'HTTP/'  # → 200 (blog unaffected)
 ```
